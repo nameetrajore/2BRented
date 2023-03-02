@@ -7,7 +7,7 @@ import { Login } from './Pages/Login'
 import { Signup } from './Pages/Signup'
 import { AadharVeri } from './Pages/AadharVeri'
 import { NoMatch } from './Pages/NoMatch';
-
+import BikeCard  from './Components/BikeCard'
 
 function App() {
   return (
