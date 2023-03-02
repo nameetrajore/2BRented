@@ -127,6 +127,9 @@ export const SearchPage = () => {
           <CategoryCard
             categoryName={'bike'}
           />
+          <CategoryCard
+            categoryName={'bike'}
+          />
           
       </Box>
       
