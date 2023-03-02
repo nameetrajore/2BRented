@@ -1,27 +1,27 @@
-import {SearchPage} from './Pages/SearchPage'
-import {Routes, Route} from 'react-router-dom'
-import { Navbar } from './Components/Navbar';
-import { BikeCatalouge } from './Pages/BikeCatalouge';
-import { Login } from './Pages/Login'
+import { SearchPage } from "./pages/HomePage";
+import { Routes, Route } from "react-router-dom";
+import { Navbar } from "./components/Navbar";
+import { BikeCatalouge } from "./pages/BikeCatalogue";
+import { Login } from "./pages/Login";
 // import { Link as RouterLink, MemoryRouter } from 'react-router-dom';
-import { Signup } from './Pages/Signup'
-import { AadharVeri } from './Pages/AadharVeri'
-import { NoMatch } from './Pages/NoMatch';
-import BikeCard  from './Components/BikeCard'
+import { Signup } from "./pages/Signup";
+import { AadharVeri } from "./pages/AadharVeri";
+import { NoMatch } from "./pages/NoMatch";
+import BikeCard from "./components/BikeCard";
 
 function App() {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <Routes>
-        <Route path ='/' element={<SearchPage/>}></Route>
-        <Route path = 'bike-catalouge' element = {<BikeCatalouge/>}></Route>
-        <Route path = 'login' element = {<Login/>}></Route>
-        <Route path = '/signup' element = {<Signup/>}>
-          <Route path = 'aadhar-verification' element = {<AadharVeri/>}/>
+        <Route path="/" element={<SearchPage />}></Route>
+        <Route path="bike-catalouge" element={<BikeCatalouge />}></Route>
+        <Route path="login" element={<Login />}></Route>
+        <Route path="/signup" element={<Signup />}>
+          <Route path="aadhar-verification" element={<AadharVeri />} />
         </Route>
-        
-        <Route path ='*' element={<NoMatch/>}></Route>
+
+        <Route path="*" element={<NoMatch />}></Route>
       </Routes>
     </>
   );
