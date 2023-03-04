@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Navigate, useNavigate } from "react-router-dom";
-import CategoryCard from "../components/CategoryCard";
+// import CategoryCard from "../components/CategoryCard";
 
 export const SearchPage = () => {
   const navigate = useNavigate();
@@ -29,51 +29,58 @@ export const SearchPage = () => {
           </Typography>
         </Box>
       </Grid>
-      <Grid container spacing={0.5} pt={2} px={7}>
-        <Grid item xs={6} sm={6} md={2}>
+      <Grid container spacing={2} pt={2} px={7}>
+        <Grid item xs={12} sm={6} md={2}>
           <TextField
-            margin="normal"
+            fullWidth
+            margin="none"
             required
             id="email"
-            label="Email Address"
+            label="Pickup Location"
+            name="email"
+            autoComplete="email"
+            autoFocus
+
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={2}>
+          <TextField
+            fullWidth
+            margin="none"
+            required
+            id="email"
+            label="Drop Location"
+            name="email"
+            autoComplete="Location"
+            autoFocus
+          />
+        </Grid>
+        <Grid item xs={0} sm={0} md={8} padding={{xs:0, sm:0}}/>
+        <Grid item xs={12} sm={6} md={2}>
+          <TextField
+            fullWidth
+            margin="none"
+            required
+            id="email"
+            label="Pickup Date"
             name="email"
             autoComplete="email"
             autoFocus
           />
         </Grid>
-        <Grid item xs={6} sm={6} md={10}>
+        <Grid item xs={12} sm={6} md={2}>
           <TextField
-            margin="normal"
+            fullWidth
+            margin="none"
             required
             id="email"
-            label="Email Address"
+            label="Drop Date"
             name="email"
             autoComplete="email"
             autoFocus
           />
         </Grid>
-        <Grid item xs={6} sm={6} md={2}>
-          <TextField
-            margin="normal"
-            required
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-        </Grid>
-        <Grid item xs={6} sm={6} md={10}>
-          <TextField
-            margin="normal"
-            required
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-        </Grid>
+        <Grid item xs={0} sm={0} md={8} />
       </Grid>
       <Grid container my={0} px={7} pt={2}>
         <Grid item xs={12} sm={8} md={1} component={Paper} square elevation={0}>
