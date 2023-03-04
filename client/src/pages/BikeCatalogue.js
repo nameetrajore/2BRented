@@ -167,13 +167,11 @@ export const BikeCatalouge = () => {
       </Box>
       <Grid container>
       <Grid item md={3}> 
-      {/* <Box sx={{ height: '100%' }}>
-        <Paper elevation={10} className={classes.paper} >
-        <Card className={classes.card}>
-          <h1>hello</h1>
-        </Card>
+      <Box sx={{ height: '100%', p: 2}}>
+        <Paper elevation={10} sx={{height:'100%', border: 1, backgroundColor: '#F1F1F1', p: 2}} >
+          
         </Paper>
-      </Box> */}
+      </Box>
        
       </Grid>
       <Grid item md={9}>
