@@ -30,7 +30,7 @@ export const SearchPage = () => {
         </Box>
       </Grid>
       <Grid container spacing={2} pt={2} px={7}>
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item xs={12} sm={6} md={3}>
           <TextField
             fullWidth
             margin="none"
@@ -43,7 +43,7 @@ export const SearchPage = () => {
 
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item xs={12} sm={6} md={3}>
           <TextField
             fullWidth
             margin="none"
@@ -55,7 +55,7 @@ export const SearchPage = () => {
             autoFocus
           />
         </Grid>
-        <Grid item xs={0} sm={0} md={8} padding={{xs:0, sm:0}}/>
+        <Grid item xs={0} sm={0} md={6} />
         <Grid item xs={12} sm={6} md={2}>
           <TextField
             fullWidth
