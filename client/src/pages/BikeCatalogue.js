@@ -101,7 +101,7 @@ export const BikeCatalouge = () => {
           ...commonStyles,
           display: "flex",
           flexDirection: "row",
-          
+          backgroundColor: "#F1F1F1"
         }}>
         <Grid container spacing={8} alignItems="center" justifyContent="center" >
           <Grid item >
@@ -114,6 +114,7 @@ export const BikeCatalouge = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            variant="filled"
           />
           </Grid>
           
@@ -127,6 +128,7 @@ export const BikeCatalouge = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            variant="filled"
           />
           </Grid>
           <Grid item >
@@ -139,6 +141,7 @@ export const BikeCatalouge = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            variant="filled"
           />
           </Grid>
           <Grid item >
@@ -151,6 +154,7 @@ export const BikeCatalouge = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            variant="filled"
           />
           </Grid>
           {/* <Grid item>
@@ -168,7 +172,7 @@ export const BikeCatalouge = () => {
       <Grid container>
       <Grid item md={3}> 
       <Box sx={{ height: '100%', p: 2}}>
-        <Paper elevation={10} sx={{height:'100%', border: 1, backgroundColor: '#F1F1F1', p: 2}} >
+        <Paper elevation={10} sx={{height:'100%', backgroundColor: '#F1F1F1', p: 2}} >
           
         </Paper>
       </Box>
