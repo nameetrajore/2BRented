@@ -8,7 +8,7 @@ const ownerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  modelAddress: {
+  ownerAddress: {
     type: String,
     required: true,
   },
