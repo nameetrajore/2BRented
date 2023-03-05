@@ -9,7 +9,7 @@ import { Card, Drawer } from '@mui/material'
 import { createTheme } from '@mui/material/styles';
 // import { makeStyles } from '@mui/styles';
 import { ClassNames } from '@emotion/react'
-
+import { shadows } from '@mui/system';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -29,6 +29,17 @@ const commonStyles = {
   borderBottom: 3,
   borderColor: '#ffea00'
 };
+
+const paper = {
+    height: '90%',
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    verticalAlign: "middle",
+    boxShadow: "4px 4px 4px 1px rgba(0, 0, 0, 0.25)",
+    borderRadius: "25px",
+    elevation: '25'  //elevation not working
+}
 
 // const useStyles = makeStyles({
 //   paper: {
@@ -172,8 +183,8 @@ export const BikeCatalouge = () => {
       <Grid container>
       <Grid item md={3}> 
       <Box sx={{ height: '100%', p: 2}}>
-        <Paper elevation={10} sx={{height:'100%', backgroundColor: '#F1F1F1', p: 2}} >
-          
+        <Paper  sx={{...paper}} elevation={25}>
+          <h1>Filters</h1>
         </Paper>
       </Box>
        
