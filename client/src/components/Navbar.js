@@ -9,9 +9,12 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useLogout } from "../hooks/useLogout";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export const Navbar = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const { user } = useAuthContext()
+  // console.log(user[0].customerName, "this is the logged in user")
   const { logout } = useLogout()
 
   const handleClick = () => {
@@ -30,25 +33,32 @@ export const Navbar = () => {
           >
             2BRented
           </Typography>
-          <div>
-            <Button
-              color="inherit"
-              onClick={() => navigate("login")}
-              size="large"
-            >
-              Login
-            </Button>
-          </div>
-          <div>
-            <Button
-              color="inherit"
-              onClick={handleClick}
-              size="large"
-            >
-              Logout
-            </Button>
-          </div>
-          
+          {
+            user && (
+              <div>
+                <span>Welcome, {user[0].customerName}</span>
+                
+                <Button
+                  color="inherit"
+                  onClick={handleClick}
+                  size="large"
+                >
+                  Logout
+                </Button>
+              </div>
+            )
+          }
+          {!user &&(
+            <div>
+              <Button
+                color="inherit"
+                onClick={() => navigate("login")}
+                size="large"
+              >
+                Login
+              </Button>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
