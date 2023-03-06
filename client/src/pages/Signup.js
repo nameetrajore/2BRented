@@ -4,22 +4,31 @@ import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
+import { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 // import { useNavigate } from 'react-router-dom';
 import { AadharVeri } from './AadharVeri';
+import { useSignup } from '../hooks/useSignup';
 
 export const Signup = () => {
     // const navigate = useNavigate()
-    const handleSubmit = (event) => {
+
+    const [userName, setName] = useState('')
+    const [userAddress, setAddress] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [password, setPassword] = useState('')
+    const [DL, setDL] = useState('')
+    const {signup, error, isLoading} = useSignup()
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-          email: data.get('email'),
-          password: data.get('password'),
-        });
+        console.log(email, password, userAddress, userName, phone, DL);
+        await signup(userName,userAddress, email,phone,password, DL)
         
       };
     
@@ -32,7 +41,7 @@ export const Signup = () => {
               sm={4}
               md={7}
               sx={{
-                backgroundImage: 'url(https://source.unsplash.com/random)',
+                backgroundImage: 'url()',
                 backgroundRepeat: 'no-repeat',
                 backgroundColor: (t) =>
                   t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -57,10 +66,34 @@ export const Signup = () => {
                   Signup
                 </Typography>
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    onChange={(e) => setName(e.target.value)} 
+                    value = {userName}   
+                    id="userName"
+                    label="Name"
+                    name="userName"
+                    autoFocus
+                  />
                   <TextField
                     margin="normal"
                     required
                     fullWidth
+                    onChange={(e) => setAddress(e.target.value)} 
+                    value = {userAddress}   
+                    id="userAddress"
+                    label="Address"
+                    name="userAddress"
+                    autoFocus
+                  />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    onChange={(e) => setEmail(e.target.value)} 
+                    value = {email}   
                     id="email"
                     label="Email Address"
                     name="email"
@@ -71,15 +104,19 @@ export const Signup = () => {
                     margin="normal"
                     required
                     fullWidth
+                    onChange={(e) => setPhone(e.target.value)} 
+                    value = {phone}   
                     id="phone"
                     label="Phone Number"
-                    name="phoneNumber"
+                    name="phone"
                     autoFocus
                   />
                   <TextField
                     margin="normal"
                     required
-                    fullWidth                
+                    fullWidth          
+                    onChange={(e) => setPassword(e.target.value)}    
+                    value = {password}      
                     name="password"
                     label="Password"
                     type="password"
@@ -88,11 +125,13 @@ export const Signup = () => {
                   <TextField
                     margin="normal"
                     required
-                    fullWidth                
-                    name="rePassword"
-                    label="Re-type Password"
+                    fullWidth   
+                    onChange={(e) => setDL(e.target.value)}  
+                    value = {DL}           
+                    name="DL"
+                    label="DL number"
                     type="password"
-                    id="rePassword"
+                    id="DL"
                   />
                   
                   <Button
@@ -100,13 +139,17 @@ export const Signup = () => {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
-                    LinkComponent = {<AadharVeri/>}
+                    // LinkComponent = {<AadharVeri/>}
+                    disabled={isLoading}
                   >
                     Submit
                   </Button>
+                  {error && <div className='"error'>{error}</div>}
                 </Box>
               </Box>
             </Grid>
           </Grid>
       );
 }
+
+export default Signup

@@ -17,10 +17,8 @@ function App() {
         <Route path="/" element={<SearchPage />}></Route>
         <Route path="bike-catalouge" element={<BikeCatalouge />}></Route>
         <Route path="login" element={<Login />}></Route>
-        <Route path="/signup" element={<Signup />}>
-          <Route path="aadhar-verification" element={<AadharVeri />} />
-        </Route>
-
+        <Route path="signup" element={<Signup />}></Route>
+        <Route path="aadhar-verification" element={<AadharVeri />} />
         <Route path="*" element={<NoMatch />}></Route>
       </Routes>
     </>

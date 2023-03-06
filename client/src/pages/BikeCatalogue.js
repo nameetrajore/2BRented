@@ -121,7 +121,7 @@ export const BikeCatalouge = () => {
             margin="none"
             required
             id="email"
-            label="Pickup Location"
+            label="Drop Date"
             name="email"
             autoComplete="email"
             autoFocus
@@ -135,7 +135,7 @@ export const BikeCatalouge = () => {
             margin="none"
             required
             id="email"
-            label="Pickup Location"
+            label="Pickup Date"
             name="email"
             autoComplete="email"
             autoFocus
@@ -148,7 +148,7 @@ export const BikeCatalouge = () => {
             margin="none"
             required
             id="email"
-            label="Pickup Location"
+            label="Drop Location"
             name="email"
             autoComplete="email"
             autoFocus
@@ -181,15 +181,15 @@ export const BikeCatalouge = () => {
         </Grid>
       </Box>
       <Grid container>
-      <Grid item md={3}> 
+      {/* <Grid item md={3}> 
       <Box sx={{ height: '100%', p: 2}}>
         <Paper  sx={{...paper}} elevation={25}>
           <h1>Filters</h1>
         </Paper>
       </Box>
        
-      </Grid>
-      <Grid item md={9}>
+      </Grid> */}
+      <Grid item md={12}>
         <Grid container>
       {notes.map(note => (
         <Grid item key={note.id} xs={12} md={3} lg = {4}>

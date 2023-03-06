@@ -12,8 +12,8 @@ export default function ImgMediaCard({ note }) {
       <CardMedia
         component="img"
         alt="green iguana"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
+        height="240"
+        image="../resources/loginBackground.png"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -13,21 +14,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { Navigate, useNavigate } from 'react-router-dom'
 
-function Copyright(props) {
-  
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 export const Login = () => {
+
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -38,7 +30,7 @@ export const Login = () => {
   };
   const navigate = useNavigate()
   return (
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" >
         <CssBaseline />
         <Grid
           item
@@ -46,12 +38,13 @@ export const Login = () => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: 'url(loginBackground.)',
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
+            height: '91vh' 
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square >
@@ -77,6 +70,8 @@ export const Login = () => {
                 margin="normal"
                 required
                 fullWidth
+                onChange={(e) => setEmail(e.target.value)} 
+                value = {email}   
                 id="email"
                 label="Email Address"
                 name="email"
@@ -86,7 +81,9 @@ export const Login = () => {
               <TextField
                 margin="normal"
                 required
-                fullWidth                
+                fullWidth   
+                onChange={(e) => setPassword(e.target.value)}      
+                value = {password}       
                 name="password"
                 label="Password"
                 type="password"
@@ -123,3 +120,5 @@ export const Login = () => {
       </Grid>
   );
 }
+
+export default Login
