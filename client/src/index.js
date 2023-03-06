@@ -8,15 +8,18 @@ import App from "./App";
 import { ThemeProvider } from "@emotion/react";
 import { themeOptions } from "./theme/theme";
 import { BrowserRouter } from "react-router-dom";
+import { AuthContext, AuthContextProvider } from './context/AuthContext';
+
 const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
   <BrowserRouter>
-    <ThemeProvider theme={themeOptions}>
-      {/* <Provider store={store}> */}
-        <App/>
-      {/* </Provider> */}
-    </ThemeProvider>
+    
+      <AuthContextProvider>
+        <ThemeProvider theme={themeOptions}>
+          <App/>
+        </ThemeProvider>
+      </AuthContextProvider>
   </BrowserRouter>
 );

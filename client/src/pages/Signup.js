@@ -12,9 +12,10 @@ import Typography from '@mui/material/Typography';
 // import { useNavigate } from 'react-router-dom';
 import { AadharVeri } from './AadharVeri';
 import { useSignup } from '../hooks/useSignup';
+import { useNavigate } from 'react-router';
 
 export const Signup = () => {
-    // const navigate = useNavigate()
+    
 
     const [userName, setName] = useState('')
     const [userAddress, setAddress] = useState('')
@@ -26,12 +27,12 @@ export const Signup = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
+        // const data = new FormData(event.currentTarget);
         console.log(email, password, userAddress, userName, phone, DL);
-        await signup(userName,userAddress, email,phone,password, DL)
+        await signup(userName,userAddress,phone, email,password, DL)
         
       };
-    
+      // const navigate = useNavigate()
       return (
           <Grid container component="main" sx={{ height: '100vh' }}>
             <CssBaseline />
@@ -41,7 +42,7 @@ export const Signup = () => {
               sm={4}
               md={7}
               sx={{
-                backgroundImage: 'url()',
+                
                 backgroundRepeat: 'no-repeat',
                 backgroundColor: (t) =>
                   t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -139,7 +140,6 @@ export const Signup = () => {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
-                    // LinkComponent = {<AadharVeri/>}
                     disabled={isLoading}
                   >
                     Submit

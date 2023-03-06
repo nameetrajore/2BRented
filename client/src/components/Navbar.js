@@ -8,9 +8,16 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useLogout } from "../hooks/useLogout";
 
 export const Navbar = () => {
   const navigate = useNavigate();
+  const { logout } = useLogout()
+
+  const handleClick = () => {
+    logout()
+  }
+
   return (
     <Box sx={{ flexGrow: 1, mt: 0 }}>
       <AppBar position="relative">
@@ -23,13 +30,25 @@ export const Navbar = () => {
           >
             2BRented
           </Typography>
-          <Button
-            color="inherit"
-            onClick={() => navigate("login")}
-            size="large"
-          >
-            Login
-          </Button>
+          <div>
+            <Button
+              color="inherit"
+              onClick={() => navigate("login")}
+              size="large"
+            >
+              Login
+            </Button>
+          </div>
+          <div>
+            <Button
+              color="inherit"
+              onClick={handleClick}
+              size="large"
+            >
+              Logout
+            </Button>
+          </div>
+          
         </Toolbar>
       </AppBar>
     </Box>

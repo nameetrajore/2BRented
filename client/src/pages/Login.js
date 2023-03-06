@@ -13,20 +13,18 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { Navigate, useNavigate } from 'react-router-dom'
-
+import { useLogin } from '../hooks/useLogin';
 
 export const Login = () => {
 
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
+  const {login, error, isLoading} = useLogin()
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    console.log(email, password)
+    await login(email, password)
   };
   const navigate = useNavigate()
   return (
@@ -38,7 +36,7 @@ export const Login = () => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(loginBackground.)',
+            
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],

@@ -13,7 +13,7 @@ export default function ImgMediaCard({ note }) {
         component="img"
         alt="green iguana"
         height="240"
-        image="../resources/loginBackground.png"
+        image=""
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
