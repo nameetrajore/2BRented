@@ -24,13 +24,15 @@ export const useLogin = () => {
         if(response.ok){
             if(customerPassword === jsonRes[0].customerPassword){
                 console.log("you are verified")
+                //updating the auth context
+                dispatch({type: 'LOGIN', payload: jsonRes})
+                setIsLoading(false)
             }
             else{
                 console.log("your password is wrong")
-            }
-            //updating the auth context
-            dispatch({type: 'LOGIN', payload: jsonRes})
-            setIsLoading(false)
+                setIsLoading(false)
+                setError(jsonRes.error)  
+            }  
         }
     }
 
