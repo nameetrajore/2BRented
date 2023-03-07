@@ -3,11 +3,23 @@ const Customer = require("../models/customers");
 const getCustomer = async (req, res) => {
   try {
     const customer = await Customer.find(req.query);
+    console.log(customer, "inside get customer")
     res.json(customer);
   } catch (err) {
     res.status(500).json({ message: err.message });
   } 
 }
+
+const getCustomerByEmail = async (req, res) => {
+  try {
+    const customer = await Customer.find({customerEmail: req.params.email});
+    // console.log(req.params, "inside get customer by email")
+    res.json(customer);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  } 
+}
+
 const postCustomer = async (req, res) => {
   const customer = new Customer({
     customerName: req.body.customerName,
@@ -38,6 +50,7 @@ const deleteCustomer = (req, res) => {
     getCustomer,
     postCustomer,
     putCustomer,
-    deleteCustomer
+    deleteCustomer,
+    getCustomerByEmail
   };
   

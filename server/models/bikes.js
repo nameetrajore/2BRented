@@ -12,6 +12,10 @@ const bikeSchema = new mongoose.Schema({
     type: Date,
     required: false,
   },
+  location: {    //change
+    type: String,
+    required: true
+  },
   modelCompany: {
     type: String,
     required: true,

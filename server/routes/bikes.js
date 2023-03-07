@@ -10,7 +10,8 @@ const postBike = async (req, res) => {
     bookedDates : req.body.bookedDates,
     dailyPrice : req.body.dailyPrice,
     mileage : req.body.mileage,
-    bikePhoto : req.body.bikePhoto
+    bikePhoto : req.body.bikePhoto,
+    location : req.body.location
   });
 
   try {
@@ -31,6 +32,18 @@ const getBike = async (req, res) => {
   }
 };
 
+const getBikeByLocation = async (req, res) => {
+  try {
+    console.log(req.params)
+    const bikes = await Bike.find(req.params);
+    console.log("Inside get bikes by location")
+    
+    res.json(bikes);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 const putBike = (req, res) => {
   res.send({ type: "PUT", id: req.params.id });
 };
@@ -44,4 +57,5 @@ module.exports = {
   postBike,
   putBike,
   deleteBike,
+  getBikeByLocation,
 };
