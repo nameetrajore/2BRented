@@ -1,12 +1,11 @@
-import { useAuthContext } from "./useAuthContext"
+import { authActions } from "../app/store";
+import { useDispatch } from "react-redux";
 
 export const useLogout = () => {
-
-    const { dispatch } = useAuthContext()
-
-    const logout = () => {
-        //dispatch logout action
-        dispatch({type: 'LOGOUT'})
-    }
-    return {logout}
-}
+  const dispatch = useDispatch();
+  const logout = () => {
+    //dispatch logout action
+    dispatch(authActions.setUser(null));
+  };
+  return { logout };
+};

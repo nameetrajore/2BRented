@@ -18,7 +18,7 @@ import loginBackground from "../resources/loginBackground.png";
 import { useLogin } from "../hooks/useLogin";
 import { Navbar } from "../components/Navbar";
 
-export const Login = () => {
+export const Home = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const { login, error, isLoading } = useLogin();
@@ -132,45 +132,48 @@ export const Login = () => {
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                color="secondary"
-                error={error}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                color="secondary"
-                autoComplete="current-password"
-                error={error}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
                 size="large"
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                disabled={isLoading}
+              >
+                Login
+              </Button>
+              <Button
+                type="submit"
+                fullWidth
+                size="large"
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Login
+              </Button>
+              <Button
+                type="submit"
+                fullWidth
+                size="large"
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Login
+              </Button>
+              <Button
+                type="submit"
+                fullWidth
+                size="large"
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Login
+              </Button>
+              <Button
+                type="submit"
+                fullWidth
+                size="large"
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
               >
                 Login
               </Button>
@@ -198,4 +201,4 @@ export const Login = () => {
   );
 };
 
-export default Login;
+export default Home;
