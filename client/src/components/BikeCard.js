@@ -63,7 +63,7 @@ const ImgMediaCard = (props) => {
           </IconButton>
           <IconButton
             onClick={() => {
-              navigate("/booking-summary");
+              navigate("/booking-summary/1");
             }}
           >
             <ArrowForward />
