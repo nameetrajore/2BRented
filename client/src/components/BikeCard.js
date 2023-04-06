@@ -1,6 +1,7 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
 import { useNavigate } from "react-router-dom";
+import { pink } from "@mui/material/colors";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -43,7 +44,7 @@ const ImgMediaCard = (props) => {
           width="200"
           image={dummyImg}
         />
-        <CardContent>
+        <CardContent sx={{ pb: 0 }}>
           <Typography gutterBottom variant="h5" component="div">
             {props.title ? props.title : "Lorem Ipsum"}
           </Typography>
@@ -55,11 +56,21 @@ const ImgMediaCard = (props) => {
             {props.year ? props.year : "Year"}
           </Typography>
           <Rating value={props.rating} readOnly size="small" precision={0.1} />
+          <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
+            ₹400 / day
+          </Typography>
+          <Typography variant="h6" sx={{ color: "#6C63FF" }}>
+            ₹1200 total
+          </Typography>
         </CardContent>
         <CardActions>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton onClick={(prevState) => props.setIsFavourite(!prevState)}>
-            {props.isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            {props.isFavourite ? (
+              <FavoriteIcon sx={{ color: pink[500] }} />
+            ) : (
+              <FavoriteBorderIcon />
+            )}
           </IconButton>
           <IconButton
             onClick={() => {

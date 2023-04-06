@@ -13,7 +13,6 @@ import SearchBike from "../components/bikeCatalogue/SearchBikeComponent";
 
 export const BikeCatalouge = () => {
   const navigate = useNavigate();
-  const [notes, setNotes] = useState([]);
   // const [searchBike, setSearchBike] = useState("");
   // const [priceRange, setPriceRange] = useState([800, 1200]);
   // const [bikeType, setBikeType] = useState("");
@@ -23,11 +22,11 @@ export const BikeCatalouge = () => {
   // const [bikeAge, setBikeAge] = useState(2);
   // const [fuelType, setFuelType] = useState("all");
 
-  useEffect(() => {
-    fetch("http://localhost:8000/notes")
-      .then((res) => res.json())
-      .then((data) => setNotes(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:4000/api/bikes")
+  //     .then((res) => res.json())
+  //     .then((data) => setNotes(data));
+  // }, []);
 
   // const classes = useStyles();
   return (

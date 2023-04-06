@@ -8,8 +8,11 @@ import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import LaptopMacIcon from "@mui/icons-material/LaptopMac";
+import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
 import HotelIcon from "@mui/icons-material/Hotel";
+import PinDropIcon from "@mui/icons-material/PinDrop";
 import RepeatIcon from "@mui/icons-material/Repeat";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 import Typography from "@mui/material/Typography";
 
 const BookingDetails = () => {
@@ -26,8 +29,8 @@ const BookingDetails = () => {
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
-          <TimelineDot>
-            <FastfoodIcon />
+          <TimelineDot color="primary">
+            <PinDropIcon />
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
@@ -35,22 +38,22 @@ const BookingDetails = () => {
           <Typography variant="h6" component="span">
             Pickup
           </Typography>
-          <Typography>*Insert text here*</Typography>
+          <Typography>Address Link</Typography>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
         <TimelineSeparator>
           <TimelineConnector />
-          <TimelineDot color="primary" variant="outlined">
-            <HotelIcon />
+          <TimelineDot>
+            <TwoWheelerIcon />
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent sx={{ py: "12px", px: 2 }}>
           <Typography variant="h6" component="span">
-            Sleep
+            Ride
           </Typography>
-          <Typography>Because you need rest</Typography>
+          <Typography>To your heart's content</Typography>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -59,35 +62,20 @@ const BookingDetails = () => {
           variant="body2"
           color="text.secondary"
         >
-          10:00 am
+          13th January, 10:00 am
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
           <TimelineDot color="primary">
-            <LaptopMacIcon />
+            <StorefrontIcon />
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent sx={{ py: "12px", px: 2 }}>
           <Typography variant="h6" component="span">
-            Code
+            Drop
           </Typography>
-          <Typography>Because it&apos;s awesome!</Typography>
-        </TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-          <TimelineDot color="secondary">
-            <RepeatIcon />
-          </TimelineDot>
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent sx={{ py: "12px", px: 2 }}>
-          <Typography variant="h6" component="span">
-            Repeat
-          </Typography>
-          <Typography>Because this is the life you love!</Typography>
+          <Typography>Location Link</Typography>
         </TimelineContent>
       </TimelineItem>
     </Timeline>

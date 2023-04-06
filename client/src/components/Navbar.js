@@ -34,8 +34,8 @@ export const Navbar = () => {
     setAnchorEl(null);
   };
   const navigate = useNavigate();
-  // const user = useSelector((state) => state.user);
-  const user = "nameet rajore";
+  const user = useSelector((state) => state.auth.user);
+  console.log(user, "inside nav");
   // console.log(user[0].customerName, "this is the logged in user")
   const { logout } = useLogout();
   const handleAvatarClick = (event) => {
@@ -45,6 +45,7 @@ export const Navbar = () => {
   const handleLogout = () => {
     logout();
     setAnchorEl(null);
+    localStorage.clear();
   };
 
   return (
@@ -76,66 +77,60 @@ export const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
 
-          {user && (
-            <Box>
-              <Button
-                variant="text"
-                size="large"
-                sx={{ color: "white", mr: 2 }}
-              >
-                Home
-              </Button>
+          <Box>
+            <Button variant="text" size="large" sx={{ color: "white", mr: 2 }}>
+              Home
+            </Button>
 
-              <Button
-                variant="text"
-                size="large"
-                sx={{ color: "white", mr: 2 }}
-              >
-                Support
-              </Button>
-              <IconButton
-                sx={{
-                  mr: 2,
-                }}
-              >
-                <FavoriteBorder
-                  fontSize="medium"
+            <Button variant="text" size="large" sx={{ color: "white", mr: 2 }}>
+              Support
+            </Button>
+            {user && (
+              <>
+                <IconButton
                   sx={{
-                    color: "white",
+                    mr: 2,
                   }}
-                />
-              </IconButton>
-              <Button
-                id="basic-button"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleAvatarClick}
-              >
-                <Avatar {...stringAvatar(user)} />{" "}
-              </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                sx={{
-                  mx: -1,
-                }}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              </Menu>
-            </Box>
-          )}
+                >
+                  <FavoriteBorder
+                    fontSize="medium"
+                    sx={{
+                      color: "white",
+                    }}
+                  />
+                </IconButton>
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleAvatarClick}
+                >
+                  <Avatar {...stringAvatar(user)} />{" "}
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  sx={{
+                    mx: -1,
+                  }}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </>
+            )}
+          </Box>
           {!user && (
             <div>
               <Button
-                onClick={() => navigate("login")}
+                onClick={() => navigate("/login")}
                 variant="text"
                 size="large"
                 sx={{

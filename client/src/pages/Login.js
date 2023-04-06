@@ -184,7 +184,7 @@ export const Login = () => {
                   <Link
                     variant="body2"
                     color="secondary"
-                    onClick={() => navigate("/signup")}
+                    onClick={() => navigate("/sign-up")}
                   >
                     {"Don't have an account? Sign Up"}
                   </Link>

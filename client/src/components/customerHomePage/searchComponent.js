@@ -47,7 +47,7 @@ const SearchComponent = () => {
             }}
           >
             <Typography variant="h3" fontWeight={500}>
-              Search for your bike
+              Search for your Bike
             </Typography>
           </Box>
         </Grid>
@@ -128,8 +128,9 @@ const SearchComponent = () => {
                 onClick={() => navigate("bike-catalogue")}
                 size="large"
                 sx={{ p: 1.5 }}
+                endIcon={<ArrowForwardIcon />}
               >
-                <ArrowForwardIcon />
+                Find Bike
               </Button>
             </Box>
           </Grid>

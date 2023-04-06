@@ -11,13 +11,13 @@ export const useLogin = () => {
   const login = async (customerEmail, customerPassword) => {
     setIsLoading(true);
     setError(null);
-    console.log(customerEmail, "email");
+    // console.log(customerEmail, "email");
     const response = await fetch(
       `http://localhost:4000/api/customers?customerEmail=${customerEmail}`
     );
     // console.log("hi");
     const jsonRes = await response.json();
-    // console.log(jsonRes, "this is it");
+    console.log(jsonRes, "this is it");
 
     if (!response.ok) {
       // console.log("incorrect email");
@@ -29,7 +29,8 @@ export const useLogin = () => {
         // console.log("you are verified");
         //updating the auth context
         // dispatch({ type: "LOGIN", payload: jsonRes });
-        dispatch(authActions.setUser(jsonRes));
+        dispatch(authActions.setUser(jsonRes[0].customerName));
+        localStorage.setItem("user", jsonRes[0].customerName);
         setIsLoading(false);
       } else {
         // console.log("your password is wrong");
