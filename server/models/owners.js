@@ -1,15 +1,13 @@
 const mongoose = require("mongoose");
+const Location = require("./locations");
+
 const ownerSchema = new mongoose.Schema({
-  // ownerId: {
-  //   type: String,
-  //   required: true,
-  // },
   ownerName: {
     type: String,
     required: true,
   },
   ownerAddress: {
-    type: String,
+    type: Location.schema,
     required: true,
   },
   ownerPhoneNumber: {
@@ -24,6 +22,12 @@ const ownerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  bikes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Bike",
+    },
+  ],
 });
 
-module.exports = mongoose.model("Owners", ownerSchema);
+module.exports = mongoose.model("Owner", ownerSchema);

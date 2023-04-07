@@ -1,38 +1,56 @@
 const mongoose = require("mongoose");
+const Location = require("./locations");
+
 const bikeSchema = new mongoose.Schema({
-  // bikeId: {
-  //   type: String,
-  //   required: true,
-  // },
-  modelName: {
+  brand: {
     type: String,
     required: true,
   },
-  modelYear: {
+  model: {
+    type: String,
+    required: true,
+  },
+  year: {
     type: Date,
-    required: false,
-  },
-  location: {    //change
-    type: String,
-    required: true
-  },
-  modelCompany: {
-    type: String,
     required: true,
   },
-  modelCategory: {
+  location: {
+    type: Location.schema,
+    required: true,
+  },
+  type: {
     type: String,
+    enum: ["road", "mountain", "city"],
+    required: true,
+  },
+  fuelType: {
+    type: String,
+    enum: ["petrol", "electric"],
     required: true,
   },
   registrationNumber: {
     type: String,
     required: true,
   },
-  bookedDates: {
-    type: [Date],
-    required: false,
+  bookings: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Booking",
+    },
+  ],
+  dailyRate: {
+    type: Number,
+    required: true,
   },
-  dailyPrice: {
+  kmsDriven: {
+    type: Number,
+    required: true,
+  },
+  bikeAge: {
+    type: Number,
+    required: true,
+  },
+  rating: {
     type: Number,
     required: true,
   },
@@ -40,10 +58,14 @@ const bikeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  bikePhoto: {
-    type: String,
-    required: true,
+  imageUrl: {
+    type: [String],
+    required: false,
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Owner",
   },
 });
 
-module.exports = mongoose.model("Bikes", bikeSchema);
+module.exports = mongoose.model("Bike", bikeSchema);

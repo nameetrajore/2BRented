@@ -1,15 +1,12 @@
 const mongoose = require("mongoose");
+const Location = require("./locations");
 const customerSchema = new mongoose.Schema({
-  // customerId: {
-  //   type: String,
-  //   required: true,
-  // },
   customerName: {
     type: String,
     required: true,
   },
   customerAddress: {
-    type: String,
+    type: Location.schema,
     required: true,
   },
   customerPhoneNumber: {
@@ -19,7 +16,7 @@ const customerSchema = new mongoose.Schema({
   customerEmail: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   customerPassword: {
     type: String,
@@ -29,6 +26,16 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  bookings: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Booking",
+    },
+  ],
+  rating: {
+    type: Number,
+    required: true,
+  },
 });
 
-module.exports = mongoose.model("Customers", customerSchema);
+module.exports = mongoose.model("Customer", customerSchema);

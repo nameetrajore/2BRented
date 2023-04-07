@@ -4,14 +4,14 @@ const postBike = async (req, res) => {
   const bike = new Bike({
     modelName: req.body.modelName,
     modelYear: req.body.modelYear,
-    modelCompany : req.body.modelCompany,
-    modelCategory : req.body.modelCategory,
-    registrationNumber : req.body.registrationNumber,
-    bookedDates : req.body.bookedDates,
-    dailyPrice : req.body.dailyPrice,
-    mileage : req.body.mileage,
-    bikePhoto : req.body.bikePhoto,
-    location : req.body.location
+    modelCompany: req.body.modelCompany,
+    modelCategory: req.body.modelCategory,
+    registrationNumber: req.body.registrationNumber,
+    bookedDates: req.body.bookedDates,
+    dailyPrice: req.body.dailyPrice,
+    mileage: req.body.mileage,
+    bikePhoto: req.body.bikePhoto,
+    location: req.body.location,
   });
 
   try {
@@ -20,24 +20,16 @@ const postBike = async (req, res) => {
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
-
 };
 
 const getBike = async (req, res) => {
   try {
-    const bikes = await Bike.find(req.query);
-    res.json(bikes);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-const getBikeByLocation = async (req, res) => {
-  try {
-    console.log(req.params)
-    const bikes = await Bike.find(req.params);
-    console.log("Inside get bikes by location")
-    
+    const bikes = await Bike.find({
+      dailyPrice: {
+        $gte: req.query.priceRange[0],
+        $lte: req.query.priceRange[1],
+      },
+    });
     res.json(bikes);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -57,5 +49,4 @@ module.exports = {
   postBike,
   putBike,
   deleteBike,
-  getBikeByLocation,
 };

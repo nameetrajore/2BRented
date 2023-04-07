@@ -1,25 +1,26 @@
 const mongoose = require("mongoose");
-const adminSchema = new mongoose.Schema({
-  // customerId: {
-  //   type: String,
-  //   required: true,
-  // },
-  adminName: {
+
+const managerSchema = new mongoose.Schema({
+  managerName: {
     type: String,
     required: true,
   },
-  adminPhoneNumber: {
+  managerDesignation: {
+    type: String,
+    required: true,
+  },
+  managerPhoneNumber: {
     type: Number,
     required: true,
   },
-  adminEmail: {
+  managerEmail: {
     type: String,
     required: true,
   },
-  adminPassword: {
+  managerPassword: {
     type: String,
     required: true,
   },
 });
 
-module.exports = mongoose.model("Admins", adminSchema);
+module.exports = mongoose.model("Manager", managerSchema);

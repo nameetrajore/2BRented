@@ -1,14 +1,13 @@
 const express = require("express");
 
 const router = express.Router();
-const bikes  = require("./bikes");
+const bikes = require("./bikes");
 const owners = require("./owners");
 const customers = require("./customers");
 const admins = require("./admins");
 
 // Bike Routes
 router.get("/bikes", bikes.getBike);
-router.get("/bikes/location/:location", bikes.getBikeByLocation)  //change
 router.post("/bikes", bikes.postBike);
 router.put("/bikes/:id", bikes.putBike);
 router.delete("/bikes/:id", bikes.deleteBike);
@@ -21,7 +20,6 @@ router.delete("/owners/:id", owners.deleteOwner);
 
 // Customer Routes
 router.get("/customers", customers.getCustomer);
-router.get("/customers/email/:email", customers.getCustomerByEmail);   //change
 router.post("/customers", customers.postCustomer);
 router.put("/customers/:id", customers.putCustomer);
 router.delete("/customers/:id", customers.deleteCustomer);
