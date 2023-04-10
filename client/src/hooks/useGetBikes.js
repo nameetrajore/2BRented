@@ -7,7 +7,7 @@ export const useGetBike = () => {
   const dispatch = useDispatch();
 
   const getBikes = async (filter, setBikes) => {
-    console.log(filter);
+    // console.log(filter);
     setIsLoading(true);
     let query = `bikes?pickupLocation=${filter.pickupLocation}&dropLocation=${filter.dropLocation}&pickupDate=${filter.pickupDate}&dropDate=${filter.dropDate}`;
     if (filter.priceRange)
@@ -24,12 +24,12 @@ export const useGetBike = () => {
 
     const response = await fetch(`http://localhost:4000/api/` + query);
 
-    console.log(`http://localhost:4000/api/` + query);
+    // console.log(`http://localhost:4000/api/` + query);
 
     const jsonRes = await await response.json();
 
     if (response.ok) {
-      console.log(jsonRes);
+      // console.log(jsonRes);
       setBikes(jsonRes);
     }
     setIsLoading(false);

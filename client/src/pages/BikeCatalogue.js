@@ -18,8 +18,6 @@ import LoadingSkeleton from "../components/bikeCatalogue/LoadingSkeletonComponen
 export const BikeCatalouge = () => {
   const navigate = useNavigate();
   const [applyFilter, setApplyFilter] = useState(true);
-  const filter = useSelector((state) => state.filter);
-  const booking = useSelector((state) => state.booking);
   const [bikes, setBikes] = useState([]);
 
   const { getBikes, isLoading } = useGetBike();

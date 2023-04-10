@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect, useRef } from "react";
 import Card from "@mui/material/Card";
 import { useNavigate } from "react-router-dom";
 import { pink } from "@mui/material/colors";
@@ -13,6 +14,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Box, IconButton, Rating, Tooltip } from "@mui/material";
 import ArrowForward from "@mui/icons-material/ArrowForward";
 import { useSelector } from "react-redux";
+import { useFavourite } from "../hooks/useFavourite";
 
 const bull = (
   <Box
@@ -24,10 +26,35 @@ const bull = (
 );
 
 const BikeCard = (props) => {
+  const bike = props.bike;
+  const { storeIsFavourite } = useFavourite(bike.isFavourite);
+  const [isFavourite, setIsFavourite] = useState(bike.isFavourite);
   const dropDate = useSelector((state) => state.booking.dropDate);
   const pickupDate = useSelector((state) => state.booking.pickupDate);
+  const pickupLocation = useSelector((state) => state.booking.pickupLocation);
+  const dropLocation = useSelector((state) => state.booking.dropLocation);
   const navigate = useNavigate();
-  const bike = props.bike;
+
+  const handleIsFavourite = () => {
+    setIsFavourite((prevState) => !prevState);
+  };
+
+  // to make sure that this useEffect executes everytime except the first render
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      const timer = setTimeout(() => {
+        storeIsFavourite(bike._id, isFavourite);
+      }, 250);
+
+      // props.setApplyFilter(false);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+    isFirstRender.current = false;
+  }, [isFavourite]);
+
   const numberOfDays =
     Math.floor(new Date(dropDate).getTime() - new Date(pickupDate).getTime()) /
     86400000;
@@ -47,10 +74,10 @@ const BikeCard = (props) => {
       >
         <CardMedia
           component="img"
-          alt="green iguana"
+          alt={bike.brand + " " + bike.model}
           height="200"
           width="200"
-          image={dummyImg}
+          image={bike.imageUrl[0]}
         />
         <CardContent sx={{ pb: 0 }}>
           <Tooltip title={bike.brand + " " + bike.model} placement="top">
@@ -75,8 +102,8 @@ const BikeCard = (props) => {
         </CardContent>
         <CardActions>
           <Box sx={{ flexGrow: 1 }} />
-          <IconButton onClick={(prevState) => props.setIsFavourite(!prevState)}>
-            {bike.isFavourite ? (
+          <IconButton onClick={handleIsFavourite}>
+            {isFavourite ? (
               <FavoriteIcon sx={{ color: pink[500] }} />
             ) : (
               <FavoriteBorderIcon />
@@ -84,7 +111,9 @@ const BikeCard = (props) => {
           </IconButton>
           <IconButton
             onClick={() => {
-              navigate("/booking-summary/1");
+              navigate(
+                `/booking-summary/${bike._id}?pickupLocation=${pickupLocation}&dropLocation=${dropLocation}&pickupDate=${pickupDate}&dropDate=${dropDate}`
+              );
             }}
           >
             <ArrowForward />

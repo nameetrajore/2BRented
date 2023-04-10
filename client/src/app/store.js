@@ -23,7 +23,7 @@ const initialFilterState = {
   rating: 0,
   kmsDriven: 400000,
   bikeAge: 2,
-  fuelType: "",
+  fuelType: "all",
 };
 
 const authSlice = createSlice({
