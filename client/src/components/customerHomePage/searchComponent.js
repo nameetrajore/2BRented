@@ -94,6 +94,7 @@ const SearchComponent = () => {
               onChange={(event) => {
                 dispatch(bookingActions.setPickupDate(event.target.value));
               }}
+              type="date"
               label="Pickup Date"
               name="email"
               /* type="date" */
@@ -108,6 +109,8 @@ const SearchComponent = () => {
               id="email"
               label="Drop Date"
               value={dropDate}
+              type="date"
+              defaultValue={new Date()}
               onChange={(event) => {
                 dispatch(bookingActions.setDropDate(event.target.value));
               }}

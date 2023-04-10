@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -83,12 +83,14 @@ const SearchBooking = () => {
               required
               id="pickup-date"
               label="Pickup Date"
+              type="date"
               value={pickupDate}
               onChange={(event) => {
                 dispatch(bookingActions.setPickupDate(event.target.value));
               }}
               name="pickup-date"
               autoComplete="date"
+              sx={{ width: 230 }}
               variant="filled"
             />
           </Grid>
@@ -99,6 +101,7 @@ const SearchBooking = () => {
               required
               id="drop-date"
               label="Drop Date"
+              type="date"
               value={dropDate}
               onChange={(event) => {
                 dispatch(bookingActions.setDropDate(event.target.value));
@@ -106,6 +109,7 @@ const SearchBooking = () => {
               name="drop-date"
               autoComplete="date"
               variant="filled"
+              sx={{ width: 230 }}
             />
           </Grid>
           <Grid item>

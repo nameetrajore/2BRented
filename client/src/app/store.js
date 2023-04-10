@@ -2,11 +2,16 @@ import { createSlice, configureStore, combineReducers } from "@reduxjs/toolkit";
 
 const initialAuthState = {
   user: "",
+  _id: -1,
 };
 
+const today = new Date();
+let tomorrow = new Date();
+tomorrow.setDate(today.getDate() + 1);
+
 const initialBookingState = {
-  dropDate: "",
-  pickupDate: "",
+  dropDate: tomorrow.toISOString().substring(0, 10),
+  pickupDate: today.toISOString().substring(0, 10),
   dropLocation: "",
   pickupLocation: "",
 };
@@ -18,7 +23,7 @@ const initialFilterState = {
   rating: 0,
   kmsDriven: 400000,
   bikeAge: 2,
-  fuelType: "all",
+  fuelType: "",
 };
 
 const authSlice = createSlice({
@@ -27,6 +32,9 @@ const authSlice = createSlice({
   reducers: {
     setUser(state, action) {
       state.user = action.payload;
+    },
+    setId(state, action) {
+      state._id = action.payload;
     },
   },
 });
@@ -75,6 +83,7 @@ const filterSlice = createSlice({
     setFuelType(state, action) {
       state.fuelType = action.payload;
     },
+    reset: () => initialFilterState,
   },
 });
 

@@ -138,20 +138,25 @@ const BookingSummary = () => {
                 <Grid
                   container
                   p={3}
-                  sx={{ backgroundColor: "#EFEFEF", borderRadius: 2 }}
+                  sx={{
+                    backgroundColor: "#EFEFEF",
+                    borderRadius: 2,
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                  }}
                 >
                   <Grid item md={12}>
                     <Typography variant="h4" fontWeight={500}>
                       Cost Breakdown
                     </Typography>
                   </Grid>
-                  <Grid item mt={3} md={12} />
-                  <Grid ml={4} item sx={{ flexGrow: 1 }}>
+                  <Grid item md={10} sx={{ flexGrow: 1 }} pl={2}>
                     <Typography variant="h6" fontWeight={500}>
                       Rental Cost
                     </Typography>
                   </Grid>
-                  <Grid item mr={4}>
+                  <Grid item md={2}>
                     <Typography variant="h6" fontWeight={500}>
                       ₹1200
                     </Typography>
@@ -172,16 +177,16 @@ const BookingSummary = () => {
                     </Typography>
                   </Grid>
                   <Grid item mt={3} md={12} />
-                  <Grid ml={4} item sx={{ flexGrow: 1 }}>
-                    <Typography variant="h6" fontWeight={500}>
-                      Rental Cost
-                    </Typography>
-                  </Grid>
-                  <Grid item mr={4}>
-                    <Typography variant="h6" fontWeight={500}>
-                      ₹1200
-                    </Typography>
-                  </Grid>
+                  {/* <Grid ml={4} item sx={{ flexGrow: 1 }}> */}
+                  {/*   <Typography variant="h6" fontWeight={500}> */}
+                  {/*     Rental Cost */}
+                  {/*   </Typography> */}
+                  {/* </Grid> */}
+                  {/* <Grid item mr={4}> */}
+                  {/*   <Typography variant="h6" fontWeight={500}> */}
+                  {/*     ₹1200 */}
+                  {/*   </Typography> */}
+                  {/* </Grid> */}
                 </Grid>
               </Grid>
             </Grid>
@@ -198,16 +203,16 @@ const BookingSummary = () => {
                     </Typography>
                   </Grid>
                   <Grid item mt={3} md={12} />
-                  <Grid ml={4} item sx={{ flexGrow: 1 }}>
-                    <Typography variant="h6" fontWeight={500}>
-                      Rental Cost
-                    </Typography>
-                  </Grid>
-                  <Grid item mr={4}>
-                    <Typography variant="h6" fontWeight={500}>
-                      ₹1200
-                    </Typography>
-                  </Grid>
+                  {/* <Grid ml={4} item sx={{ flexGrow: 1 }}> */}
+                  {/*   <Typography variant="h6" fontWeight={500}> */}
+                  {/*     Rental Cost */}
+                  {/*   </Typography> */}
+                  {/* </Grid> */}
+                  {/* <Grid item mr={4}> */}
+                  {/*   <Typography variant="h6" fontWeight={500}> */}
+                  {/*     ₹1200 */}
+                  {/*   </Typography> */}
+                  {/* </Grid> */}
                 </Grid>
               </Grid>
             </Grid>

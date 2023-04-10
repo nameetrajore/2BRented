@@ -13,10 +13,13 @@ import { authActions } from "./app/store";
 function App() {
   // to persist login status on reload or browser shut down
   const dispatch = useDispatch();
+
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
-    if (loggedInUser) {
+    const loggedInId = localStorage.getItem("_id");
+    if (loggedInUser && loggedInId) {
       dispatch(authActions.setUser(loggedInUser));
+      dispatch(authActions.setId(loggedInId));
     }
   }, []);
 

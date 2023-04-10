@@ -10,8 +10,9 @@ import Typography from "@mui/material/Typography";
 import dummyImg from "../resources/customerHomePage1.svg";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Box, IconButton, Rating } from "@mui/material";
+import { Box, IconButton, Rating, Tooltip } from "@mui/material";
 import ArrowForward from "@mui/icons-material/ArrowForward";
+import { useSelector } from "react-redux";
 
 const bull = (
   <Box
@@ -22,8 +23,15 @@ const bull = (
   </Box>
 );
 
-const ImgMediaCard = (props) => {
+const BikeCard = (props) => {
+  const dropDate = useSelector((state) => state.booking.dropDate);
+  const pickupDate = useSelector((state) => state.booking.pickupDate);
   const navigate = useNavigate();
+  const bike = props.bike;
+  const numberOfDays =
+    Math.floor(new Date(dropDate).getTime() - new Date(pickupDate).getTime()) /
+    86400000;
+
   return (
     <Box
       sx={{
@@ -45,28 +53,30 @@ const ImgMediaCard = (props) => {
           image={dummyImg}
         />
         <CardContent sx={{ pb: 0 }}>
-          <Typography gutterBottom variant="h5" component="div">
-            {props.title ? props.title : "Lorem Ipsum"}
-          </Typography>
+          <Tooltip title={bike.brand + " " + bike.model} placement="top">
+            <Typography gutterBottom variant="h6" noWrap component="div">
+              {bike.brand + " " + bike.model}
+            </Typography>
+          </Tooltip>
           <Typography variant="body2" color="text.secondary">
-            {props.fuelType ? props.fuelType : "Fuel Type"}
+            {bike.fuelType}
             {bull}
-            {props.transmission ? props.transmission : "Transmission"}
+            {bike.transmission}
             {bull}
-            {props.year ? props.year : "Year"}
+            {bike.year.substring(0, 4)}
           </Typography>
-          <Rating value={props.rating} readOnly size="small" precision={0.1} />
+          <Rating value={bike.rating} readOnly size="small" precision={0.1} />
           <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-            ₹400 / day
+            ₹{bike.dailyRate} / day
           </Typography>
           <Typography variant="h6" sx={{ color: "#6C63FF" }}>
-            ₹1200 total
+            ₹{bike.dailyRate * numberOfDays} total
           </Typography>
         </CardContent>
         <CardActions>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton onClick={(prevState) => props.setIsFavourite(!prevState)}>
-            {props.isFavourite ? (
+            {bike.isFavourite ? (
               <FavoriteIcon sx={{ color: pink[500] }} />
             ) : (
               <FavoriteBorderIcon />
@@ -85,4 +95,4 @@ const ImgMediaCard = (props) => {
   );
 };
 
-export default ImgMediaCard;
+export default BikeCard;

@@ -10,25 +10,38 @@ import Filter from "../components/bikeCatalogue/FilterComponent";
 import { Navbar } from "../components/Navbar";
 import SearchBooking from "../components/bikeCatalogue/SearchBookingComponent";
 import SearchBike from "../components/bikeCatalogue/SearchBikeComponent";
+import { useGetBike } from "../hooks/useGetBikes";
+import { useDispatch, useSelector } from "react-redux";
+import { CircularProgress, Typography } from "@mui/material";
+import LoadingSkeleton from "../components/bikeCatalogue/LoadingSkeletonComponent";
 
 export const BikeCatalouge = () => {
   const navigate = useNavigate();
-  // const [searchBike, setSearchBike] = useState("");
-  // const [priceRange, setPriceRange] = useState([800, 1200]);
-  // const [bikeType, setBikeType] = useState("");
-  // const [bikeCompany, setBikeCompany] = useState("");
-  // const [rating, setRating] = useState(0);
-  // const [kmsDriven, setKmsDriven] = useState(400000);
-  // const [bikeAge, setBikeAge] = useState(2);
-  // const [fuelType, setFuelType] = useState("all");
+  const [applyFilter, setApplyFilter] = useState(true);
+  const filter = useSelector((state) => state.filter);
+  const booking = useSelector((state) => state.booking);
+  const [bikes, setBikes] = useState([]);
 
-  // useEffect(() => {
-  //   fetch("http://localhost:4000/api/bikes")
-  //     .then((res) => res.json())
-  //     .then((data) => setNotes(data));
-  // }, []);
+  const { getBikes, isLoading } = useGetBike();
 
-  // const classes = useStyles();
+  const NoBikesFound = () => {
+    return (
+      <Grid item md={7} xs={5} sm={6}>
+        <Grid
+          container
+          spacing={3}
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+            height: "50vh",
+          }}
+        >
+          <Typography variant="h4"> No bikes found (T⌓T)</Typography>
+        </Grid>
+      </Grid>
+    );
+  };
+
   return (
     <div>
       <Navbar />
@@ -47,53 +60,28 @@ export const BikeCatalouge = () => {
         py={3}
       >
         <Grid item md={2} sm={3} xs={4}>
-          <Filter />
+          <Filter
+            applyFilter={applyFilter}
+            setApplyFilter={setApplyFilter}
+            setBikes={setBikes}
+            getBikes={getBikes}
+          />
         </Grid>
-        {/* <Grid item md={12}> */}
-        {/*   <Grid container> */}
-        {/*     {/\* {notes.map((note) => ( *\/} */}
-        {/*     <Grid item key={note.id} xs={12} md={3} lg={4}> */}
-        {/*       <BikeCard note={note} /> */}
-        {/*     </Grid> */}
-        {/*   </Grid> */}
-        {/* </Grid> */}
-        <Grid item md={7} xs={5} sm={6}>
-          <Grid container spacing={3}>
-            <Grid item md={3} sm={4} xs={5}>
-              <BikeCard note={" "} />
-            </Grid>
-            <Grid item md={3} sm={4} xs={5}>
-              <BikeCard note={" "} />
-            </Grid>
-            <Grid item md={3} sm={4} xs={5}>
-              <BikeCard note={" "} />
-            </Grid>
-            <Grid item md={3} sm={4} xs={5}>
-              <BikeCard note={" "} />
-            </Grid>
-            <Grid item md={3} sm={4} xs={5}>
-              <BikeCard note={" "} />
-            </Grid>
-            <Grid item md={3} sm={4} xs={5}>
-              <BikeCard note={" "} />
-            </Grid>
-            <Grid item md={3} sm={4} xs={5}>
-              <BikeCard note={" "} />
-            </Grid>
-            <Grid item md={3} sm={4} xs={5}>
-              <BikeCard note={" "} />
-            </Grid>
-            <Grid item md={3} sm={4} xs={5}>
-              <BikeCard note={" "} />
-            </Grid>
-            <Grid item md={3} sm={4} xs={5}>
-              <BikeCard note={" "} />
-            </Grid>
-            <Grid item md={3} sm={4} xs={5}>
-              <BikeCard note={" "} />
+        {isLoading ? (
+          <LoadingSkeleton />
+        ) : bikes.length ? (
+          <Grid item md={7} xs={5} sm={6}>
+            <Grid container spacing={3}>
+              {bikes.map((bike) => (
+                <Grid item key={bike._id} md={3} lg={3}>
+                  <BikeCard bike={bike} />
+                </Grid>
+              ))}
             </Grid>
           </Grid>
-        </Grid>
+        ) : (
+          <NoBikesFound />
+        )}
       </Grid>
     </div>
   );
