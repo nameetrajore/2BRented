@@ -5,10 +5,6 @@ const bookingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Bike",
   },
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Owner",
-  },
   startDate: {
     type: Date,
     required: true,
@@ -20,6 +16,10 @@ const bookingSchema = new mongoose.Schema({
   totalAmount: {
     type: Number,
     required: true,
+  },
+  customer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Customer",
   },
   paymentId: {
     type: mongoose.Schema.Types.ObjectId,

@@ -10,12 +10,20 @@ const locationSchema = new mongoose.Schema({
     required: true,
   },
   pincode: {
+    type: Number,
+    required: true,
+  },
+  area: {
     type: String,
     required: true,
   },
   address: {
     type: String,
     required: true,
+  },
+  gmapLink: {
+    type: String,
+    required: false,
   },
 });
 

@@ -1,18 +1,7 @@
 const Bike = require("../models/bikes");
 
 const postBike = async (req, res) => {
-  const bike = new Bike({
-    modelName: req.body.modelName,
-    modelYear: req.body.modelYear,
-    modelCompany: req.body.modelCompany,
-    modelCategory: req.body.modelCategory,
-    registrationNumber: req.body.registrationNumber,
-    bookedDates: req.body.bookedDates,
-    dailyPrice: req.body.dailyPrice,
-    mileage: req.body.mileage,
-    bikePhoto: req.body.bikePhoto,
-    location: req.body.location,
-  });
+  const bike = new Bike({ ...req.body });
 
   try {
     const newBike = await bike.save();
@@ -24,20 +13,24 @@ const postBike = async (req, res) => {
 
 const getBike = async (req, res) => {
   try {
-    const bikes = await Bike.find({
-      dailyPrice: {
-        $gte: req.query.priceRange[0],
-        $lte: req.query.priceRange[1],
-      },
-    });
+    const bikes = await Bike.find();
     res.json(bikes);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+  console.log(req.query);
 };
 
-const putBike = (req, res) => {
-  res.send({ type: "PUT", id: req.params.id });
+const patchBike = async (req, res) => {
+  try {
+    const bike = await Bike.updateOne(
+      { _id: req.params.id },
+      { $set: req.query }
+    );
+    res.json(bike);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 };
 
 const deleteBike = (req, res) => {
@@ -47,6 +40,6 @@ const deleteBike = (req, res) => {
 module.exports = {
   getBike,
   postBike,
-  putBike,
+  patchBike,
   deleteBike,
 };

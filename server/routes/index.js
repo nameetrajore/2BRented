@@ -9,7 +9,7 @@ const admins = require("./admins");
 // Bike Routes
 router.get("/bikes", bikes.getBike);
 router.post("/bikes", bikes.postBike);
-router.put("/bikes/:id", bikes.putBike);
+router.patch("/bikes/:id", bikes.patchBike);
 router.delete("/bikes/:id", bikes.deleteBike);
 
 // Owner Routes

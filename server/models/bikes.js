@@ -1,6 +1,23 @@
 const mongoose = require("mongoose");
 const Location = require("./locations");
 
+const reviewSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  review: {
+    type: String,
+    required: true,
+  },
+  rating: {
+    type: Number,
+    required: true,
+  },
+});
+
+const Review = mongoose.model("Review", reviewSchema);
+
 const bikeSchema = new mongoose.Schema({
   brand: {
     type: String,
@@ -23,9 +40,13 @@ const bikeSchema = new mongoose.Schema({
     enum: ["road", "mountain", "city"],
     required: true,
   },
+  transmission: {
+    type: String,
+    enum: ["Geared", "Non-Geared"],
+  },
   fuelType: {
     type: String,
-    enum: ["petrol", "electric"],
+    enum: ["Petrol", "Electric"],
     required: true,
   },
   registrationNumber: {
@@ -54,6 +75,10 @@ const bikeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  review: {
+    type: [Review.schema],
+    required: false,
+  },
   mileage: {
     type: Number,
     required: true,
@@ -61,6 +86,10 @@ const bikeSchema = new mongoose.Schema({
   imageUrl: {
     type: [String],
     required: false,
+  },
+  isFavourite: {
+    type: Boolean,
+    required: true,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
