@@ -9,12 +9,34 @@ import Box from "@mui/material/Box";
 import { Navigate, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { bookingActions } from "../../app/store";
+import { useState } from "react";
 const SearchComponent = () => {
   const dispatch = useDispatch();
   const dropDate = useSelector((state) => state.booking.dropDate);
   const pickupDate = useSelector((state) => state.booking.pickupDate);
   const dropLocation = useSelector((state) => state.booking.dropLocation);
   const pickupLocation = useSelector((state) => state.booking.pickupLocation);
+  const [errorPickupLocation, setErrorPickupLocation] = useState(false);
+  const [errorDropLocation, setErrorDropLocation] = useState(false);
+  const today = new Date();
+  const [minPickupDate, setMinPickupDate] = useState(
+    today.toISOString().substring(0, 10)
+  );
+  const [minDropDate, setMinDropDate] = useState(
+    new Date(minPickupDate).toISOString().substring(0, 10)
+  );
+
+  const pickupDateHandler = (event) => {
+    const nextDay = new Date();
+    nextDay.setDate(new Date(event.target.value).getDate() + 1);
+    if (event.target.value >= dropDate)
+      dispatch(
+        bookingActions.setDropDate(nextDay.toISOString().substring(0, 10))
+      );
+    dispatch(bookingActions.setPickupDate(event.target.value));
+    setMinDropDate(nextDay.toISOString().substring(0, 10));
+  };
+
   const navigate = useNavigate();
   return (
     <Box bgcolor="transparent" p={10} mt={-35}>
@@ -62,6 +84,10 @@ const SearchComponent = () => {
               name="email"
               value={pickupLocation}
               autoComplete="email"
+              error={errorPickupLocation}
+              helperText={
+                errorPickupLocation ? "Cannot leave this field empty" : ""
+              }
               onChange={(event) => {
                 dispatch(bookingActions.setPickupLocation(event.target.value));
               }}
@@ -74,6 +100,10 @@ const SearchComponent = () => {
               required
               id="email"
               value={dropLocation}
+              error={errorDropLocation}
+              helperText={
+                errorDropLocation ? "Cannot leave this field empty" : ""
+              }
               onChange={(event) => {
                 dispatch(bookingActions.setDropLocation(event.target.value));
               }}
@@ -91,9 +121,10 @@ const SearchComponent = () => {
               required
               id="email"
               value={pickupDate}
-              onChange={(event) => {
-                dispatch(bookingActions.setPickupDate(event.target.value));
+              inputProps={{
+                min: minPickupDate,
               }}
+              onChange={pickupDateHandler}
               type="date"
               label="Pickup Date"
               name="email"
@@ -110,12 +141,14 @@ const SearchComponent = () => {
               label="Drop Date"
               value={dropDate}
               type="date"
-              defaultValue={new Date()}
               onChange={(event) => {
                 dispatch(bookingActions.setDropDate(event.target.value));
               }}
               name="email"
               autoComplete="email"
+              inputProps={{
+                min: minDropDate,
+              }}
             />
           </Grid>
           <Grid item md={8} />
@@ -128,7 +161,15 @@ const SearchComponent = () => {
             >
               <Button
                 variant="contained"
-                onClick={() => navigate("bike-catalogue")}
+                onClick={() => {
+                  if (dropLocation === "") setErrorDropLocation(true);
+                  if (pickupLocation === "") setErrorPickupLocation(true);
+                  if (pickupLocation !== "" && dropLocation !== "") {
+                    setErrorDropLocation(false);
+                    setErrorPickupLocation(false);
+                    navigate("bike-catalogue");
+                  }
+                }}
                 size="large"
                 sx={{ p: 1.5 }}
                 endIcon={<ArrowForwardIcon />}

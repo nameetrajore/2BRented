@@ -31,8 +31,8 @@ export const useLogin = () => {
         // dispatch({ type: "LOGIN", payload: jsonRes });
         dispatch(authActions.setUser(jsonRes[0].customerName));
         dispatch(authActions.setId(jsonRes[0]._id));
-        localStorage.setItem("user", jsonRes[0].customerName);
-        localStorage.setItem("_id", jsonRes[0]._id);
+        // localStorage.setItem("user", jsonRes[0].customerName);
+        // localStorage.setItem("_id", jsonRes[0]._id);
         setIsLoading(false);
       } else {
         // console.log("your password is wrong");

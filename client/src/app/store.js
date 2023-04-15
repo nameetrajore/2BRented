@@ -1,8 +1,8 @@
 import { createSlice, configureStore, combineReducers } from "@reduxjs/toolkit";
 
 const initialAuthState = {
-  user: "",
-  _id: -1,
+  user: localStorage.getItem("user") ? localStorage.getItem("user") : "",
+  _id: localStorage.getItem("_id") ? localStorage.getItem("_id") : -1,
 };
 
 const today = new Date();
@@ -10,19 +10,19 @@ let tomorrow = new Date();
 tomorrow.setDate(today.getDate() + 1);
 
 const initialBookingState = {
-  dropDate: tomorrow.toISOString().substring(0, 10),
   pickupDate: today.toISOString().substring(0, 10),
+  dropDate: tomorrow.toISOString().substring(0, 10),
   dropLocation: "",
   pickupLocation: "",
 };
 
 const initialFilterState = {
-  priceRange: [800, 1200],
+  priceRange: [0, 0],
   bikeType: "",
   bikeCompany: "",
   rating: 0,
-  kmsDriven: 400000,
-  bikeAge: 2,
+  kmsDriven: 0,
+  bikeAge: 0,
   fuelType: "all",
 };
 
@@ -32,9 +32,11 @@ const authSlice = createSlice({
   reducers: {
     setUser(state, action) {
       state.user = action.payload;
+      localStorage.setItem("user", action.payload);
     },
     setId(state, action) {
       state._id = action.payload;
+      localStorage.setItem("_id", action.payload);
     },
   },
 });
@@ -45,15 +47,19 @@ const bookingSlice = createSlice({
   reducers: {
     setDropDate(state, action) {
       state.dropDate = action.payload;
+      localStorage.setItem("dropDate", action.payload);
     },
     setPickupDate(state, action) {
       state.pickupDate = action.payload;
+      localStorage.setItem("pickupDate", action.payload);
     },
     setDropLocation(state, action) {
       state.dropLocation = action.payload;
+      localStorage.setItem("dropLocation", action.payload);
     },
     setPickupLocation(state, action) {
       state.pickupLocation = action.payload;
+      localStorage.setItem("pickupLocation", action.payload);
     },
   },
 });

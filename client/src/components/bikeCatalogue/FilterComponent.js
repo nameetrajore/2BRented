@@ -143,9 +143,11 @@ const Filter = (props) => {
                 props.setApplyFilter(false);
               }}
             >
-              <MenuItem value={"Sporty"}>Sporty</MenuItem>
-              <MenuItem value={"Economical"}>Economical</MenuItem>
-              <MenuItem value={"Everyday Use"}>Everyday Use</MenuItem>
+              <MenuItem value={"Road"}>Road</MenuItem>
+              <MenuItem value={"Mountain"}>Mountain</MenuItem>
+              <MenuItem value={"City"}>City</MenuItem>
+              <MenuItem value={"Super-Bike"}>Super Bike</MenuItem>
+              <MenuItem value={"Sport"}>Sport</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -172,7 +174,7 @@ const Filter = (props) => {
           </FormControl>
         </Box>
         <Box mt={2}>
-          <Typography component="legend">Rating</Typography>
+          <Typography component="legend">Min. Rating</Typography>
           <Rating
             name="simple-controlled"
             value={rating}
@@ -183,7 +185,7 @@ const Filter = (props) => {
           />
         </Box>
         <Box mt={2}>
-          <Typography component="legend">Kms Driven</Typography>
+          <Typography component="legend">Max. Kms Driven</Typography>
           <Slider
             size="small"
             min={10000}
@@ -201,7 +203,7 @@ const Filter = (props) => {
           />
         </Box>
         <Box mt={2}>
-          <Typography component="legend">Bike Age</Typography>
+          <Typography component="legend">Max. Bike Age</Typography>
           <Slider
             size="small"
             defaultValue={3}
@@ -235,13 +237,13 @@ const Filter = (props) => {
                 label="All"
               />
               <FormControlLabel
-                value="petrol"
+                value="Petrol"
                 /* onChange={() => dispatch(filterActions.setFuelType("petrol"))} */
                 control={<Radio />}
                 label="Petrol"
               />
               <FormControlLabel
-                value="electric"
+                value="Electric"
                 /* onChange={() => dispatch(filterActions.setFuelType("electric"))} */
                 control={<Radio />}
                 label="Electric"

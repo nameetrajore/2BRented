@@ -6,23 +6,8 @@ import { Login } from "./pages/Login";
 // import { Link as RouterLink, MemoryRouter } from 'react-router-dom';
 import { Signup } from "./pages/Signup";
 import AppRoutes from "./routes/routes";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { authActions } from "./app/store";
 
 function App() {
-  // to persist login status on reload or browser shut down
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
-    const loggedInId = localStorage.getItem("_id");
-    if (loggedInUser && loggedInId) {
-      dispatch(authActions.setUser(loggedInUser));
-      dispatch(authActions.setId(loggedInId));
-    }
-  }, []);
-
   return <AppRoutes />;
 }
 

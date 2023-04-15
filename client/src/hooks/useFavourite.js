@@ -1,20 +1,29 @@
-import { useState } from "react";
-export const useFavourite = () => {
-  const storeIsFavourite = async (_id, _isFavourite) => {
-    const response = await fetch(
-      `http://localhost:4000/api/bikes/${_id}?isFavourite=${_isFavourite}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      }
-    );
+import { useSelector } from "react-redux";
 
-    const jsonRes = await await response.json();
-    console.log(
-      `http://localhost:4000/bikes/${_id}?isFavourite=${_isFavourite}`
-    );
+export const useFavourite = () => {
+  const id = useSelector((state) => state.auth._id);
+  const storeIsFavourite = async (bikeId, _isFavourite) => {
+    if (_isFavourite) {
+      const response = await fetch(
+        `http://localhost:4000/api/customers/${id}?addFavourite=${bikeId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        }
+      );
+    } else {
+      const response = await fetch(
+        `http://localhost:4000/api/customers/${id}?removeFavourite=${bikeId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        }
+      );
+    }
   };
 
   return { storeIsFavourite };

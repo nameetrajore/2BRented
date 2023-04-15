@@ -1,15 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import CachedIcon from "@mui/icons-material/Cached";
-import dayjs from "dayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
 import { bookingActions } from "../../app/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -21,12 +15,38 @@ const commonStyles = {
   borderColor: "#ffea00",
 };
 
-const SearchBooking = () => {
+const SearchBooking = (props) => {
   const dispatch = useDispatch();
   const dropDate = useSelector((state) => state.booking.dropDate);
   const pickupDate = useSelector((state) => state.booking.pickupDate);
   const dropLocation = useSelector((state) => state.booking.dropLocation);
   const pickupLocation = useSelector((state) => state.booking.pickupLocation);
+  const filter = useSelector((state) => state.filter);
+  const booking = useSelector((state) => state.booking);
+  const [errorPickupLocation, setErrorPickupLocation] = useState(false);
+  const [errorDropLocation, setErrorDropLocation] = useState(false);
+  const today = new Date();
+  const [minPickupDate, setMinPickupDate] = useState(
+    today.toISOString().substring(0, 10)
+  );
+  const [minDropDate, setMinDropDate] = useState(
+    new Date(minPickupDate).toISOString().substring(0, 10)
+  );
+
+  const pickupDateHandler = (event) => {
+    const nextDay = new Date();
+    nextDay.setDate(new Date(event.target.value).getDate() + 1);
+    if (event.target.value >= dropDate)
+      dispatch(
+        bookingActions.setDropDate(nextDay.toISOString().substring(0, 10))
+      );
+    dispatch(bookingActions.setPickupDate(event.target.value));
+    let completeFilter = {};
+    if (props.applyFilter) completeFilter = booking;
+    else completeFilter = { ...filter, ...booking };
+    props.getBikes(completeFilter, props.setBikes);
+    setMinDropDate(nextDay.toISOString().substring(0, 10));
+  };
   return (
     <>
       <Box
@@ -51,6 +71,7 @@ const SearchBooking = () => {
               id="pickup-location"
               label="Pickup Location"
               value={pickupLocation}
+              error={errorPickupLocation}
               onChange={(event) => {
                 dispatch(bookingActions.setPickupLocation(event.target.value));
               }}
@@ -68,6 +89,7 @@ const SearchBooking = () => {
               id="drop-location"
               label="Drop Location"
               value={dropLocation}
+              error={errorDropLocation}
               onChange={(event) => {
                 dispatch(bookingActions.setDropLocation(event.target.value));
               }}
@@ -84,10 +106,11 @@ const SearchBooking = () => {
               id="pickup-date"
               label="Pickup Date"
               type="date"
-              value={pickupDate}
-              onChange={(event) => {
-                dispatch(bookingActions.setPickupDate(event.target.value));
+              inputProps={{
+                min: minPickupDate,
               }}
+              value={pickupDate}
+              onChange={pickupDateHandler}
               name="pickup-date"
               autoComplete="date"
               sx={{ width: 230 }}
@@ -102,9 +125,16 @@ const SearchBooking = () => {
               id="drop-date"
               label="Drop Date"
               type="date"
+              inputProps={{
+                min: minDropDate,
+              }}
               value={dropDate}
               onChange={(event) => {
                 dispatch(bookingActions.setDropDate(event.target.value));
+                let completeFilter = {};
+                if (props.applyFilter) completeFilter = booking;
+                else completeFilter = { ...filter, ...booking };
+                props.getBikes(completeFilter, props.setBikes);
               }}
               name="drop-date"
               autoComplete="date"
@@ -115,9 +145,20 @@ const SearchBooking = () => {
           <Grid item>
             <Button
               variant="contained"
-              /* onClick={() => navigate("/bike-catalogue")} */
               size="large"
               color="inherit"
+              onClick={() => {
+                if (dropLocation === "") setErrorDropLocation(true);
+                if (pickupLocation === "") setErrorPickupLocation(true);
+                if (pickupLocation !== "" && dropLocation !== "") {
+                  setErrorDropLocation(false);
+                  setErrorPickupLocation(false);
+                  let completeFilter = {};
+                  if (props.applyFilter) completeFilter = booking;
+                  else completeFilter = { ...filter, ...booking };
+                  props.getBikes(completeFilter, props.setBikes);
+                }
+              }}
               sx={{ p: 1.9 }}
             >
               <CachedIcon />

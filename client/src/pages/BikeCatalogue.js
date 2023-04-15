@@ -19,10 +19,39 @@ export const BikeCatalouge = () => {
   const navigate = useNavigate();
   const [applyFilter, setApplyFilter] = useState(true);
   const [bikes, setBikes] = useState([]);
+  const [searchBike, setSearchBike] = useState("");
+  const [sort, setSort] = useState("ip");
+
+  const filteredBikes = searchBike
+    ? bikes.filter((bike) => {
+        return (
+          bike.model.toLowerCase().includes(searchBike.toLowerCase()) ||
+          bike.brand.toLowerCase().includes(searchBike.toLowerCase())
+        );
+      })
+    : bikes;
+
+  if (sort === "ip") {
+    filteredBikes.sort(function (a, b) {
+      return a.dailyRate - b.dailyRate;
+    });
+  } else if (sort === "dp") {
+    filteredBikes.sort(function (a, b) {
+      return b.dailyRate - a.dailyRate;
+    });
+  } else if (sort === "ir") {
+    filteredBikes.sort(function (a, b) {
+      return a.rating - b.rating;
+    });
+  } else if (sort === "dr") {
+    filteredBikes.sort(function (a, b) {
+      return b.rating - a.rating;
+    });
+  }
 
   const { getBikes, isLoading } = useGetBike();
 
-  const NoBikesFound = () => {
+  const NoBikesFound = (props) => {
     return (
       <Grid item md={7} xs={5} sm={6}>
         <Grid
@@ -43,8 +72,17 @@ export const BikeCatalouge = () => {
   return (
     <div>
       <Navbar />
-      <SearchBooking />
-      <SearchBike />
+      <SearchBooking
+        setBikes={setBikes}
+        getBikes={getBikes}
+        applyFilter={applyFilter}
+      />
+      <SearchBike
+        searchBike={searchBike}
+        setSearchBike={setSearchBike}
+        sort={sort}
+        setSort={setSort}
+      />
       <Grid
         alignItems="center"
         justifyContent="center"
@@ -70,11 +108,15 @@ export const BikeCatalouge = () => {
         ) : bikes.length ? (
           <Grid item md={7} xs={5} sm={6}>
             <Grid container spacing={3}>
-              {bikes.map((bike) => (
-                <Grid item key={bike._id} md={3} lg={3}>
-                  <BikeCard bike={bike} />
-                </Grid>
-              ))}
+              {filteredBikes.map((bike) => {
+                {
+                  return (
+                    <Grid item key={bike._id} md={3} lg={3}>
+                      <BikeCard bike={bike} />
+                    </Grid>
+                  );
+                }
+              })}
             </Grid>
           </Grid>
         ) : (
