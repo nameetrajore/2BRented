@@ -10,13 +10,7 @@ const getOwner = async (req, res) => {
 };
 
 const postOwner = async (req, res) => {
-  const owner = new Owner({
-    ownerName: req.body.ownerName,
-    ownerAddress: req.body.ownerAddress,
-    ownerPhoneNumber: req.body.ownerPhoneNumber,
-    ownerEmail: req.body.ownerEmail,
-    ownerPassword: req.body.ownerPassword,
-  });
+  const owner = new Owner({ ...req.body });
 
   try {
     const newOwner = await owner.save();

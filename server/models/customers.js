@@ -32,6 +32,12 @@ const customerSchema = new mongoose.Schema({
       ref: "Booking",
     },
   ],
+  favourites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Bike",
+    },
+  ],
   rating: {
     type: Number,
     required: true,

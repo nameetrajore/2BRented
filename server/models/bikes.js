@@ -37,7 +37,7 @@ const bikeSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["road", "mountain", "city"],
+    enum: ["Road", "Mountain", "City", "Super-Bike", "Sport"],
     required: true,
   },
   transmission: {
@@ -86,10 +86,6 @@ const bikeSchema = new mongoose.Schema({
   imageUrl: {
     type: [String],
     required: false,
-  },
-  isFavourite: {
-    type: Boolean,
-    required: true,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

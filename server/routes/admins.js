@@ -9,12 +9,7 @@ const getAdmin = async (req, res) => {
   }
 };
 const postAdmin = async (req, res) => {
-  const admin = new Admin({
-    adminName: req.body.adminName,
-    adminPhoneNumber : req.body.adminPhoneNumber,
-    adminEmail : req.body.adminEmail,
-    adminPassword : req.body.adminPassword,
-  });
+  const admin = new Admin({ ...req.body });
 
   try {
     const newAdmin = await admin.save();

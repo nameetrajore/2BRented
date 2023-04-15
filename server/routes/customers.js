@@ -2,9 +2,7 @@ const Customer = require("../models/customers");
 
 const getCustomer = async (req, res) => {
   try {
-    console.log(req.query);
     const customer = await Customer.find(req.query);
-    // console.log(customer, "inside get customer");
     res.json(customer);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -12,14 +10,7 @@ const getCustomer = async (req, res) => {
 };
 
 const postCustomer = async (req, res) => {
-  const customer = new Customer({
-    customerName: req.body.customerName,
-    customerAddress: req.body.customerAddress,
-    customerPhoneNumber: req.body.customerPhoneNumber,
-    customerEmail: req.body.customerEmail,
-    customerPassword: req.body.customerPassword,
-    customerDrivingLicense: req.body.customerDrivingLicense,
-  });
+  const customer = new Customer({ ...req.body });
 
   try {
     const newCustomer = await customer.save();
@@ -29,8 +20,25 @@ const postCustomer = async (req, res) => {
   }
 };
 
-const putCustomer = (req, res) => {
-  res.send({ type: "PUT", id: req.params.id });
+const patchCustomer = async (req, res) => {
+  console.log(req.query);
+  try {
+    if (req.query.addFavourite) {
+      const customer = await Customer.updateOne(
+        { _id: req.params.id },
+        { $addToSet: { favourites: req.query.addFavourite } }
+      );
+      res.json(customer);
+    } else if (req.query.removeFavourite) {
+      const customer = await Customer.updateOne(
+        { _id: req.params.id },
+        { $pull: { favourites: req.query.removeFavourite } }
+      );
+      res.json(customer);
+    }
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 };
 
 const deleteCustomer = (req, res) => {
@@ -40,6 +48,6 @@ const deleteCustomer = (req, res) => {
 module.exports = {
   getCustomer,
   postCustomer,
-  putCustomer,
+  patchCustomer,
   deleteCustomer,
 };

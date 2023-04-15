@@ -33,4 +33,12 @@ const bookingSchema = new mongoose.Schema({
   },
 });
 
+bookingSchema.path("startDate").validate(function (value) {
+  return value < this.endDate;
+}, "startDate must be less than endDate");
+
+bookingSchema.path("endDate").validate(function (value) {
+  return value > this.startDate;
+}, "endDate must be greater than startDate");
+
 module.exports = mongoose.model("Booking", bookingSchema);

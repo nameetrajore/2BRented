@@ -5,6 +5,7 @@ const bikes = require("./bikes");
 const owners = require("./owners");
 const customers = require("./customers");
 const admins = require("./admins");
+const bookings = require("./bookings");
 
 // Bike Routes
 router.get("/bikes", bikes.getBike);
@@ -21,7 +22,7 @@ router.delete("/owners/:id", owners.deleteOwner);
 // Customer Routes
 router.get("/customers", customers.getCustomer);
 router.post("/customers", customers.postCustomer);
-router.put("/customers/:id", customers.putCustomer);
+router.patch("/customers/:id", customers.patchCustomer);
 router.delete("/customers/:id", customers.deleteCustomer);
 
 // Admin Routes
@@ -29,5 +30,11 @@ router.get("/admins", admins.getAdmin);
 router.post("/admins", admins.postAdmin);
 router.put("/admins/:id", admins.putAdmin);
 router.delete("/admins/:id", admins.deleteAdmin);
+
+//Booking Routes
+router.get("/bookings", bookings.getBooking);
+router.post("/bookings", bookings.postBooking);
+router.patch("/bookings/:id", bookings.patchBooking);
+router.delete("/bookings/:id", bookings.deleteBooking);
 
 module.exports = router;
