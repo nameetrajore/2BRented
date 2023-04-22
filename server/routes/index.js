@@ -5,6 +5,7 @@ const bikes = require("./bikes");
 const owners = require("./owners");
 const customers = require("./customers");
 const admins = require("./admins");
+const checkout = require("../controllers/paymentController.js");
 const bookings = require("./bookings");
 
 // Bike Routes
@@ -36,5 +37,10 @@ router.get("/bookings", bookings.getBooking);
 router.post("/bookings", bookings.postBooking);
 router.patch("/bookings/:id", bookings.patchBooking);
 router.delete("/bookings/:id", bookings.deleteBooking);
+
+// Payment Routes
+router.post("/checkout", checkout.checkout);
+router.get("/get-key", checkout.getkey);
+router.post("/payment-verification", checkout.paymentVerification);
 
 module.exports = router;

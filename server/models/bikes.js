@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const Location = require("./locations");
 
 const reviewSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+  userName: {
+    type: String,
+    required: true,
   },
   review: {
     type: String,
@@ -75,7 +75,7 @@ const bikeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  review: {
+  reviews: {
     type: [Review.schema],
     required: false,
   },

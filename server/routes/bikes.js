@@ -13,6 +13,7 @@ const postBike = async (req, res) => {
 
 const getBike = async (req, res) => {
   const incomingQuery = req.query;
+  console.log(incomingQuery);
   const outgoingQuery = { ...incomingQuery };
 
   delete outgoingQuery.priceHigh;
@@ -47,7 +48,7 @@ const getBike = async (req, res) => {
     };
   }
 
-  if (incomingQuery.pickupLocation != "") {
+  if (incomingQuery.pickupLocation && incomingQuery.pickupLocation != "") {
     outgoingQuery["location.city"] = {
       $regex: new RegExp(incomingQuery.pickupLocation),
       $options: "i",
@@ -79,8 +80,14 @@ const getBike = async (req, res) => {
           bookings: {
             $not: {
               $elemMatch: {
-                startDate: { $lt: incomingQuery.dropDate },
-                endDate: { $gt: incomingQuery.pickupDate },
+                startDate: {
+                  $gt: incomingQuery.pickupDate,
+                  $lt: incomingQuery.dropDate,
+                },
+                endDate: {
+                  $gt: incomingQuery.pickupDate,
+                  $lt: incomingQuery.dropDate,
+                },
               },
             },
           },
