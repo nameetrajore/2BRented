@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import customerHomePage1 from "../../resources/customerHomePage1.svg";
 import Box from "@mui/material/Box";
-import { Navigate, useNavigate } from "react-router-dom";
+import { createSearchParams, Navigate, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { bookingActions } from "../../app/store";
 import { useState } from "react";
@@ -16,6 +16,7 @@ const SearchComponent = () => {
   const pickupDate = useSelector((state) => state.booking.pickupDate);
   const dropLocation = useSelector((state) => state.booking.dropLocation);
   const pickupLocation = useSelector((state) => state.booking.pickupLocation);
+  const params = { dropLocation, pickupLocation, dropDate, pickupDate };
   const [errorPickupLocation, setErrorPickupLocation] = useState(false);
   const [errorDropLocation, setErrorDropLocation] = useState(false);
   const today = new Date();
@@ -128,7 +129,6 @@ const SearchComponent = () => {
               type="date"
               label="Pickup Date"
               name="email"
-              /* type="date" */
               autoComplete="email"
             />
           </Grid>
@@ -167,7 +167,7 @@ const SearchComponent = () => {
                   if (pickupLocation !== "" && dropLocation !== "") {
                     setErrorDropLocation(false);
                     setErrorPickupLocation(false);
-                    navigate("bike-catalogue");
+                    navigate(`bike-catalogue?${createSearchParams(params)}`);
                   }
                 }}
                 size="large"

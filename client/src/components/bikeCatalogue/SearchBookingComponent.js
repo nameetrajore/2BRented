@@ -7,6 +7,7 @@ import CachedIcon from "@mui/icons-material/Cached";
 import { bookingActions } from "../../app/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 const commonStyles = {
   bgcolor: "background.paper",
@@ -21,10 +22,9 @@ const SearchBooking = (props) => {
   const pickupDate = useSelector((state) => state.booking.pickupDate);
   const dropLocation = useSelector((state) => state.booking.dropLocation);
   const pickupLocation = useSelector((state) => state.booking.pickupLocation);
+  const [searchParams, setSearchParams] = useSearchParams();
   const filter = useSelector((state) => state.filter);
   const booking = useSelector((state) => state.booking);
-  const [errorPickupLocation, setErrorPickupLocation] = useState(false);
-  const [errorDropLocation, setErrorDropLocation] = useState(false);
   const today = new Date();
   const [minPickupDate, setMinPickupDate] = useState(
     today.toISOString().substring(0, 10)
@@ -41,10 +41,6 @@ const SearchBooking = (props) => {
         bookingActions.setDropDate(nextDay.toISOString().substring(0, 10))
       );
     dispatch(bookingActions.setPickupDate(event.target.value));
-    let completeFilter = {};
-    if (props.applyFilter) completeFilter = booking;
-    else completeFilter = { ...filter, ...booking };
-    props.getBikes(completeFilter, props.setBikes);
     setMinDropDate(nextDay.toISOString().substring(0, 10));
   };
   return (
@@ -71,10 +67,11 @@ const SearchBooking = (props) => {
               id="pickup-location"
               label="Pickup Location"
               value={pickupLocation}
-              error={errorPickupLocation}
+              /* error={errorPickupLocation} */
               onChange={(event) => {
                 dispatch(bookingActions.setPickupLocation(event.target.value));
               }}
+              disabled
               name="pickup-location"
               autoComplete="location"
               variant="filled"
@@ -89,10 +86,11 @@ const SearchBooking = (props) => {
               id="drop-location"
               label="Drop Location"
               value={dropLocation}
-              error={errorDropLocation}
+              /* error={errorDropLocation} */
               onChange={(event) => {
                 dispatch(bookingActions.setDropLocation(event.target.value));
               }}
+              disabled
               name="drop-location"
               autoComplete="location"
               variant="filled"
@@ -131,10 +129,6 @@ const SearchBooking = (props) => {
               value={dropDate}
               onChange={(event) => {
                 dispatch(bookingActions.setDropDate(event.target.value));
-                let completeFilter = {};
-                if (props.applyFilter) completeFilter = booking;
-                else completeFilter = { ...filter, ...booking };
-                props.getBikes(completeFilter, props.setBikes);
               }}
               name="drop-date"
               autoComplete="date"
@@ -148,11 +142,7 @@ const SearchBooking = (props) => {
               size="large"
               color="inherit"
               onClick={() => {
-                if (dropLocation === "") setErrorDropLocation(true);
-                if (pickupLocation === "") setErrorPickupLocation(true);
                 if (pickupLocation !== "" && dropLocation !== "") {
-                  setErrorDropLocation(false);
-                  setErrorPickupLocation(false);
                   let completeFilter = {};
                   if (props.applyFilter) completeFilter = booking;
                   else completeFilter = { ...filter, ...booking };

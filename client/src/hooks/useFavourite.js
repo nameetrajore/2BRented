@@ -2,8 +2,9 @@ import { useSelector } from "react-redux";
 
 export const useFavourite = () => {
   const id = useSelector((state) => state.auth._id);
-  const storeIsFavourite = async (bikeId, _isFavourite) => {
+  const storeIsFavourite = async (bikeId, _isFavourite, bike) => {
     if (_isFavourite) {
+      bike.isFavourite = true;
       const response = await fetch(
         `http://localhost:4000/api/customers/${id}?addFavourite=${bikeId}`,
         {
@@ -14,6 +15,7 @@ export const useFavourite = () => {
         }
       );
     } else {
+      bike.isFavourite = false;
       const response = await fetch(
         `http://localhost:4000/api/customers/${id}?removeFavourite=${bikeId}`,
         {

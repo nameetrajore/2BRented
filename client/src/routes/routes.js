@@ -6,6 +6,9 @@ import { SearchPage } from "../pages/HomePage";
 import Login from "../pages/Login";
 import { NoMatch } from "../pages/NoMatch";
 import Signup from "../pages/Signup";
+import Invoice from "../pages/Invoice";
+import Bookings from "../pages/Bookings";
+import Profile from "../pages/Profile";
 
 const AppRoutes = () => {
   const user = useSelector((state) => state.auth.user);
@@ -18,7 +21,11 @@ const AppRoutes = () => {
         path="/sign-up"
         element={!user ? <Signup /> : <Navigate to="/" />}
       />
-      <Route path="/booking-summary/:bookingId" element={<BookingSummary />} />
+      <Route path="/booking-summary/:id" element={<BookingSummary />} />
+      <Route path="/payment" element={<Invoice />} />
+      <Route path="/my-bookings" element={<Bookings />} />
+      <Route path="/profile" element=<Profile /> />
+      <Route path="/support" />
       <Route path="*" element={<NoMatch />} />
     </Routes>
   );

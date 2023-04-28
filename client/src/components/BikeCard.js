@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import Card from "@mui/material/Card";
-import { useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { pink } from "@mui/material/colors";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -33,10 +33,18 @@ const BikeCard = (props) => {
   const pickupDate = useSelector((state) => state.booking.pickupDate);
   const pickupLocation = useSelector((state) => state.booking.pickupLocation);
   const dropLocation = useSelector((state) => state.booking.dropLocation);
+  const params = { dropLocation, pickupLocation, dropDate, pickupDate };
   const navigate = useNavigate();
+  const id = useSelector((state) => state.auth._id);
+  const message = {
+    message: "You need to login first in order to add bikes to favourites.",
+  };
 
   const handleIsFavourite = () => {
-    setIsFavourite((prevState) => !prevState);
+    if (id !== -1) setIsFavourite((prevState) => !prevState);
+    else {
+      navigate(`/login?${createSearchParams(message)}`);
+    }
   };
 
   // to make sure that this useEffect executes everytime except the first render
@@ -44,7 +52,7 @@ const BikeCard = (props) => {
   useEffect(() => {
     if (!isFirstRender.current) {
       const timer = setTimeout(() => {
-        storeIsFavourite(bike._id, isFavourite);
+        storeIsFavourite(bike._id, isFavourite, bike);
       }, 250);
 
       // props.setApplyFilter(false);
@@ -112,7 +120,7 @@ const BikeCard = (props) => {
           <IconButton
             onClick={() => {
               navigate(
-                `/booking-summary/${bike._id}?pickupLocation=${pickupLocation}&dropLocation=${dropLocation}&pickupDate=${pickupDate}&dropDate=${dropDate}`
+                `/booking-summary/${bike._id}?${createSearchParams(params)}`
               );
             }}
           >

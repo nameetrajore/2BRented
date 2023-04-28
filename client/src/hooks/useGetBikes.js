@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../app/store";
 
-export const useGetBike = () => {
+export const useGetBikes = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const id = useSelector((state) => state.auth._id);
@@ -27,24 +27,27 @@ export const useGetBike = () => {
       query += `&fuelType=${filter.fuelType}`;
 
     const responseBikes = await fetch(`http://localhost:4000/api/` + query);
-    const responseFavourites = await fetch(
-      `http://localhost:4000/api/customers?_id=${id}`
-    );
-
     const jsonResBikes = await responseBikes.json();
-    const jsonResFavourites = await responseFavourites.json();
+    if (responseBikes.ok) {
+      if (id !== -1) {
+        const responseFavourites = await fetch(
+          `http://localhost:4000/api/customers?_id=${id}`
+        );
+        const jsonResFavourites = await responseFavourites.json();
 
-    console.log(jsonResBikes);
-    console.log(jsonResFavourites);
-    if (responseBikes.ok && responseFavourites.ok) {
-      const bikes = jsonResBikes.map((bike) => {
-        if (jsonResFavourites[0].favourites.includes(bike._id))
-          return { ...bike, isFavourite: true };
-        else return { ...bike, isFavourite: false };
-      });
-      setBikes(bikes);
+        if (responseFavourites.ok) {
+          const bikes = jsonResBikes.map((bike) => {
+            if (jsonResFavourites[0].favourites.includes(bike._id))
+              return { ...bike, isFavourite: true };
+            else return { ...bike, isFavourite: false };
+          });
+          setBikes(bikes);
+        }
+      } else {
+        setBikes(jsonResBikes);
+      }
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return { getBikes, isLoading };

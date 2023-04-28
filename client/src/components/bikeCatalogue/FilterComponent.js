@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import CachedIcon from "@mui/icons-material/Cached";
+import FormGroup from "@mui/material/FormGroup";
+import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -29,6 +31,9 @@ const Filter = (props) => {
   const filter = useSelector((state) => state.filter);
   const booking = useSelector((state) => state.booking);
 
+  const favouritesOnly = props.favouritesOnly;
+  const setFavouritesOnly = props.setFavouritesOnly;
+
   const applyFilterHandler = () => {
     dispatch(filterActions.reset());
     props.setApplyFilter((prevState) => !prevState);
@@ -46,7 +51,7 @@ const Filter = (props) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [props.applyFilter, filter]);
+  }, [props.applyFilter, filter, booking]);
 
   const marksPriceRange = [
     {
@@ -250,6 +255,18 @@ const Filter = (props) => {
               />
             </RadioGroup>
           </FormControl>
+        </Box>
+        <Box mt={2}>
+          <FormGroup>
+            <FormControlLabel
+              value={favouritesOnly}
+              onChange={() => {
+                setFavouritesOnly((prevState) => !prevState);
+              }}
+              control={<Checkbox />}
+              label="Favourites only"
+            />
+          </FormGroup>
         </Box>
       </Box>
     </>
