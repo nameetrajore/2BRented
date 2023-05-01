@@ -108,7 +108,7 @@ const Filter = () => {
           <Box mt={1} />
           <FormControl fullWidth>
             <InputLabel>Type</InputLabel>
-            <Select
+            <Select 
               value={type}
               label="Type"
               onChange={(event) => {
