@@ -110,7 +110,6 @@ const Bookings = () => {
           </AccordionDetails>
         </Accordion>
       </Box>
-      <Footer />
     </>
   );
 };

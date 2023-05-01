@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress, Typography } from "@mui/material";
 import LoadingSkeleton from "../components/bikeCatalogue/LoadingSkeletonComponent";
 import { bookingActions } from "../app/store";
+import Footer from "../components/Footer";
 
 export const BikeCatalouge = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -142,6 +143,7 @@ export const BikeCatalouge = () => {
           <NoBikesFound />
         )}
       </Grid>
+      <Footer />
     </div>
   );
 };

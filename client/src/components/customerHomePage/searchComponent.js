@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import customerHomePage1 from "../../resources/customerHomePage1.svg";
+import customerHomePage1 from "../../resources/undraw_web_search_re_efla.svg";
 import Box from "@mui/material/Box";
 import { createSearchParams, Navigate, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
@@ -40,7 +40,7 @@ const SearchComponent = () => {
 
   const navigate = useNavigate();
   return (
-    <Box bgcolor="transparent" p={10} mt={-35}>
+    <Box bgcolor="transparent" p={10} mt={-40}>
       <Grid
         container
         /* color="linear-gradient(131deg, rgba(44,212,195,1) 19%, rgba(51,179,166,1) 41%, rgba(30,125,116,1) 82%)" */
@@ -51,7 +51,7 @@ const SearchComponent = () => {
           /*   t.palette.mode === "light" */
           /*     ? t.palette.primary[100] */
           /*     : t.palette.grey[900], */
-          backgroundSize: "20%",
+          backgroundSize: "25%",
           backgroundImage: `url(${customerHomePage1})`,
           backgroundColor: "white",
           borderRadius: 2,

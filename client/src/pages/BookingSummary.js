@@ -29,6 +29,7 @@ import ImageComponent from "../components/bookingSummary/ImageComponent";
 import DetailsComponent from "../components/bookingSummary/DetailsComponent";
 import ReviewComponent from "../components/bookingSummary/ReviewComponent";
 import { usePayment } from "../hooks/usePayment";
+import Footer from "../components/Footer";
 
 const bull = (
   <Box
@@ -212,6 +213,7 @@ const BookingSummary = (props) => {
           <ImageComponent bike={bike} />
           <DetailsComponent bike={bike} />
           <ReviewComponent bike={bike} />
+          <Footer />
         </>
       )}
     </>

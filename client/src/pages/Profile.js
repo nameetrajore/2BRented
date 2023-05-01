@@ -1,130 +1,49 @@
-import React, { useState } from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  createStyles,
-  Divider,
-  IconButton,
-  Paper,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import SettingsIcon from "@mui/icons-material/Settings";
+import React from "react";
+import { Avatar, Button, Grid, Paper, Rating, Typography } from "@mui/material";
 
-const Profile = () => {
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const tabPanelStyles = createStyles({
-    tabPanel: {
-      padding: "24px",
-    },
-  });
-
-  const headerStyles = createStyles({
-    header: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      marginBottom: "16px",
-    },
-    avatar: {
-      width: "100px",
-      height: "100px",
-      marginRight: "16px",
-    },
-    followButton: {
-      backgroundColor: "#2196F3",
-      color: "#fff",
-      "&:hover": {
-        backgroundColor: "#1565C0",
-      },
-    },
-    editButton: {
-      color: "#757575",
-    },
-    divider: {
-      margin: "16px 0",
-    },
-  });
-
-  const aboutStyles = createStyles({
-    about: {
-      marginBottom: "16px",
-    },
-  });
-
-  const tabsStyles = createStyles({
-    root: {
-      borderRight: "1px solid #ddd",
-    },
-    indicator: {
-      backgroundColor: "#2196F3",
-    },
-  });
-
+const ProfilePage = () => {
   return (
-    <div>
-      <Box display="flex" alignItems="center" mb={4}>
-        <Typography variant="h4">Profile</Typography>
-        <IconButton>
-          <SettingsIcon />
-        </IconButton>
-      </Box>
-      <Box display="flex" alignItems="flex-start">
-        <Tabs
-          orientation="vertical"
-          value={value}
-          onChange={handleChange}
-          className={tabsStyles.root}
-          classes={{ indicator: tabsStyles.indicator }}
-        >
-          <Tab label="About" />
-          <Tab label="Photos" />
-          <Tab label="Videos" />
-          <Tab label="Friends" />
-          <Tab label="Groups" />
-        </Tabs>
-        <Paper square elevation={0} style={tabPanelStyles}>
-          <Box className="header" style={headerStyles.header}>
-            <Avatar
-              src="https://i.pravatar.cc/150"
-              alt="Profile Picture"
-              style={headerStyles.avatar}
-            />
-            <Box>
-              <Typography variant="h5">John Doe</Typography>
-              <Typography variant="subtitle1">Los Angeles, CA</Typography>
-              <Button variant="contained" style={headerStyles.followButton}>
-                Follow
-              </Button>
-            </Box>
-          </Box>
-          <IconButton style={headerStyles.editButton}>
-            <EditIcon />
-          </IconButton>
-          <Divider style={headerStyles.divider} />
-          <Box className="about" style={aboutStyles.about}>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              dictum nisl sed purus feugiat, vitae convallis quam dapibus. Etiam
-              sit amet ligula mi. Nulla nec nulla massa. Nunc vulputate orci at
-              arcu efficitur, non elementum lacus tincidunt. Duis auctor urna
-              vel quam tempor bibendum. Quisque a nunc ullamcorper, vehiculaenim
-              ut, bibendum arcu. Sed ut sapien a libero blandit auctor. Donec
-              congue porttitor nulla sed facilisis.
-            </Typography>
-          </Box>
+    <Grid container spacing={2} justifyContent="center">
+      <Grid item xs={12} sm={8} md={6}>
+        <Paper elevation={3} sx={{ padding: 2 }}>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item>
+              <Avatar src="/avatar.jpg" sx={{ width: 100, height: 100 }} />
+            </Grid>
+            <Grid item>
+              <Typography variant="h4">John Doe</Typography>
+              <Typography variant="subtitle1">Software Engineer</Typography>
+              <Typography variant="subtitle2">San Francisco, CA</Typography>
+              {/* <Button variant="outlined" sx={{ marginTop: 2 }}> */}
+              {/*   Edit Profile */}
+              {/* </Button> */}
+              <Typography variant="body1" sx={{ marginTop: 2 }}>
+                Phone: (123) 456-7890
+              </Typography>
+              <Typography variant="body1">
+                Email: john.doe@example.com
+              </Typography>
+              <Typography variant="body1">
+                Address: 123 Main St, San Francisco, CA
+              </Typography>
+              <Rating name="rating" value={4.5} precision={0.5} readOnly />
+            </Grid>
+          </Grid>
+          <Typography variant="h5" sx={{ marginTop: 4 }}>
+            Skills
+          </Typography>
+          <Typography variant="body1" sx={{ marginTop: 2 }}>
+            - JavaScript
+            <br />
+            - React
+            <br />
+            - Node.js
+            <br />- HTML/CSS
+          </Typography>
         </Paper>
-      </Box>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 
-export default Profile;
+export default ProfilePage;

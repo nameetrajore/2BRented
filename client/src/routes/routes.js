@@ -9,6 +9,7 @@ import Signup from "../pages/Signup";
 import Invoice from "../pages/Invoice";
 import Bookings from "../pages/Bookings";
 import Profile from "../pages/Profile";
+import Support from "../pages/Support";
 
 const AppRoutes = () => {
   const user = useSelector((state) => state.auth.user);
@@ -25,7 +26,7 @@ const AppRoutes = () => {
       <Route path="/payment" element={<Invoice />} />
       <Route path="/my-bookings" element={<Bookings />} />
       <Route path="/profile" element=<Profile /> />
-      <Route path="/support" />
+      <Route path="/support" element=<Support /> />
       <Route path="*" element={<NoMatch />} />
     </Routes>
   );

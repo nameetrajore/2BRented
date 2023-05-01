@@ -70,13 +70,13 @@ const BikeCard = (props) => {
   return (
     <Box
       sx={{
-        boxShadow: 1,
-        borderRadius: 3,
+        boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+        borderRadius: 2,
       }}
     >
       <Card
         sx={{
-          boxShadow: 1,
+          /* boxShadow: 1, */
           borderRadius: 3,
         }}
       >
