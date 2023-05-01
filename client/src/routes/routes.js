@@ -13,6 +13,10 @@ import AddBike1 from "../pages/AddBike1";
 import AddBike2 from "../pages/AddBike2";
 import AddBike3 from "../pages/AddBike3";
 import AddBike4 from "../pages/AddBike4";
+import Invoice from "../pages/Invoice";
+import Bookings from "../pages/Bookings";
+import Profile from "../pages/Profile";
+import Support from "../pages/Support";
 
 const AppRoutes = () => {
   const user = useSelector((state) => state.auth.user);
@@ -35,7 +39,11 @@ const AppRoutes = () => {
         path="/sign-up"
         element={!user ? <Signup /> : <Navigate to="/" />}
       />
-      <Route path="/booking-summary/:bookingId" element={<BookingSummary />} />
+      <Route path="/booking-summary/:id" element={<BookingSummary />} />
+      <Route path="/payment" element={<Invoice />} />
+      <Route path="/my-bookings" element={<Bookings />} />
+      <Route path="/profile" element=<Profile /> />
+      <Route path="/support" element=<Support /> />
       <Route path="*" element={<NoMatch />} />
     </Routes>
   );

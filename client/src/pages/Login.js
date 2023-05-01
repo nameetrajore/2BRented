@@ -13,15 +13,23 @@ import TwoWheelerIcon from "@mui/icons-material/TwoWheeler"; // import { useNavi
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { Navigate, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import loginBackground from "../resources/loginBackground.png";
 import { useLogin } from "../hooks/useLogin";
 import { Navbar } from "../components/Navbar";
+import { Alert } from "@mui/material";
 
 export const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const { login, error, isLoading } = useLogin();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const message = searchParams.get("message");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -99,6 +107,13 @@ export const Login = () => {
               flexDirection: "column",
             }}
           >
+            {message ? (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {message}
+              </Alert>
+            ) : (
+              <></>
+            )}
             <Box
               sx={{
                 display: "flex",

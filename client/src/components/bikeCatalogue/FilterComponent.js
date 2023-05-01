@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ClearIcon from "@mui/icons-material/Clear";
 import CachedIcon from "@mui/icons-material/Cached";
+import FormGroup from "@mui/material/FormGroup";
+import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -9,13 +12,14 @@ import Rating from "@mui/material/Rating";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, IconButton, Typography } from "@mui/material";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
 import { filterActions } from "../../app/store";
+import useDidMountEffect from "../../hooks/useDidMountEffect";
 
-const Filter = () => {
+const Filter = (props) => {
   const priceRange = useSelector((state) => state.filter.priceRange);
   const rating = useSelector((state) => state.filter.rating);
   const dispatch = useDispatch();
@@ -24,6 +28,30 @@ const Filter = () => {
   const bikeAge = useSelector((state) => state.filter.bikeAge);
   const kmsDriven = useSelector((state) => state.filter.kmsDriven);
   const fuelType = useSelector((state) => state.filter.fuelType);
+  const filter = useSelector((state) => state.filter);
+  const booking = useSelector((state) => state.booking);
+
+  const favouritesOnly = props.favouritesOnly;
+  const setFavouritesOnly = props.setFavouritesOnly;
+
+  const applyFilterHandler = () => {
+    dispatch(filterActions.reset());
+    props.setApplyFilter((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      let completeFilter = {};
+      if (props.applyFilter) completeFilter = booking;
+      else completeFilter = { ...filter, ...booking };
+      props.getBikes(completeFilter, props.setBikes);
+    }, 500);
+
+    // props.setApplyFilter(false);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [props.applyFilter, filter, booking]);
 
   const marksPriceRange = [
     {
@@ -78,10 +106,13 @@ const Filter = () => {
             </Typography>
           </Grid>
           <Grid item>
-            <Button variant="contained" size="large">
-              Apply
-              {/* TODO: Send Get Request */}
-            </Button>
+            {props.applyFilter ? (
+              <></>
+            ) : (
+              <Button variant="text" size="large" onClick={applyFilterHandler}>
+                Reset
+              </Button>
+            )}
           </Grid>
         </Grid>
         <Box mt={2}>
@@ -93,6 +124,7 @@ const Filter = () => {
             value={priceRange}
             onChange={(event) => {
               dispatch(filterActions.setPriceRange(event.target.value));
+              props.setApplyFilter(false);
             }}
             valueLabelDisplay="auto"
             marks={marksPriceRange}
@@ -113,11 +145,14 @@ const Filter = () => {
               label="Type"
               onChange={(event) => {
                 dispatch(filterActions.setBikeType(event.target.value));
+                props.setApplyFilter(false);
               }}
             >
-              <MenuItem value={"Sporty"}>Sporty</MenuItem>
-              <MenuItem value={"Economical"}>Economical</MenuItem>
-              <MenuItem value={"Everyday Use"}>Everyday Use</MenuItem>
+              <MenuItem value={"Road"}>Road</MenuItem>
+              <MenuItem value={"Mountain"}>Mountain</MenuItem>
+              <MenuItem value={"City"}>City</MenuItem>
+              <MenuItem value={"Super-Bike"}>Super Bike</MenuItem>
+              <MenuItem value={"Sport"}>Sport</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -133,6 +168,7 @@ const Filter = () => {
               label="Company"
               onChange={(event) => {
                 dispatch(filterActions.setBikeCompany(event.target.value));
+                props.setApplyFilter(false);
               }}
             >
               {/* TODO: Load dynamically from database */}
@@ -143,17 +179,18 @@ const Filter = () => {
           </FormControl>
         </Box>
         <Box mt={2}>
-          <Typography component="legend">Rating</Typography>
+          <Typography component="legend">Min. Rating</Typography>
           <Rating
             name="simple-controlled"
             value={rating}
             onChange={(event) => {
               dispatch(filterActions.setRating(Number(event.target.value)));
+              props.setApplyFilter(false);
             }}
           />
         </Box>
         <Box mt={2}>
-          <Typography component="legend">Kms Driven</Typography>
+          <Typography component="legend">Max. Kms Driven</Typography>
           <Slider
             size="small"
             min={10000}
@@ -161,25 +198,27 @@ const Filter = () => {
             step={10000}
             marks={marksKmsDriven}
             value={kmsDriven}
-            onChange={(event) =>
-              dispatch(filterActions.setKmsDriven(event.target.value))
-            }
+            onChange={(event) => {
+              dispatch(filterActions.setKmsDriven(event.target.value));
+              props.setApplyFilter(false);
+            }}
             defaultValue={400000}
             aria-label="Small"
             valueLabelDisplay="auto"
           />
         </Box>
         <Box mt={2}>
-          <Typography component="legend">Bike Age</Typography>
+          <Typography component="legend">Max. Bike Age</Typography>
           <Slider
             size="small"
             defaultValue={3}
             min={1}
             max={10}
             value={bikeAge}
-            onChange={(event) =>
-              dispatch(filterActions.setBikeAge(event.target.value))
-            }
+            onChange={(event) => {
+              dispatch(filterActions.setBikeAge(event.target.value));
+              props.setApplyFilter(false);
+            }}
             aria-label="Small"
             marks={marksBikeAge}
             valueLabelDisplay="auto"
@@ -191,9 +230,10 @@ const Filter = () => {
             <RadioGroup
               row
               value={fuelType}
-              onChange={(event) =>
-                dispatch(filterActions.setFuelType(event.target.value))
-              }
+              onChange={(event) => {
+                dispatch(filterActions.setFuelType(event.target.value));
+                props.setApplyFilter(false);
+              }}
             >
               <FormControlLabel
                 value="all"
@@ -202,19 +242,31 @@ const Filter = () => {
                 label="All"
               />
               <FormControlLabel
-                value="petrol"
+                value="Petrol"
                 /* onChange={() => dispatch(filterActions.setFuelType("petrol"))} */
                 control={<Radio />}
                 label="Petrol"
               />
               <FormControlLabel
-                value="electric"
+                value="Electric"
                 /* onChange={() => dispatch(filterActions.setFuelType("electric"))} */
                 control={<Radio />}
                 label="Electric"
               />
             </RadioGroup>
           </FormControl>
+        </Box>
+        <Box mt={2}>
+          <FormGroup>
+            <FormControlLabel
+              value={favouritesOnly}
+              onChange={() => {
+                setFavouritesOnly((prevState) => !prevState);
+              }}
+              control={<Checkbox />}
+              label="Favourites only"
+            />
+          </FormGroup>
         </Box>
       </Box>
     </>

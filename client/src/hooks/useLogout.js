@@ -6,6 +6,8 @@ export const useLogout = () => {
   const logout = () => {
     dispatch(authActions.setUser(null));
     dispatch(fullAuthAction.setUserName(null))
+    dispatch(authActions.setUser(""));
+    dispatch(authActions.setId(-1));
   };
   return { logout };
 };

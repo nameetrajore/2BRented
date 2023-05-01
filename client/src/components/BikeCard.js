@@ -1,6 +1,7 @@
 import * as React from "react";
+import { useState, useEffect, useRef } from "react";
 import Card from "@mui/material/Card";
-import { useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { pink } from "@mui/material/colors";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -10,8 +11,10 @@ import Typography from "@mui/material/Typography";
 import dummyImg from "../resources/customerHomePage1.svg";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Box, IconButton, Rating } from "@mui/material";
+import { Box, IconButton, Rating, Tooltip } from "@mui/material";
 import ArrowForward from "@mui/icons-material/ArrowForward";
+import { useSelector } from "react-redux";
+import { useFavourite } from "../hooks/useFavourite";
 
 const bull = (
   <Box
@@ -22,51 +25,93 @@ const bull = (
   </Box>
 );
 
-const ImgMediaCard = (props) => {
+const BikeCard = (props) => {
+  const bike = props.bike;
+  const { storeIsFavourite } = useFavourite(bike.isFavourite);
+  const [isFavourite, setIsFavourite] = useState(bike.isFavourite);
+  const dropDate = useSelector((state) => state.booking.dropDate);
+  const pickupDate = useSelector((state) => state.booking.pickupDate);
+  const pickupLocation = useSelector((state) => state.booking.pickupLocation);
+  const dropLocation = useSelector((state) => state.booking.dropLocation);
+  const params = { dropLocation, pickupLocation, dropDate, pickupDate };
   const navigate = useNavigate();
+  const id = useSelector((state) => state.auth._id);
+  const message = {
+    message: "You need to login first in order to add bikes to favourites.",
+  };
+
+  const handleIsFavourite = () => {
+    if (id !== -1) setIsFavourite((prevState) => !prevState);
+    else {
+      navigate(`/login?${createSearchParams(message)}`);
+    }
+  };
+
+  // to make sure that this useEffect executes everytime except the first render
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      const timer = setTimeout(() => {
+        storeIsFavourite(bike._id, isFavourite, bike);
+      }, 250);
+
+      // props.setApplyFilter(false);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+    isFirstRender.current = false;
+  }, [isFavourite]);
+
+  const numberOfDays =
+    Math.floor(new Date(dropDate).getTime() - new Date(pickupDate).getTime()) /
+    86400000;
+
   return (
     <Box
       sx={{
-        boxShadow: 1,
-        borderRadius: 3,
+        boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+        borderRadius: 2,
       }}
     >
       <Card
         sx={{
-          boxShadow: 1,
+          /* boxShadow: 1, */
           borderRadius: 3,
         }}
       >
         <CardMedia
           component="img"
-          alt="green iguana"
+          alt={bike.brand + " " + bike.model}
           height="200"
           width="200"
-          image={dummyImg}
+          image={bike.imageUrl[0]}
         />
         <CardContent sx={{ pb: 0 }}>
-          <Typography gutterBottom variant="h5" component="div">
-            {props.title ? props.title : "Lorem Ipsum"}
-          </Typography>
+          <Tooltip title={bike.brand + " " + bike.model} placement="top">
+            <Typography gutterBottom variant="h6" noWrap component="div">
+              {bike.brand + " " + bike.model}
+            </Typography>
+          </Tooltip>
           <Typography variant="body2" color="text.secondary">
-            {props.fuelType ? props.fuelType : "Fuel Type"}
+            {bike.fuelType}
             {bull}
-            {props.transmission ? props.transmission : "Transmission"}
+            {bike.transmission}
             {bull}
-            {props.year ? props.year : "Year"}
+            {bike.year.substring(0, 4)}
           </Typography>
-          <Rating value={props.rating} readOnly size="small" precision={0.1} />
+          <Rating value={bike.rating} readOnly size="small" precision={0.1} />
           <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-            ₹400 / day
+            ₹{bike.dailyRate} / day
           </Typography>
           <Typography variant="h6" sx={{ color: "#6C63FF" }}>
-            ₹1200 total
+            ₹{bike.dailyRate * numberOfDays} total
           </Typography>
         </CardContent>
         <CardActions>
           <Box sx={{ flexGrow: 1 }} />
-          <IconButton onClick={(prevState) => props.setIsFavourite(!prevState)}>
-            {props.isFavourite ? (
+          <IconButton onClick={handleIsFavourite}>
+            {isFavourite ? (
               <FavoriteIcon sx={{ color: pink[500] }} />
             ) : (
               <FavoriteBorderIcon />
@@ -74,7 +119,9 @@ const ImgMediaCard = (props) => {
           </IconButton>
           <IconButton
             onClick={() => {
-              navigate("/booking-summary/1");
+              navigate(
+                `/booking-summary/${bike._id}?${createSearchParams(params)}`
+              );
             }}
           >
             <ArrowForward />
@@ -85,4 +132,4 @@ const ImgMediaCard = (props) => {
   );
 };
 
-export default ImgMediaCard;
+export default BikeCard;

@@ -35,7 +35,7 @@ export const Navbar = () => {
   };
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-  console.log(user, "inside nav");
+  // console.log(user, "inside nav");
   // console.log(user[0].customerName, "this is the logged in user")
   const { logout } = useLogout();
   const handleAvatarClick = (event) => {
@@ -78,27 +78,29 @@ export const Navbar = () => {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box>
-            <Button variant="text" size="large" sx={{ color: "white", mr: 2 }}>
+            <Button
+              variant="text"
+              size="large"
+              sx={{ color: "white", mr: 2 }}
+              onClick={() => {
+                navigate("/");
+              }}
+            >
               Home
             </Button>
 
-            <Button variant="text" size="large" sx={{ color: "white", mr: 2 }}>
+            <Button
+              variant="text"
+              size="large"
+              sx={{ color: "white", mr: 2 }}
+              onClick={() => {
+                navigate("/support");
+              }}
+            >
               Support
             </Button>
             {user && (
               <>
-                <IconButton
-                  sx={{
-                    mr: 2,
-                  }}
-                >
-                  <FavoriteBorder
-                    fontSize="medium"
-                    sx={{
-                      color: "white",
-                    }}
-                  />
-                </IconButton>
                 <Button
                   id="basic-button"
                   aria-controls={open ? "basic-menu" : undefined}
@@ -120,8 +122,21 @@ export const Navbar = () => {
                     "aria-labelledby": "basic-button",
                   }}
                 >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      navigate("/profile");
+                    }}
+                  >
+                    Profile
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      navigate("/my-bookings");
+                    }}
+                  >
+                    My Bookings
+                  </MenuItem>
+                  {/* This will have active and previous bookings */}
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
               </>
