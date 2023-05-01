@@ -57,6 +57,20 @@ const bikeSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Booking",
+      validate: {
+        validator: function(value) {
+          if (!Array.isArray(value)) {
+            return false;
+          }
+          for (let i = 0; i < value.length; i++) {
+            if (!mongoose.Types.ObjectId.isValid(value[i])) {
+              return false;
+            }
+          }
+          return true;
+        },
+        message: props => `${props.value} is not a valid ObjectId array`
+      }
     },
   ],
   dailyRate: {
