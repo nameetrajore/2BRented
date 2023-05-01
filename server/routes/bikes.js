@@ -2,7 +2,7 @@ const Bike = require("../models/bikes");
 
 const postBike = async (req, res) => {
   const bike = new Bike({ ...req.body });
-
+  // Hello
   try {
     const newBike = await bike.save();
     res.status(201).json(newBike);
@@ -13,7 +13,7 @@ const postBike = async (req, res) => {
 
 const getBike = async (req, res) => {
   const incomingQuery = req.query;
-  console.log(incomingQuery);
+  // console.log(incomingQuery);
   const outgoingQuery = { ...incomingQuery };
 
   delete outgoingQuery.priceHigh;
@@ -55,47 +55,29 @@ const getBike = async (req, res) => {
     };
   }
 
-  // outgoingQuery.bookings = {
-  //   $not: {
-  //     $elemMatch: {
-  //       startDate: { $lt: incomingQuery.dropDate },
-  //       endDate: { $gt: incomingQuery.pickupDate },
-  //     },
-  //   },
-  // };
-  console.log("outgoing query", outgoingQuery);
+  const dateArray = [];
+
+  // Loop through each day between start and end date
+  const currentDate = new Date(incomingQuery.pickupDate);
+  while (currentDate <= new Date(incomingQuery.dropDate)) {
+    // Add the current date to the array
+    dateArray.push(new Date(currentDate));
+
+    // Increment the current date
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  outgoingQuery.bookingDates = {
+    $not: {
+      $elemMatch: {
+        $in: dateArray,
+      },
+    },
+  };
+
+  console.log(outgoingQuery, dateArray);
   try {
     const bikes = await Bike.find(outgoingQuery);
-    const ex = await Bike.aggregate([
-      {
-        $lookup: {
-          from: "bookings",
-          localField: "bookings",
-          foreignField: "_id",
-          as: "bookings",
-        },
-      },
-      {
-        $match: {
-          bookings: {
-            $not: {
-              $elemMatch: {
-                startDate: {
-                  $gt: incomingQuery.pickupDate,
-                  $lt: incomingQuery.dropDate,
-                },
-                endDate: {
-                  $gt: incomingQuery.pickupDate,
-                  $lt: incomingQuery.dropDate,
-                },
-              },
-            },
-          },
-        },
-      },
-    ]);
-
-    console.log(ex[ex.length - 1].bookings);
 
     res.json(bikes);
   } catch (err) {

@@ -13,10 +13,6 @@ const locationSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  area: {
-    type: String,
-    required: true,
-  },
   address: {
     type: String,
     required: true,

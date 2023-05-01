@@ -22,12 +22,12 @@ const ownerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  bikes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Bike",
-    },
-  ],
+  // bikes: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Bike",
+  //   },
+  // ],
 });
 
 module.exports = mongoose.model("Owner", ownerSchema);

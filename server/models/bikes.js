@@ -59,6 +59,10 @@ const bikeSchema = new mongoose.Schema({
       ref: "Booking",
     },
   ],
+  bookingDates: {
+    type: [Date],
+    required: true,
+  },
   dailyRate: {
     type: Number,
     required: true,

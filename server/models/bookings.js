@@ -5,12 +5,58 @@ const bookingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Bike",
   },
+  bikeName: {
+    type: String,
+    required: true,
+  },
   startDate: {
     type: Date,
     required: true,
+    validate: {
+      validator: async function (value) {
+        const booking = await mongoose.models.Booking.findOne({
+          _id: { $ne: this._id },
+          bike: this.bike,
+          $or: [
+            { startDate: { $lte: value }, endDate: { $gte: value } },
+            {
+              startDate: { $lte: this.endDate },
+              endDate: { $gte: this.endDate },
+            },
+          ],
+        });
+        return !booking;
+      },
+      message: "Booking dates overlap with an existing booking.",
+    },
   },
   endDate: {
     type: Date,
+    required: true,
+    validate: {
+      validator: async function (value) {
+        const booking = await mongoose.models.Booking.findOne({
+          _id: { $ne: this._id },
+          bike: this.bike,
+          $or: [
+            { startDate: { $lte: value }, endDate: { $gte: value } },
+            {
+              startDate: { $lte: this.startDate },
+              endDate: { $gte: this.startDate },
+            },
+          ],
+        });
+        return !booking;
+      },
+      message: "Booking dates overlap with an existing booking.",
+    },
+  },
+  pickupLocation: {
+    type: String,
+    required: true,
+  },
+  dropLocation: {
+    type: String,
     required: true,
   },
   totalAmount: {
@@ -22,7 +68,7 @@ const bookingSchema = new mongoose.Schema({
     ref: "Customer",
   },
   paymentId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "Payment",
     required: true,
   },
