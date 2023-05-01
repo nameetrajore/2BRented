@@ -133,14 +133,14 @@ export const Login = () => {
                 Login
               </Typography>
             </Box>
-            <Typography
+            {/* <Typography
               component="h5"
               sx={{ fontStyle: "italic" }}
               color="#154B46"
             >
               Fringilla urna porttitor rhoncus dolor purus non enim praesent
               elementum facilisis le facilisi etiam{" "}
-            </Typography>
+            </Typography> */}
             <Box
               component="form"
               noValidate
@@ -175,10 +175,20 @@ export const Login = () => {
                 autoComplete="current-password"
                 error={error}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+              <Grid container>
+                <Grid item xs>
+                  <FormControlLabel
+                    control={<Checkbox value="remember" color="primary" />}
+                    label="Remember me"
+                  />
+                </Grid>
+                <Grid item mt = {1}>
+                  <Link onClick={() => navigate("/login-owner")} varient="body2" color="secondary">
+                    Login as an owner
+                  </Link>
+                </Grid>
+              </Grid>
+              
               <Button
                 type="submit"
                 fullWidth
