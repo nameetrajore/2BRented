@@ -1,14 +1,50 @@
 const Bike = require("../models/bikes");
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
 
 const postBike = async (req, res) => {
-  const bike = new Bike({ ...req.body });
-  // Hello
-  try {
-    const newBike = await bike.save();
-    res.status(201).json(newBike);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
+  // console.log("we are here", req.body);
+  const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+      const dir = './uploads';
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+      }
+      cb(null, dir);
+    },
+    filename: function(req, file, cb) {
+      cb(null, new Date().toISOString() + '-' + file.originalname);
+    }
+  });
+
+  const upload = multer({ storage: storage }).array('images', 5); // change 'single' to 'array' and set a limit of 5 files
+
+  // Call the upload middleware here to process the file uploads
+  upload(req, res, async function (err) { // wrap the callback function inside async
+    // console.log("these are the files", req.files)
+    if (err) {
+      // Handle any errors
+      console.error(err);
+      res.status(400).json({ message: "Failed to upload images" });
+      return;
+    }
+
+    // Get the file paths of the uploaded images
+    const imageUrls = req.files.map((file) => file.path);
+    const bike = new Bike({ ...req.body, imageUrl: imageUrls, location: JSON.parse(req.body.location)});// assuming you have a 'images' field in your Bike schema 
+    // console.log("this is the file",bike)
+    // console.log(imageUrls)
+    try {
+      // console.log("this is the file",req.body)
+      const newBike = await bike.save();
+      res.status(201).json(newBike);
+      // console.log("posted", bike)
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+      console.log(err.message)
+    }
+  });
 };
 
 const getBike = async (req, res) => {
@@ -55,6 +91,7 @@ const getBike = async (req, res) => {
     };
   }
 
+
   const dateArray = [];
 
   // Loop through each day between start and end date
@@ -74,6 +111,8 @@ const getBike = async (req, res) => {
       },
     },
   };
+
+
 
   console.log(outgoingQuery, dateArray);
   try {
