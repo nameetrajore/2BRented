@@ -73,6 +73,10 @@ const bikeSchema = new mongoose.Schema({
       }
     },
   ],
+  bookingDates: {
+    type: [Date],
+    required: true,
+  },
   dailyRate: {
     type: Number,
     required: true,

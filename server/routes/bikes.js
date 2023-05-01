@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 
 const postBike = async (req, res) => {
-
   // console.log("we are here", req.body);
   const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -92,38 +91,32 @@ const getBike = async (req, res) => {
     };
   }
 
+
+  const dateArray = [];
+
+  // Loop through each day between start and end date
+  const currentDate = new Date(incomingQuery.pickupDate);
+  while (currentDate <= new Date(incomingQuery.dropDate)) {
+    // Add the current date to the array
+    dateArray.push(new Date(currentDate));
+
+    // Increment the current date
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  outgoingQuery.bookingDates = {
+    $not: {
+      $elemMatch: {
+        $in: dateArray,
+      },
+    },
+  };
+
+
+
+  console.log(outgoingQuery, dateArray);
   try {
     const bikes = await Bike.find(outgoingQuery);
-    const ex = await Bike.aggregate([
-      {
-        $lookup: {
-          from: "bookings",
-          localField: "bookings",
-          foreignField: "_id",
-          as: "bookings",
-        },
-      },
-      {
-        $match: {
-          bookings: {
-            $not: {
-              $elemMatch: {
-                startDate: {
-                  $gt: incomingQuery.pickupDate,
-                  $lt: incomingQuery.dropDate,
-                },
-                endDate: {
-                  $gt: incomingQuery.pickupDate,
-                  $lt: incomingQuery.dropDate,
-                },
-              },
-            },
-          },
-        },
-      },
-    ]);
-
-    // console.log(ex[ex.length - 1].bookings);
 
     res.json(bikes);
   } catch (err) {
