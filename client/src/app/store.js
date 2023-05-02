@@ -5,18 +5,16 @@ const initialAuthState = {
   _id: localStorage.getItem("_id") ? localStorage.getItem("_id") : -1,
 };
 
-const initialFullAuthState = {
-  userFirstName: "",
-  userName: "",
-  userPhoneNumber: "",
-  userEmail: "",
-  userID: "",
-}
+const initialOwnerAuthState = {
+  owner: localStorage.getItem("owner") ? localStorage.getItem("owner") : "",
+  ownerId: localStorage.getItem("ownerId")
+    ? localStorage.getItem("ownerId")
+    : -1,
+};
 
 const today = new Date();
 let tomorrow = new Date();
 tomorrow.setDate(today.getDate() + 1);
-
 
 const initialBookingState = {
   pickupDate: today.toISOString().substring(0, 10),
@@ -40,13 +38,12 @@ const initialLocationState = {
   city: "",
   pincode: 0,
   address: "",
-}
-
+};
 
 const initialBikeState = {
   brand: "",
   model: "",
-  year: new Date().toISOString().substring(0,4),
+  year: new Date().toISOString().substring(0, 4),
   location: initialLocationState,
   type: "city",
   fuelType: "petrol",
@@ -59,7 +56,7 @@ const initialBikeState = {
   mileage: "",
   imageUrl: "",
   owner: "",
-}
+};
 
 const setLocation = (state, action) => {
   const { address, city, pincode, stateName } = action.payload;
@@ -77,45 +74,45 @@ const bikeSlice = createSlice({
   initialState: initialBikeState,
   reducers: {
     setBrand(state, action) {
-      state.brand = action.payload
+      state.brand = action.payload;
     },
     setModel(state, action) {
-      state.model = action.payload
+      state.model = action.payload;
     },
     setYear(state, action) {
-      state.year = action.payload
+      state.year = action.payload;
     },
 
     setType(state, action) {
-      state.type = action.payload
+      state.type = action.payload;
     },
     setFuelType(state, action) {
-      state.fuelType = action.payload
+      state.fuelType = action.payload;
     },
     setRegistrationNumber(state, action) {
-      state.registrationNumber = action.payload
+      state.registrationNumber = action.payload;
     },
     setBookingsId(state, action) {
-      state.bookingsId = action.payload
+      state.bookingsId = action.payload;
     },
     setBikeAge(state, action) {
-      state.bikeAge = action.payload  
+      state.bikeAge = action.payload;
     },
     setRating(state, action) {
-      state.rating = action.payload
+      state.rating = action.payload;
     },
     setImageUrl(state, action) {
-      state.imageUrl = action.payload
+      state.imageUrl = action.payload;
     },
     setMileage(state, action) {
-      state.mileage = action.payload
+      state.mileage = action.payload;
     },
     setOwnerID(state, action) {
-      state.owner = action.payload
-    },    
+      state.owner = action.payload;
+    },
     setLocation,
   },
-})
+});
 
 const authSlice = createSlice({
   name: "authState",
@@ -132,24 +129,20 @@ const authSlice = createSlice({
   },
 });
 
-const fullAuthSlice = createSlice({
-  name: "fullAuthState",
-  initialState: initialFullAuthState,
+const ownerAuthSlice = createSlice({
+  name: "ownerAuthSlice",
+  initialState: initialOwnerAuthState,
   reducers: {
-    setUserName(state, action) {
-      state.userName = action.payload;
+    setOwner(state, action) {
+      state.owner = action.payload;
+      localStorage.setItem("owner", action.payload);
     },
-    setUserPhoneNumber(state, action) {
-      state.userPhoneNumber = action.payload;
+    setOwnerId(state, action) {
+      state.ownerId = action.payload;
+      localStorage.setItem("ownerId", action.payload);
     },
-    setUserEmail(state, action) {
-      state.userEmail = action.payload;
-    },
-    setUserId(state, action) {
-      state.userID = action.payload;
-    }
   },
-})
+});
 
 const bookingSlice = createSlice({
   name: "bookingSlice",
@@ -203,19 +196,17 @@ const filterSlice = createSlice({
   },
 });
 
-
-
 const reducers = combineReducers({
   auth: authSlice.reducer,
   bikeDetails: bikeSlice.reducer,
-  fullauth: fullAuthSlice.reducer,
+  ownerAuth: ownerAuthSlice.reducer,
   booking: bookingSlice.reducer,
   filter: filterSlice.reducer,
 });
 
 const store = configureStore({ reducer: reducers });
 export const authActions = authSlice.actions;
-export const fullAuthAction = fullAuthSlice.actions;
+export const ownerAuthActions = ownerAuthSlice.actions;
 export const bookingActions = bookingSlice.actions;
 export const filterActions = filterSlice.actions;
 export const bikeDetailsActions = bikeSlice.actions;

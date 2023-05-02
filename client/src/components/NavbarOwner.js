@@ -34,7 +34,7 @@ export const NavbarOwner = () => {
     setAnchorEl(null);
   };
   const navigate = useNavigate();
-  const user = useSelector((state) => state.fullauth.userName);
+  const user = useSelector((state) => state.ownerAuth.owner);
   console.log(user, "inside nav");
   // console.log(user[0].customerName, "this is the logged in user")
   const { logout } = useLogout();
@@ -73,37 +73,24 @@ export const NavbarOwner = () => {
             sx={{ mt: 0, fontWeight: "700", fontStyle: "italic" }}
             onClick={() => navigate("/owner-dashboard")}
           >
-            2BRENTED<span style={{ color: 'black' }}>OWNERS</span>
+            2BRENTED<span style={{ color: "black" }}>OWNERS</span>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
 
           <Box>
-          <Button variant="text" size="large" sx={{ color: "white", mr: 2 }}
-                  onClick={()=>navigate("/add-bike-1")}
-          >
-              Start Earning
-            </Button>
             <Button variant="text" size="large" sx={{ color: "white", mr: 2 }}>
               Home
             </Button>
-
-            <Button variant="text" size="large" sx={{ color: "white", mr: 2 }}>
-              Support
+            <Button
+              variant="text"
+              size="large"
+              sx={{ color: "white", mr: 2 }}
+              onClick={() => navigate("/add-bike-1")}
+            >
+              Manage Bikes
             </Button>
             {user && (
               <>
-                <IconButton
-                  sx={{
-                    mr: 2,
-                  }}
-                >
-                  <FavoriteBorder
-                    fontSize="medium"
-                    sx={{
-                      color: "white",
-                    }}
-                  />
-                </IconButton>
                 <Button
                   id="basic-button"
                   aria-controls={open ? "basic-menu" : undefined}

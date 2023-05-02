@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { authActions, fullAuthAction } from "../app/store";
 export const useLogin = () => {
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   // const { dispatch } = useAuthContext();
   const dispatch = useDispatch();
 

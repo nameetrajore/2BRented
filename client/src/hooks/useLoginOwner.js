@@ -1,7 +1,7 @@
 import { useState } from "react";
 // import { useAuthContext } from "./useAuthContext";
 import { useDispatch } from "react-redux";
-import { authActions, fullAuthAction } from "../app/store";
+import { authActions, ownerAuthActions } from "../app/store";
 
 export const useLoginOwner = () => {
   const [error, setError] = useState(null);
@@ -31,12 +31,9 @@ export const useLoginOwner = () => {
         //updating the auth context
         // dispatch({ type: "LOGIN", payload: jsonRes });
         // dispatch(authActions.setUser(jsonRes[0].ownerName));
-        
-        dispatch(fullAuthAction.setUserName(jsonRes[0].ownerName))
-        dispatch(fullAuthAction.setUserEmail(jsonRes[0].ownerEmail))
-        dispatch(fullAuthAction.setUserPhoneNumber(jsonRes[0].ownerPhoneNumber))
-        dispatch(fullAuthAction.setUserId(jsonRes[0]._id))
-        localStorage.setItem("user", jsonRes[0].ownerName);
+
+        dispatch(ownerAuthActions.setOwner(jsonRes[0].ownerName));
+        dispatch(ownerAuthActions.setOwnerId(jsonRes[0]._id));
         setError(jsonRes.error);
       }
     }
