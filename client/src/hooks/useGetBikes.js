@@ -28,6 +28,7 @@ export const useGetBikes = () => {
 
     const responseBikes = await fetch(`http://localhost:4000/api/` + query);
     const jsonResBikes = await responseBikes.json();
+    console.log(jsonResBikes)
     if (responseBikes.ok) {
       if (id !== -1) {
         const responseFavourites = await fetch(
@@ -44,6 +45,7 @@ export const useGetBikes = () => {
           setBikes(bikes);
         }
       } else {
+        console.log(jsonResBikes)
         setBikes(jsonResBikes);
       }
       setIsLoading(false);

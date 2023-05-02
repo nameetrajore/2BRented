@@ -27,6 +27,7 @@ const bull = (
 
 const BikeCard = (props) => {
   const bike = props.bike;
+  console.log("this is image",bike.imageUrl)
   const { storeIsFavourite } = useFavourite(bike.isFavourite);
   const [isFavourite, setIsFavourite] = useState(bike.isFavourite);
   const dropDate = useSelector((state) => state.booking.dropDate);
@@ -38,6 +39,12 @@ const BikeCard = (props) => {
   const id = useSelector((state) => state.auth._id);
   const message = {
     message: "You need to login first in order to add bikes to favourites.",
+  };
+  const getImageUrl = (imageUrl) => {
+    console.log(imageUrl)
+    const url = "http://localhost:4000/" + imageUrl;
+    console.log("inside getImageUrl",url)
+    return url;
   };
 
   const handleIsFavourite = () => {
@@ -85,7 +92,7 @@ const BikeCard = (props) => {
           alt={bike.brand + " " + bike.model}
           height="200"
           width="200"
-          image={bike.imageUrl[0]}
+          image={getImageUrl(bike.imageUrl[0])}
         />
         <CardContent sx={{ pb: 0 }}>
           <Tooltip title={bike.brand + " " + bike.model} placement="top">

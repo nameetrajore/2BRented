@@ -36,6 +36,7 @@ export const AddBike4 = () => {
   const handleImageChange = (event) => {
     setImages(event.target.files);
     const files = event.target.files;
+
     const urls = [];
     for (let i = 0; i < files.length; i++) {
       urls.push(URL.createObjectURL(files[i]));
