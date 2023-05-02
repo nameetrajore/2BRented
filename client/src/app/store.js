@@ -12,6 +12,15 @@ const initialOwnerAuthState = {
     : -1,
 };
 
+const initialManagerAuthState = {
+  manager: localStorage.getItem("manager")
+    ? localStorage.getItem("manager")
+    : "",
+  managerId: localStorage.getItem("managerId")
+    ? localStorage.getItem("managerId")
+    : -1,
+};
+
 const today = new Date();
 let tomorrow = new Date();
 tomorrow.setDate(today.getDate() + 1);
@@ -144,6 +153,21 @@ const ownerAuthSlice = createSlice({
   },
 });
 
+const managerAuthSlice = createSlice({
+  name: "managerAuthSlice",
+  initialState: initialManagerAuthState,
+  reducers: {
+    setOwner(state, action) {
+      state.manager = action.payload;
+      localStorage.setItem("manager", action.payload);
+    },
+    setOwnerId(state, action) {
+      state.managerId = action.payload;
+      localStorage.setItem("managerId", action.payload);
+    },
+  },
+});
+
 const bookingSlice = createSlice({
   name: "bookingSlice",
   initialState: initialBookingState,
@@ -202,11 +226,13 @@ const reducers = combineReducers({
   ownerAuth: ownerAuthSlice.reducer,
   booking: bookingSlice.reducer,
   filter: filterSlice.reducer,
+  managerAuth: managerAuthSlice.reducer,
 });
 
 const store = configureStore({ reducer: reducers });
 export const authActions = authSlice.actions;
 export const ownerAuthActions = ownerAuthSlice.actions;
+export const managerAuthActions = managerAuthSlice.actions;
 export const bookingActions = bookingSlice.actions;
 export const filterActions = filterSlice.actions;
 export const bikeDetailsActions = bikeSlice.actions;
