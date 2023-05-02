@@ -4,7 +4,7 @@ import { createSearchParams } from "react-router-dom";
 
 export const usePayment = () => {
   const id = useSelector((state) => state.auth._id);
-  const checkout = async (amount, bike, booking, customer, paymentId) => {
+  const checkout = async (amount, bike, booking) => {
     const response = await fetch(
       `http://localhost:4000/api/customers?_id=${id}`
     );
@@ -48,7 +48,6 @@ export const usePayment = () => {
     const rzp1 = window.Razorpay(options);
     rzp1.open();
 
-    console.log(booking);
     const params = {
       bike: bike._id,
       bikeName: `${bike.brand} ${bike.model} ${bike.year.substring(0, 4)}`,

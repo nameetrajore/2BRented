@@ -95,8 +95,8 @@ const Filter = (props) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          boxShadow: 1,
-          borderRadius: 5,
+          boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+          borderRadius: 3,
         }}
       >
         <Grid container>
@@ -140,7 +140,7 @@ const Filter = (props) => {
           <Box mt={1} />
           <FormControl fullWidth>
             <InputLabel>Type</InputLabel>
-            <Select 
+            <Select
               value={type}
               label="Type"
               onChange={(event) => {

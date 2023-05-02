@@ -31,6 +31,7 @@ import ReviewComponent from "../components/bookingSummary/ReviewComponent";
 import { usePayment } from "../hooks/usePayment";
 import Footer from "../components/Footer";
 import { usePatchBike } from "../hooks/usePatchBike";
+import ErrorModal from "../components/bookingSummary/errorModal";
 
 const bull = (
   <Box
@@ -45,6 +46,7 @@ const BookingSummary = (props) => {
   const { checkout } = usePayment();
   const { patchBike } = usePatchBike();
   const navigate = useNavigate();
+  const [modal, setModal] = useState(false);
   const _id = useSelector((state) => state.auth._id);
   const booking = useSelector((state) => state.booking);
   const message = {
@@ -52,8 +54,9 @@ const BookingSummary = (props) => {
   };
   const checkoutHandler = async (amount) => {
     if (_id !== -1) {
-      checkout(amount, bike, booking);
-      patchBike(bike, booking);
+      const alreadyBooked = await patchBike(bike, booking, setModal);
+      if (!alreadyBooked) checkout(amount, bike, booking, setModal);
+      else setModal(true);
     } else navigate(`/login?${createSearchParams(message)}`);
   };
   const dispatch = useDispatch();
@@ -81,6 +84,7 @@ const BookingSummary = (props) => {
   return (
     <>
       <Navbar />
+      <ErrorModal modal={modal} setModal={setModal} />
       <Box
         sx={{
           height: "30vh",
