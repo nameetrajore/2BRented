@@ -30,6 +30,7 @@ import DetailsComponent from "../components/bookingSummary/DetailsComponent";
 import ReviewComponent from "../components/bookingSummary/ReviewComponent";
 import { usePayment } from "../hooks/usePayment";
 import Footer from "../components/Footer";
+import { usePatchBike } from "../hooks/usePatchBike";
 
 const bull = (
   <Box
@@ -42,6 +43,7 @@ const bull = (
 
 const BookingSummary = (props) => {
   const { checkout } = usePayment();
+  const { patchBike } = usePatchBike();
   const navigate = useNavigate();
   const _id = useSelector((state) => state.auth._id);
   const booking = useSelector((state) => state.booking);
@@ -49,8 +51,10 @@ const BookingSummary = (props) => {
     message: "In order to rent a bike you need to login first.",
   };
   const checkoutHandler = async (amount) => {
-    if (_id !== -1) checkout(amount, bike, booking);
-    else navigate(`/login?${createSearchParams(message)}`);
+    if (_id !== -1) {
+      checkout(amount, bike, booking);
+      patchBike(bike, booking);
+    } else navigate(`/login?${createSearchParams(message)}`);
   };
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();

@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { NavbarOwner } from "../components/NavbarOwner";
-import Grid from "@mui/material/Grid"
+import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Box, Button, Typography } from "@mui/material";
@@ -9,19 +9,15 @@ import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 
 export const AddBike1 = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userName = useSelector((state) => state.fullauth.userName);
-  const userPhoneNumber = useSelector((state) => state.fullauth.userPhoneNumber);
-  const userEmail = useSelector((state) => state.fullauth.userEmail)
-  const userID = useSelector((state) => state.fullauth.userID)
+  const owner = useSelector((state) => state.ownerAuth.owner);
 
   return (
     <>
-      <NavbarOwner/>
-      <Grid 
-        alignItems = "center"
+      <NavbarOwner />
+      <Grid
+        alignItems="center"
         justifyContent="center"
         spacing={3}
         container
@@ -30,24 +26,22 @@ export const AddBike1 = () => {
           flexDirection: "row",
           alignItems: "flex-start",
         }}
-        component={Paper}
         p={9}
       >
         <Box
-        component="form"
-        noValidate
-        
-        sx={{
-          height: "100%",
-          px: 4,
-          py: 2,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: 500,
-          boxShadow: 5,
-          borderRadius: 5,
-        }}
+          component="form"
+          noValidate
+          sx={{
+            height: "100%",
+            px: 4,
+            py: 2,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: 500,
+            boxShadow: 5,
+            borderRadius: 5,
+          }}
         >
           <Typography
             variant="h4"
@@ -57,7 +51,10 @@ export const AddBike1 = () => {
             }}
             pb={2}
             color="#154B46"
-          > Personal Details</Typography>
+          >
+            {" "}
+            Personal Details
+          </Typography>
           <Typography
             variant="h5"
             sx={{
@@ -65,9 +62,12 @@ export const AddBike1 = () => {
               fontWeight: "bold",
             }}
             pb={5}
-          > Verify if it's you</Typography>
+          >
+            {" "}
+            Verify if it's you
+          </Typography>
           <Grid
-            alignItems = "center"
+            alignItems="center"
             justifyContent="center"
             spacing={3}
             container
@@ -75,26 +75,27 @@ export const AddBike1 = () => {
               display: "flex",
               flexDirection: "row",
               alignItems: "flex-start",
-          }}
+            }}
           >
             <CssBaseline />
-            <Box
-              component="form"
-              noValidate
-              
-              sx={{ mt: 4 }}
-            >
-              <Grid container spacing={3} alignItems="center" align="center" justifyContent="center">
+            <Box component="form" noValidate sx={{ mt: 4 }}>
+              <Grid
+                container
+                spacing={3}
+                alignItems="center"
+                align="center"
+                justifyContent="center"
+              >
                 <Grid item md={12}>
                   <TextField
                     required
-                    style={{textAlign: "center", width: 300}}
+                    style={{ textAlign: "center", width: 300 }}
                     disabled={true}
-                    sx = {{ml:3}}
-                    value={userName}
-                    id="userName"
+                    sx={{ ml: 3 }}
+                    value={owner}
+                    id="owner"
                     label="Name"
-                    name="userName"
+                    name="owner"
                     autoFocus
                     color="secondary"
                   />
@@ -102,9 +103,8 @@ export const AddBike1 = () => {
                 <Grid item md={12}>
                   <TextField
                     required
-                    sx = {{ml:3, width: 300}}
+                    sx={{ ml: 3, width: 300 }}
                     disabled={true}
-                    value={userPhoneNumber}
                     id="phNumber"
                     label="Phone Number"
                     name="phoneNumber"
@@ -115,9 +115,8 @@ export const AddBike1 = () => {
                 <Grid item md={12}>
                   <TextField
                     required
-                    sx = {{ml:3, width: 300}}
+                    sx={{ ml: 3, width: 300 }}
                     disabled={true}
-                    value={userEmail}
                     id="userEmailId"
                     label="Email"
                     name="email"
@@ -125,10 +124,12 @@ export const AddBike1 = () => {
                     color="secondary"
                   />
                 </Grid>
-                <Grid item md = {12}>
-                  <Button item 
-                    
-                    onClick={()=>{navigate("/add-bike-2")}}
+                <Grid item md={12}>
+                  <Button
+                    item
+                    onClick={() => {
+                      navigate("/add-bike-2");
+                    }}
                     variant="contained"
                     size="large"
                   >

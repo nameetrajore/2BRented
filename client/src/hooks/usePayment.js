@@ -69,14 +69,11 @@ export const usePayment = () => {
       paymentId: order.id,
       status: "completed",
     };
-    try {
-      const responseBooking = await axios.post(
-        `http://localhost:4000/api/bookings`,
-        params
-      );
-    } catch (err) {
-      console.log(err.response.data.message); // display modal
-    }
+
+    const responseBooking = await axios.post(
+      `http://localhost:4000/api/bookings`,
+      params
+    );
   };
 
   return { checkout };
