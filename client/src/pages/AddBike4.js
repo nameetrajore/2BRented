@@ -38,8 +38,10 @@ export const AddBike4 = () => {
     const files = event.target.files;
     const urls = []
     for(let i = 0 ; i < files.length ; i++){
+      console.log("this is files",files[i])
       urls.push(URL.createObjectURL(files[i]));
     }
+    console.log("this is urls",urls)
     setSelectedFiles(urls)
   };
 
