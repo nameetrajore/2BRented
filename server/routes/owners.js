@@ -24,8 +24,13 @@ const putOwner = (req, res) => {
   res.send({ type: "PUT", id: req.params.id });
 };
 
-const deleteOwner = (req, res) => {
-  res.send({ type: "DELETE" });
+const deleteOwner = async (req, res) => {
+  try {
+    const owner = await Owner.deleteOne({ _id: req.params.id });
+    res.json(owner);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 module.exports = {
