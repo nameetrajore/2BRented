@@ -1,7 +1,32 @@
 const Bike = require("../models/bikes");
-const multer = require("multer");
-const fs = require("fs");
-const path = require("path");
+
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+const app = express();
+const http = require('http');
+
+const getBikeImages = async (req, res) => {
+  const filePath = path.join(process.cwd(), 'uploads', req.params.filename);
+  console.log('File path:', __dirname);
+
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.error('Error:', err);
+      res.status(404).end();
+      return;
+    }
+
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.on('error', (error) => {
+      console.error('Error:', error);
+      res.status(404).end();
+    });
+
+    fileStream.pipe(res);
+  });
+};
 
 const postBike = async (req, res) => {
   // console.log("we are here", req.body);
@@ -82,7 +107,7 @@ const getBike = async (req, res) => {
       $lte: incomingQuery.bikeAge,
     };
   }
-
+  
   if (incomingQuery.kmsDriven) {
     outgoingQuery.kmsDriven = {
       $lte: incomingQuery.kmsDriven,
@@ -153,4 +178,5 @@ module.exports = {
   postBike,
   patchBike,
   deleteBike,
+  getBikeImages,
 };
