@@ -26,6 +26,5 @@ export const useLoginOwner = () => {
     }
     setIsLoading(false);
   };
-
   return { login, isLoading, error };
 };
