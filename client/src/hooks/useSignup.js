@@ -4,7 +4,7 @@ import { authActions } from "../app/store";
 import { useAuthContext } from "./useAuthContext";
 
 export const useSignup = () => {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(null);
   // const { dispatch } = useAuthContext()
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ export const useSignup = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch("http://localhost:4000/api/customers", {
+    const response = await fetch("http://localhost:4000/api/customer-signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -30,18 +30,21 @@ export const useSignup = () => {
         customerEmail,
         customerPassword,
         customerDrivingLicense,
+        rating: 0,
       }),
     });
-    console.log("hi");
+
     const json = await response.json();
+    console.log(json);
 
     if (!response.ok) {
       setIsLoading(false);
-      setError(json.error);
+      setError(true);
+      window.alert(error); // display the error in a popup window
     }
     if (response.ok) {
-      //updating the auth context
-      dispatch(authActions.setUser(json));
+      dispatch(authActions.setUser(customerName));
+      dispatch(authActions.setId(json.customer._id));
       setIsLoading(false);
     }
   };

@@ -1,4 +1,8 @@
-import { authActions, ownerAuthActions } from "../app/store";
+import {
+  authActions,
+  managerAuthActions,
+  ownerAuthActions,
+} from "../app/store";
 import { useDispatch } from "react-redux";
 
 export const useLogout = () => {
@@ -8,6 +12,8 @@ export const useLogout = () => {
     dispatch(ownerAuthActions.setOwnerId(-1));
     dispatch(authActions.setUser(""));
     dispatch(authActions.setId(-1));
+    dispatch(managerAuthActions.setManager(""));
+    dispatch(managerAuthActions.setManagerId(-1));
   };
   return { logout };
 };

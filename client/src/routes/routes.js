@@ -17,10 +17,17 @@ import Invoice from "../pages/Invoice";
 import Bookings from "../pages/Bookings";
 import Profile from "../pages/Profile";
 import Support from "../pages/Support";
+import ManagerLogin from "../pages/ManagerLogin";
+import ManagerDashboard from "../pages/ManagerDashboard";
+import ManageCustomers from "../pages/ManageCustomers";
+import ManageOwners from "../pages/ManageOwners";
+import ManageBikes from "../pages/ManageBikes";
 
 const AppRoutes = () => {
   const user = useSelector((state) => state.auth.user);
   const owner = useSelector((state) => state.ownerAuth.owner);
+  const manager = useSelector((state) => state.managerAuth.manager);
+
   console.log("ownerauth", owner);
   return (
     <Routes>
@@ -51,8 +58,34 @@ const AppRoutes = () => {
       <Route path="/booking-summary/:id" element={<BookingSummary />} />
       <Route path="/payment" element={<Invoice />} />
       <Route path="/my-bookings" element={<Bookings />} />
-      <Route path="/profile" element=<Profile /> />
-      <Route path="/support" element=<Support /> />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/support" element={<Support />} />
+      <Route
+        path="/manager-dashboard"
+        element={
+          manager ? <ManagerDashboard /> : <Navigate to="/manager-login" />
+        }
+      />
+      <Route
+        path="manager-dashboard/customers"
+        element={
+          manager ? <ManageCustomers /> : <Navigate to="/manager-login" />
+        }
+      />
+      <Route
+        path="manager-dashboard/owners"
+        element={manager ? <ManageOwners /> : <Navigate to="/manager-login" />}
+      />
+      <Route
+        path="manager-dashboard/bikes"
+        element={manager ? <ManageBikes /> : <Navigate to="/manager-login" />}
+      />
+      <Route
+        path="/manager-login"
+        element={
+          !manager ? <ManagerLogin /> : <Navigate to="/manager-dashboard" />
+        }
+      />
       <Route path="*" element={<NoMatch />} />
     </Routes>
   );

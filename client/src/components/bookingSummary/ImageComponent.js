@@ -7,6 +7,7 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
+import SimpleImageSlider from "react-simple-image-slider";
 import Slider from "react-slick";
 const ImageComponent = (props) => {
   const bike = props.bike;
@@ -35,13 +36,14 @@ const ImageComponent = (props) => {
           </Typography>
         </Grid>
         <Grid item md={12} px={5} pb={7}>
-          <Slider {...settings}>
-            {bike.imageUrl.map((image) => (
-              <Box key={Math.random()}>
-                <img src={image} style={{ borderRadius: 10 }} />
-              </Box>
-            ))}
-          </Slider>
+          <SimpleImageSlider images={bike.imageUrl} />
+          {/* <Slider {...settings}> */}
+          {/*   {bike.imageUrl.map((image) => ( */}
+          {/*     <Box key={Math.random()}> */}
+          {/*       <img src={image} style={{ borderRadius: 10 }} /> */}
+          {/*     </Box> */}
+          {/*   ))} */}
+          {/* </Slider> */}
         </Grid>
       </Grid>
     </Box>

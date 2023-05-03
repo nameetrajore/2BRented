@@ -20,7 +20,6 @@ const Bookings = () => {
   useEffect(() => {
     getBookings(customerId, setBookings);
   }, []);
-  console.log(bookings);
   return (
     <>
       <Navbar />
