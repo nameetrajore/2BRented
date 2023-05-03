@@ -41,8 +41,13 @@ const patchCustomer = async (req, res) => {
   }
 };
 
-const deleteCustomer = (req, res) => {
-  res.send({ type: "DELETE" });
+const deleteCustomer = async (req, res) => {
+  try {
+    const customer = await Customer.deleteOne({ _id: req.params.id });
+    res.json(customer);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 module.exports = {

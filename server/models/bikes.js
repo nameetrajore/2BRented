@@ -58,7 +58,7 @@ const bikeSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Booking",
       validate: {
-        validator: function(value) {
+        validator: function (value) {
           if (!Array.isArray(value)) {
             return false;
           }
@@ -69,8 +69,8 @@ const bikeSchema = new mongoose.Schema({
           }
           return true;
         },
-        message: props => `${props.value} is not a valid ObjectId array`
-      }
+        message: (props) => `${props.value} is not a valid ObjectId array`,
+      },
     },
   ],
   bookingDates: {

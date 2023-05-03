@@ -1,27 +1,28 @@
 const Bike = require("../models/bikes");
-const multer = require('multer');
-const fs = require('fs');
-const path = require('path');
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 
 const postBike = async (req, res) => {
   // console.log("we are here", req.body);
   const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-      const dir = './uploads';
+    destination: function (req, file, cb) {
+      const dir = "./uploads";
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
       }
       cb(null, dir);
     },
-    filename: function(req, file, cb) {
-      cb(null, new Date().toISOString() + '-' + file.originalname);
-    }
+    filename: function (req, file, cb) {
+      cb(null, new Date().toISOString() + "-" + file.originalname);
+    },
   });
 
-  const upload = multer({ storage: storage }).array('images', 5); // change 'single' to 'array' and set a limit of 5 files
+  const upload = multer({ storage: storage }).array("images", 5); // change 'single' to 'array' and set a limit of 5 files
 
   // Call the upload middleware here to process the file uploads
-  upload(req, res, async function (err) { // wrap the callback function inside async
+  upload(req, res, async function (err) {
+    // wrap the callback function inside async
     // console.log("these are the files", req.files)
     if (err) {
       // Handle any errors
@@ -32,7 +33,11 @@ const postBike = async (req, res) => {
 
     // Get the file paths of the uploaded images
     const imageUrls = req.files.map((file) => file.path);
-    const bike = new Bike({ ...req.body, imageUrl: imageUrls, location: JSON.parse(req.body.location)});// assuming you have a 'images' field in your Bike schema 
+    const bike = new Bike({
+      ...req.body,
+      imageUrl: imageUrls,
+      location: JSON.parse(req.body.location),
+    }); // assuming you have a 'images' field in your Bike schema
     // console.log("this is the file",bike)
     // console.log(imageUrls)
     try {
@@ -42,14 +47,14 @@ const postBike = async (req, res) => {
       // console.log("posted", bike)
     } catch (err) {
       res.status(400).json({ message: err.message });
-      console.log(err.message)
+      console.log(err.message);
     }
   });
 };
 
 const getBike = async (req, res) => {
   const incomingQuery = req.query;
-  // console.log(incomingQuery);
+  console.log("inside getBike");
   const outgoingQuery = { ...incomingQuery };
 
   delete outgoingQuery.priceHigh;
@@ -91,7 +96,6 @@ const getBike = async (req, res) => {
     };
   }
 
-
   const dateArray = [];
 
   // Loop through each day between start and end date
@@ -104,17 +108,15 @@ const getBike = async (req, res) => {
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
-  outgoingQuery.bookingDates = {
-    $not: {
-      $elemMatch: {
-        $in: dateArray,
+  if (incomingQuery.pickupDate && incomingQuery.dropDate)
+    outgoingQuery.bookingDates = {
+      $not: {
+        $elemMatch: {
+          $in: dateArray,
+        },
       },
-    },
-  };
+    };
 
-
-
-  console.log(outgoingQuery, dateArray);
   try {
     const bikes = await Bike.find(outgoingQuery);
 
@@ -126,9 +128,10 @@ const getBike = async (req, res) => {
 
 const patchBike = async (req, res) => {
   try {
+    console.log("here");
     const bike = await Bike.updateOne(
       { _id: req.params.id },
-      { $set: req.query }
+      { $set: req.body }
     );
     res.json(bike);
   } catch (err) {
@@ -136,8 +139,13 @@ const patchBike = async (req, res) => {
   }
 };
 
-const deleteBike = (req, res) => {
-  res.send({ type: "DELETE" });
+const deleteBike = async (req, res) => {
+  try {
+    const bike = await Bike.deleteOne({ _id: req.params.id });
+    res.json(bike);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 module.exports = {
