@@ -10,6 +10,7 @@ const bookings = require("./bookings");
 const queries = require("./queries");
 
 // Bike Routes
+router.get("/uploads/:filename", bikes.getBikeImages)
 router.get("/bikes", bikes.getBike);
 router.post("/bikes", bikes.postBike);
 router.patch("/bikes/:id", bikes.patchBike);
