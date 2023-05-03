@@ -40,12 +40,23 @@ const BikeCard = (props) => {
   const message = {
     message: "You need to login first in order to add bikes to favourites.",
   };
-  const getImageUrl = (imageUrl) => {
-    console.log(imageUrl)
-    const url = "http://localhost:4000/" + imageUrl;
-    console.log("inside getImageUrl",url)
-    return url;
-  };
+
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    // Call the getBikeImage method from your backend to get the image URL
+    console.log("this is inside useffect")
+    fetch(`http://localhost:4000/api/${bike.imageUrl[0]}`)
+      .then((res) => res.blob())
+      .then((blob) => {
+        
+        const url = URL.createObjectURL(blob);
+        setImageUrl(url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [bike]);
 
   const handleIsFavourite = () => {
     if (id !== -1) setIsFavourite((prevState) => !prevState);
@@ -92,7 +103,7 @@ const BikeCard = (props) => {
           alt={bike.brand + " " + bike.model}
           height="200"
           width="200"
-          image={getImageUrl(bike.imageUrl[0])}
+          image={imageUrl}
         />
         <CardContent sx={{ pb: 0 }}>
           <Tooltip title={bike.brand + " " + bike.model} placement="top">
