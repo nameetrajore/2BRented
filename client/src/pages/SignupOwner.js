@@ -21,7 +21,10 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 export const SignupOwner = () => {
   const navigate = useNavigate();
   const [userName, setName] = useState("");
-  const [userAddress, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -31,8 +34,22 @@ export const SignupOwner = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // const data = new FormData(event.currentTarget);
-    console.log(email, password, userAddress, userName, phone, rePassword);
-    await signup(userName, userAddress, phone, email, password, rePassword);
+    console.log(
+      email,
+      password,
+      { city, pincode, state, address },
+      userName,
+      phone,
+      rePassword
+    );
+    await signup(
+      userName,
+      { city, pincode, state, address },
+      phone,
+      email,
+      password,
+      rePassword
+    );
   };
   // const navigate = useNavigate()
   return (
@@ -132,7 +149,7 @@ export const SignupOwner = () => {
             onSubmit={handleSubmit}
             sx={{ mt: 4 }}
           >
-            <Grid container spacing={3}> 
+            <Grid container spacing={3}>
               <Grid item md={6}>
                 <TextField
                   required
@@ -150,11 +167,40 @@ export const SignupOwner = () => {
                 <TextField
                   required
                   fullWidth
+                  onChange={(e) => setCity(e.target.value)}
+                  value={city}
+                  label="City"
+                  color="secondary"
+                />
+              </Grid>
+              <Grid item md={6}>
+                <TextField
+                  required
+                  fullWidth
+                  onChange={(e) => setState(e.target.value)}
+                  value={state}
+                  label="State"
+                  color="secondary"
+                />
+              </Grid>
+              <Grid item md={6}>
+                <TextField
+                  required
+                  fullWidth
+                  onChange={(e) => setPincode(e.target.value)}
+                  value={pincode}
+                  label="Pincode"
+                  name=""
+                  color="secondary"
+                />
+              </Grid>
+              <Grid item md={6}>
+                <TextField
+                  required
+                  fullWidth
                   onChange={(e) => setAddress(e.target.value)}
-                  value={userAddress}
-                  id="userAddress"
+                  value={address}
                   label="Address"
-                  name="userAddress"
                   color="secondary"
                 />
               </Grid>
@@ -197,7 +243,7 @@ export const SignupOwner = () => {
                 />
               </Grid>
               <Grid item md={6}>
-              <TextField
+                <TextField
                   required
                   fullWidth
                   onChange={(e) => setRePassword(e.target.value)}

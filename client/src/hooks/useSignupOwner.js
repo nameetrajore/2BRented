@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { authActions } from "../app/store";
-import { useAuthContext } from "./useAuthContext";
+import { authActions, ownerAuthActions } from "../app/store";
 
 export const useSignupOwner = () => {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(null);
-  // const { dispatch } = useAuthContext()
   const dispatch = useDispatch();
 
   const signup = async (
@@ -14,20 +12,12 @@ export const useSignupOwner = () => {
     ownerAddress,
     ownerPhoneNumber,
     ownerEmail,
-    ownerPassword,
-    ownerRePassword,
+    ownerPassword
   ) => {
     setIsLoading(true);
     setError(null);
 
-    if (ownerRePassword !== ownerPassword) {
-      setIsLoading(false);
-      setError("Passwords do not match");
-      window.alert(error); // display the error in a popup window
-      return;
-    }
-
-    const response = await fetch("http://localhost:4000/api/owners", {
+    const response = await fetch("http://localhost:4000/api/owner-signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -38,20 +28,17 @@ export const useSignupOwner = () => {
         ownerPassword,
       }),
     });
-    
-    console.log("hi");
+
     const json = await response.json();
 
     if (!response.ok) {
       setIsLoading(false);
-      setError(json.error);
+      setError(true);
       window.alert(error); // display the error in a popup window
     }
     if (response.ok) {
-      //updating the auth context
-      console.log("done");
-      console.log("This is the response",json);
-      dispatch(authActions.setUser(json));
+      dispatch(ownerAuthActions.setOwner(ownerName));
+      dispatch(ownerAuthActions.setOwnerId(json.customer._id));
       setIsLoading(false);
     }
   };

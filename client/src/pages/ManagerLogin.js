@@ -23,11 +23,12 @@ import loginBackground from "../resources/loginBackground.png";
 import { useLogin } from "../hooks/useLogin";
 import { Navbar } from "../components/Navbar";
 import { Alert } from "@mui/material";
+import { useManagerLogin } from "../hooks/useManagerLogin";
 
 export const ManagerLogin = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const { login, error, isLoading } = useLogin();
+  const { login, error, isLoading } = useManagerLogin();
   const [searchParams, setSearchParams] = useSearchParams();
   const message = searchParams.get("message");
 
@@ -37,7 +38,6 @@ export const ManagerLogin = () => {
     await login(email, password);
   };
 
-  const navigate = useNavigate();
   return (
     <>
       <Grid
@@ -130,7 +130,7 @@ export const ManagerLogin = () => {
                 mb={2}
                 color="#154B46"
               >
-                Login
+                Manager Login
               </Typography>
             </Box>
             {/* <Typography
@@ -182,17 +182,7 @@ export const ManagerLogin = () => {
                     label="Remember me"
                   />
                 </Grid>
-                <Grid item mt={1}>
-                  <Link
-                    onClick={() => navigate("/login-owner")}
-                    varient="body2"
-                    color="secondary"
-                  >
-                    Login as an owner
-                  </Link>
-                </Grid>
               </Grid>
-
               <Button
                 type="submit"
                 fullWidth
@@ -203,22 +193,7 @@ export const ManagerLogin = () => {
               >
                 Login
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2" color="secondary">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link
-                    variant="body2"
-                    color="secondary"
-                    onClick={() => navigate("/sign-up")}
-                  >
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
+              <Grid container></Grid>
             </Box>
           </Box>
         </Grid>

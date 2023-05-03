@@ -69,6 +69,10 @@ export const usePayment = () => {
       status: "completed",
     };
 
+    await postBooking(params);
+  };
+
+  const postBooking = async (params) => {
     const responseBooking = await axios.post(
       `http://localhost:4000/api/bookings`,
       params
