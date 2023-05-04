@@ -1,12 +1,12 @@
 require("dotenv").config();
 
 const express = require("express");
-const routes = require("./routes/index");
 const app = express();
 const mongoose = require("mongoose");
 const uri = process.env.DATABASE_URL;
 const db = mongoose.connection;
 const cors = require("cors");
+const path = require("path");
 mongoose.set("strictQuery", true);
 mongoose.connect(uri);
 
@@ -20,20 +20,17 @@ app.use(
 );
 
 app.use(express.json());
-app.use("/api", routes);
+app.use("/api", require(path.join(__dirname, "routes", "index.js")));
 
 if (process.env.NODE_ENV === "production") {
-  const path = require("path");
   app.get("/", (req, res) => {
-    app.use(
-      cors({
-        origin: path.resolve(__dirname, "..", "client", "build", "index.html"), // replace with your client-side domain
-      })
-    );
-    app.use(express.static(path.resolve(__dirname, "..", "client", "build")));
-    res.sendFile(
-      path.resolve(__dirname, "..", "client", "build", "index.html")
-    );
+    // app.use(
+    //   cors({
+    //     origin: path.resolve(__dirname, "..", "client", "build", "index.html"), // replace with your client-side domain
+    //   })
+    // );
+    app.use(express.static(path.join(__dirname, "..", "client", "build")));
+    res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
   });
 }
 
