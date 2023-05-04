@@ -17,5 +17,5 @@
       "src":"./client/build",
       "use":"@vercel/static"
     }
-  ],
+  ]
 }
