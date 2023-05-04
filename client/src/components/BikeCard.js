@@ -42,37 +42,22 @@ const BikeCard = (props) => {
   };
 
   const [imageUrl, setImageUrl] = useState("");
-
-  useEffect(() => {
-    // Call the getBikeImage method from your backend to get the image URL
-    console.log("this is inside useffect")
-    fetch(`http://localhost:4000/api/${bike.imageUrl[0]}`)
-      .then((res) => res.blob())
-      .then((blob) => {
-        
-        const url = URL.createObjectURL(blob);
-        setImageUrl(url);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [bike]);
-
-  const handleIsFavourite = () => {
-    if (id !== -1) setIsFavourite((prevState) => !prevState);
-    else {
-      navigate(`/login?${createSearchParams(message)}`);
-    }
-  };
-
-  // to make sure that this useEffect executes everytime except the first render
-  const isFirstRender = useRef(true);
+    
+    const handleIsFavourite = () => {
+      if (id !== -1) setIsFavourite((prevState) => !prevState);
+      else {
+        navigate(`/login?${createSearchParams(message)}`);
+      }
+    };
+    
+    // to make sure that this useEffect executes everytime except the first render
+    const isFirstRender = useRef(true);
   useEffect(() => {
     if (!isFirstRender.current) {
       const timer = setTimeout(() => {
         storeIsFavourite(bike._id, isFavourite, bike);
       }, 250);
-
+      
       // props.setApplyFilter(false);
       return () => {
         clearTimeout(timer);
@@ -80,22 +65,22 @@ const BikeCard = (props) => {
     }
     isFirstRender.current = false;
   }, [isFavourite]);
-
+  
   const numberOfDays =
-    Math.floor(new Date(dropDate).getTime() - new Date(pickupDate).getTime()) /
-    86400000;
-
+  Math.floor(new Date(dropDate).getTime() - new Date(pickupDate).getTime()) /
+  86400000;
+  
   return (
     <Box
-      sx={{
+    sx={{
         boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-        borderRadius: 2,
+        borderRadius: 4,
       }}
     >
       <Card
         sx={{
           /* boxShadow: 1, */
-          borderRadius: 3,
+          borderRadius: 2,
         }}
       >
         <CardMedia
@@ -103,7 +88,7 @@ const BikeCard = (props) => {
           alt={bike.brand + " " + bike.model}
           height="200"
           width="200"
-          image={imageUrl}
+          image={"http://localhost:4000/api/"+bike.imageUrl[0]}
         />
         <CardContent sx={{ pb: 0 }}>
           <Tooltip title={bike.brand + " " + bike.model} placement="top">

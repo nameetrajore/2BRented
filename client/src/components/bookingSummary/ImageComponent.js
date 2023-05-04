@@ -10,12 +10,13 @@ import {
 import Slider from "react-slick";
 const ImageComponent = (props) => {
   const bike = props.bike;
+  
   var settings = {
     dots: true,
     centerMode: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 2,
     slidesToScroll: 1,
   };
   return (
@@ -38,7 +39,7 @@ const ImageComponent = (props) => {
           <Slider {...settings}>
             {bike.imageUrl.map((image) => (
               <Box key={Math.random()}>
-                <img src={image} style={{ borderRadius: 10 }} />
+                <img src={"http://localhost:4000/api/"+image} style={{ borderRadius: 10, height:"200px" }} />
               </Box>
             ))}
           </Slider>

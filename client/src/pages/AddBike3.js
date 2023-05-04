@@ -23,6 +23,7 @@ export const AddBike3 = () => {
   const [stateBike, setState] = useState("");
   const [cityBike, setCity] = useState("");
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("inside")

@@ -119,7 +119,7 @@ const BookingSummary = (props) => {
                   <Grid item md={1.8}>
                     <Box ml={3} mt={3} mb={3}>
                       <img
-                        src={bike.imageUrl[0]}
+                        src={"http://localhost:4000/api/" + bike.imageUrl[0]}
                         alt="Bike Image"
                         height="200px"
                         width="100%"
