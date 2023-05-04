@@ -10,9 +10,13 @@ import Paper from "@mui/material/Paper";
 import { FormControl, InputLabel, Input, CardMedia, Card } from "@mui/material";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export const AddBike4 = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [open, setOpen] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const brand = useSelector((state) => state.bikeDetails.brand);
@@ -28,10 +32,18 @@ export const AddBike4 = () => {
   const location = useSelector((state) => state.bikeDetails.location);
   const userID = useSelector((state) => state.ownerAuth.ownerId);
   const rating = 0;
-  const dailyRate = 0;
-  const kmsDriven = 0;
+  const dailyRate = useSelector((state) => state.bikeDetails.dailyRate);
+  const kmsDriven = useSelector((state) => state.bikeDetails.kmsDriven);
 
   const [images, setImages] = useState([]);
+  
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+  
+    setOpen(false);
+  };
 
   const handleImageChange = (event) => {
     setImages(event.target.files);
@@ -83,6 +95,7 @@ export const AddBike4 = () => {
           },
         }
       );
+      setOpen(true);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -183,6 +196,11 @@ export const AddBike4 = () => {
           <CssBaseline />
         </Box>
       </Grid>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Bike added successfully!
+        </Alert>
+      </Snackbar>
 
       {/* <form onSubmit={handleSubmit} encType="multipart/form-data">
       <label>

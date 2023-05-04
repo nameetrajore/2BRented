@@ -54,15 +54,15 @@ const initialBikeState = {
   model: "",
   year: new Date().toISOString().substring(0, 4),
   location: initialLocationState,
-  type: "city",
-  fuelType: "petrol",
+  type: "City",
+  fuelType: "Petrol",
   registrationNumber: "",
   bookingsId: [],
-  bikeAge: "",
-  dailyRate: "",
-  kmsDriven: "",
-  rating: "",
-  mileage: "",
+  bikeAge: 0,
+  dailyRate: 0,
+  kmsDriven: 0,
+  rating: 0,
+  mileage: 0,
   imageUrl: "",
   owner: "",
 };
@@ -118,6 +118,12 @@ const bikeSlice = createSlice({
     },
     setOwnerID(state, action) {
       state.owner = action.payload;
+    },
+    setDailyRate(state, action) {
+      state.dailyRate = action.payload;
+    },
+    setKmsDriven(state, action) {
+      state.kmsDriven = action.payload;
     },
     setLocation,
   },

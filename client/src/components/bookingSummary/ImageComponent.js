@@ -11,12 +11,13 @@ import SimpleImageSlider from "react-simple-image-slider";
 import Slider from "react-slick";
 const ImageComponent = (props) => {
   const bike = props.bike;
+  
   var settings = {
     dots: true,
     centerMode: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 2,
     slidesToScroll: 1,
   };
   return (
@@ -36,14 +37,13 @@ const ImageComponent = (props) => {
           </Typography>
         </Grid>
         <Grid item md={12} px={5} pb={7}>
-          <SimpleImageSlider images={bike.imageUrl} />
-          {/* <Slider {...settings}> */}
-          {/*   {bike.imageUrl.map((image) => ( */}
-          {/*     <Box key={Math.random()}> */}
-          {/*       <img src={image} style={{ borderRadius: 10 }} /> */}
-          {/*     </Box> */}
-          {/*   ))} */}
-          {/* </Slider> */}
+          <Slider {...settings}>
+            {bike.imageUrl.map((image) => (
+              <Box key={Math.random()}>
+                <img src={"http://localhost:4000/api/"+image} style={{ borderRadius: 10, height:"200px" }} />
+              </Box>
+            ))}
+          </Slider>
         </Grid>
       </Grid>
     </Box>

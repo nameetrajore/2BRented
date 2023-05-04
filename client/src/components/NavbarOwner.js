@@ -85,7 +85,7 @@ export const NavbarOwner = () => {
               variant="text"
               size="large"
               sx={{ color: "white", mr: 2 }}
-              onClick={() => navigate("/add-bike-1")}
+              onClick={() => navigate("/add-bike-2")}
             >
               Manage Bikes
             </Button>
