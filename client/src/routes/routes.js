@@ -30,7 +30,7 @@ const AppRoutes = () => {
 
   console.log("ownerauth", owner);
   return (
-    <Routes>
+    <Routes basename="/">
       <Route path="/" element={<SearchPage />} />
 
       <Route
