@@ -27,7 +27,7 @@ const bull = (
 
 const BikeCard = (props) => {
   const bike = props.bike;
-  console.log("this is image",bike.imageUrl)
+  console.log("this is image", bike.imageUrl);
   const { storeIsFavourite } = useFavourite(bike.isFavourite);
   const [isFavourite, setIsFavourite] = useState(bike.isFavourite);
   const dropDate = useSelector((state) => state.booking.dropDate);
@@ -42,21 +42,6 @@ const BikeCard = (props) => {
   };
 
   const [imageUrl, setImageUrl] = useState("");
-
-  useEffect(() => {
-    // Call the getBikeImage method from your backend to get the image URL
-    console.log("this is inside useffect")
-    fetch(`http://localhost:4000/api/${bike.imageUrl[0]}`)
-      .then((res) => res.blob())
-      .then((blob) => {
-        
-        const url = URL.createObjectURL(blob);
-        setImageUrl(url);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [bike]);
 
   const handleIsFavourite = () => {
     if (id !== -1) setIsFavourite((prevState) => !prevState);
@@ -94,7 +79,6 @@ const BikeCard = (props) => {
     >
       <Card
         sx={{
-          /* boxShadow: 1, */
           borderRadius: 3,
         }}
       >
@@ -103,7 +87,7 @@ const BikeCard = (props) => {
           alt={bike.brand + " " + bike.model}
           height="200"
           width="200"
-          image={imageUrl}
+          image={bike.imageUrl[0]}
         />
         <CardContent sx={{ pb: 0 }}>
           <Tooltip title={bike.brand + " " + bike.model} placement="top">

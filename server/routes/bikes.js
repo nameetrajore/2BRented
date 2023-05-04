@@ -1,38 +1,62 @@
 const Bike = require("../models/bikes");
-
-const multer = require('multer');
-const fs = require('fs');
-const path = require('path');
-const express = require('express');
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const fs = require("fs");
+const path = require("path");
+const express = require("express");
 const app = express();
-const http = require('http');
-
-const getBikeImages = async (req, res) => {
-  const filePath = path.join(process.cwd(), 'uploads', req.params.filename);
-  console.log('File path:', __dirname);
-
-  fs.access(filePath, fs.constants.F_OK, (err) => {
-    if (err) {
-      console.error('Error:', err);
-      res.status(404).end();
-      return;
-    }
-
-    const fileStream = fs.createReadStream(filePath);
-    fileStream.on('error', (error) => {
-      console.error('Error:', error);
-      res.status(404).end();
-    });
-
-    fileStream.pipe(res);
+const http = require("http");
+const multer = require("multer");
+const bucket = "2brented-app";
+const uploadToS3 = async (path, originalFilename, mimetype) => {
+  const client = new S3Client({
+    region: "eu-north-1",
+    credentials: {
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+      accessKeyId: process.env.S3_ACCESS_KEY,
+    },
   });
+
+  const parts = originalFilename.split(".");
+  const ext = parts[parts.length - 1];
+  const newFilename = Date.now() + "." + ext;
+  const data = await client.send(
+    new PutObjectCommand({
+      Bucket: bucket,
+      Body: fs.readFileSync(path),
+      Key: newFilename,
+      ContentType: mimetype,
+      ACL: "public-read",
+    })
+  );
+
+  return `https://${bucket}.s3.amazonaws.com/${newFilename}`;
 };
 
+// const getBikeImages = async (req, res) => {
+//   const filePath = path.join(process.cwd(), "uploads", req.params.filename);
+//   console.log("File path:", __dirname);
+
+//   fs.access(filePath, fs.constants.F_OK, (err) => {
+//     if (err) {
+//       console.error("Error:", err);
+//       res.status(404).end();
+//       return;
+//     }
+
+//     const fileStream = fs.createReadStream(filePath);
+//     fileStream.on("error", (error) => {
+//       console.error("Error:", error);
+//       res.status(404).end();
+//     });
+
+//     fileStream.pipe(res);
+//   });
+// };
+
 const postBike = async (req, res) => {
-  // console.log("we are here", req.body);
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      const dir = "./uploads";
+      const dir = "/tmp";
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
       }
@@ -48,7 +72,6 @@ const postBike = async (req, res) => {
   // Call the upload middleware here to process the file uploads
   upload(req, res, async function (err) {
     // wrap the callback function inside async
-    // console.log("these are the files", req.files)
     if (err) {
       // Handle any errors
       console.error(err);
@@ -57,19 +80,21 @@ const postBike = async (req, res) => {
     }
 
     // Get the file paths of the uploaded images
-    const imageUrls = req.files.map((file) => file.path);
+    const uploadedFiles = [];
+    for (let i = 0; i < req.files.length; i++) {
+      const { path, originalname, mimetype } = req.files[i];
+      const url = await uploadToS3(path, originalname, mimetype);
+      uploadedFiles.push(url);
+    }
     const bike = new Bike({
       ...req.body,
-      imageUrl: imageUrls,
+      imageUrl: uploadedFiles,
       location: JSON.parse(req.body.location),
-    }); // assuming you have a 'images' field in your Bike schema
-    // console.log("this is the file",bike)
-    // console.log(imageUrls)
+    });
     try {
-      // console.log("this is the file",req.body)
       const newBike = await bike.save();
       res.status(201).json(newBike);
-      // console.log("posted", bike)
+      console.log(bike);
     } catch (err) {
       res.status(400).json({ message: err.message });
       console.log(err.message);
@@ -89,10 +114,10 @@ const getBike = async (req, res) => {
   delete outgoingQuery.kmsDriven;
   delete outgoingQuery.pickupLocation;
 
-  if(incomingQuery.owner){
-    outgoingQuery.owner = incomingQuery.owner
+  if (incomingQuery.owner) {
+    outgoingQuery.owner = incomingQuery.owner;
   }
-  
+
   if (incomingQuery.priceHigh && incomingQuery.priceLow) {
     outgoingQuery.dailyRate = {
       $gte: incomingQuery.priceLow,
@@ -111,7 +136,7 @@ const getBike = async (req, res) => {
       $lte: incomingQuery.bikeAge,
     };
   }
-  
+
   if (incomingQuery.kmsDriven) {
     outgoingQuery.kmsDriven = {
       $lte: incomingQuery.kmsDriven,
@@ -182,5 +207,4 @@ module.exports = {
   postBike,
   patchBike,
   deleteBike,
-  getBikeImages,
 };
