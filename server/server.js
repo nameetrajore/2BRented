@@ -8,16 +8,21 @@ const db = mongoose.connection;
 const cors = require("cors");
 const path = require("path");
 mongoose.set("strictQuery", true);
-mongoose.connect(uri);
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+});
 
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to Database"));
 
-app.use(
-  cors({
-    origin: "http://localhost:3000", // replace with your client-side domain
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000", // replace with your client-side domain
+//   })
+// );
 
 app.use(express.json());
 app.use("/api", require(path.join(__dirname, "routes", "index.js")));
