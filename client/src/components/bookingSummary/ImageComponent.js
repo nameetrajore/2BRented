@@ -7,6 +7,7 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
+import SimpleImageSlider from "react-simple-image-slider";
 import Slider from "react-slick";
 const ImageComponent = (props) => {
   const bike = props.bike;

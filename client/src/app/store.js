@@ -163,11 +163,11 @@ const managerAuthSlice = createSlice({
   name: "managerAuthSlice",
   initialState: initialManagerAuthState,
   reducers: {
-    setOwner(state, action) {
+    setManager(state, action) {
       state.manager = action.payload;
       localStorage.setItem("manager", action.payload);
     },
-    setOwnerId(state, action) {
+    setManagerId(state, action) {
       state.managerId = action.payload;
       localStorage.setItem("managerId", action.payload);
     },
