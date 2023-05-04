@@ -89,6 +89,10 @@ const getBike = async (req, res) => {
   delete outgoingQuery.kmsDriven;
   delete outgoingQuery.pickupLocation;
 
+  if(incomingQuery.owner){
+    outgoingQuery.owner = incomingQuery.owner
+  }
+  
   if (incomingQuery.priceHigh && incomingQuery.priceLow) {
     outgoingQuery.dailyRate = {
       $gte: incomingQuery.priceLow,
