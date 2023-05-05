@@ -11,17 +11,10 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler"; // import { useNavigate } from 'react-router-dom';
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import {
-  Navigate,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import loginBackground from "../resources/loginBackground.png";
 import { useLogin } from "../hooks/useLogin";
-import { Navbar } from "../components/Navbar";
 import { Alert } from "@mui/material";
 
 export const Login = () => {
@@ -33,7 +26,6 @@ export const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //console.log(email, password);
     await login(email, password);
   };
 
@@ -182,13 +174,17 @@ export const Login = () => {
                     label="Remember me"
                   />
                 </Grid>
-                <Grid item mt = {1}>
-                  <Link onClick={() => navigate("/login-owner")} varient="body2" color="secondary">
+                <Grid item mt={1}>
+                  <Link
+                    onClick={() => navigate("/login-owner")}
+                    varient="body2"
+                    color="secondary"
+                  >
                     Login as an owner
                   </Link>
                 </Grid>
               </Grid>
-              
+
               <Button
                 type="submit"
                 fullWidth

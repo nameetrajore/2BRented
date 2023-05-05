@@ -10,7 +10,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { NavbarManager } from "../components/NavbarManager";
 import { Button } from "@mui/material";
-import { useOwners } from "../hooks/useOwners";
 import { useCustomers } from "../hooks/useCustomers";
 
 const ManageCustomers = () => {

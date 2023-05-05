@@ -4,7 +4,6 @@ import { authActions } from "../app/store";
 export const useSignup = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(null);
-  // const { dispatch } = useAuthContext()
   const dispatch = useDispatch();
 
   const signup = async (

@@ -6,22 +6,13 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler"; // import { useNavigate } from 'react-router-dom';
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import {
-  Navigate,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import loginBackground from "../resources/loginBackground.png";
-import { useLogin } from "../hooks/useLogin";
-import { Navbar } from "../components/Navbar";
 import { Alert } from "@mui/material";
 import { useManagerLogin } from "../hooks/useManagerLogin";
 

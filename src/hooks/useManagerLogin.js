@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { authActions, fullAuthAction, managerAuthActions } from "../app/store";
+import { managerAuthActions } from "../app/store";
 export const useManagerLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);

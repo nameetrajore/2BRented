@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { authActions, fullAuthAction } from "../app/store";
+import { authActions } from "../app/store";
 export const useLogin = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
-import SortIcon from "@mui/icons-material/Sort";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import BikeCard from "../components/BikeCard";
-import TextField from "@mui/material/TextField";
-// import { makeStyles } from '@mui/styles';
 import Filter from "../components/bikeCatalogue/FilterComponent";
 import { Navbar } from "../components/Navbar";
 import SearchBooking from "../components/bikeCatalogue/SearchBookingComponent";
 import SearchBike from "../components/bikeCatalogue/SearchBikeComponent";
-import { useGetBike, useGetBikes } from "../hooks/useGetBikes";
+import { useGetBikes } from "../hooks/useGetBikes";
 import { useDispatch, useSelector } from "react-redux";
-import { CircularProgress, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import LoadingSkeleton from "../components/bikeCatalogue/LoadingSkeletonComponent";
 import { bookingActions } from "../app/store";
 import Footer from "../components/Footer";
@@ -20,7 +16,6 @@ import Footer from "../components/Footer";
 export const BikeCatalouge = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const booking = useSelector((state) => state.booking);
 
   useEffect(() => {
     dispatch(bookingActions.setDropLocation(searchParams.get("dropLocation")));
@@ -31,7 +26,6 @@ export const BikeCatalouge = () => {
     dispatch(bookingActions.setPickupDate(searchParams.get("pickupDate")));
   }, []);
 
-  const navigate = useNavigate();
   const [applyFilter, setApplyFilter] = useState(true);
   const [bikes, setBikes] = useState([]);
   const [searchBike, setSearchBike] = useState("");

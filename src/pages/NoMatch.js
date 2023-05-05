@@ -9,7 +9,7 @@ export const NoMatch = () => {
         height: "100vh",
       }}
     >
-      <Grid item md={8} p={19}>
+      <Grid item md={12} p={19}>
         <Typography variant="h3">
           Oops! The page you're looking for does not exist!
         </Typography>

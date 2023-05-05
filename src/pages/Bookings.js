@@ -1,4 +1,3 @@
-import Footer from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import * as React from "react";
 import Accordion from "@mui/material/Accordion";
@@ -16,7 +15,7 @@ import BookingComponent from "../components/bookingsPage/BookingComponent";
 const Bookings = () => {
   const customerId = useSelector((state) => state.auth._id);
   const [bookings, setBookings] = useState([]);
-  const { getBookings, isLoading } = useBooking();
+  const { getBookings } = useBooking();
   useEffect(() => {
     getBookings(customerId, setBookings);
   }, []);

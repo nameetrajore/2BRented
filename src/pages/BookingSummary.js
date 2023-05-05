@@ -1,17 +1,8 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Rating,
-  Typography,
-} from "@mui/material";
+import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import "./booking-style.css";
-import PersonIcon from "@mui/icons-material/Person";
 import {
   createSearchParams,
   useNavigate,
@@ -33,16 +24,7 @@ import Footer from "../components/Footer";
 import { usePatchBike } from "../hooks/usePatchBike";
 import ErrorModal from "../components/bookingSummary/errorModal";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
-
-const BookingSummary = (props) => {
+const BookingSummary = () => {
   const { checkout } = usePayment();
   const { patchBike } = usePatchBike();
   const navigate = useNavigate();

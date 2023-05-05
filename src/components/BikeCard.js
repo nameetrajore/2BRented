@@ -6,9 +6,7 @@ import { pink } from "@mui/material/colors";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import dummyImg from "../resources/customerHomePage1.svg";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Box, IconButton, Rating, Tooltip } from "@mui/material";
@@ -40,8 +38,6 @@ const BikeCard = (props) => {
   const message = {
     message: "You need to login first in order to add bikes to favourites.",
   };
-
-  const [imageUrl, setImageUrl] = useState("");
 
   const handleIsFavourite = () => {
     if (id !== -1) setIsFavourite((prevState) => !prevState);

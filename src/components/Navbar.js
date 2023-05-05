@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
@@ -9,12 +8,8 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import { useLogout } from "../hooks/useLogout";
 import { useSelector } from "react-redux";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import Favorite from "@mui/icons-material/Favorite";
 
 function stringAvatar(name) {
   return {
@@ -29,7 +24,7 @@ function stringAvatar(name) {
 export const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClose = (event) => {
+  const handleClose = () => {
     setAnchorEl(null);
   };
   const navigate = useNavigate();

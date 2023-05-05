@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import { Box, Button, Typography } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import Paper from "@mui/material/Paper";
-import { FormControl, InputLabel, Input, CardMedia, Card } from "@mui/material";
+import { FormControl, Input, CardMedia, Card } from "@mui/material";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
@@ -17,8 +17,6 @@ export const AddBike4 = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [open, setOpen] = useState(false);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const brand = useSelector((state) => state.bikeDetails.brand);
   const model = useSelector((state) => state.bikeDetails.model);
   const year = useSelector((state) => state.bikeDetails.year);
@@ -36,12 +34,12 @@ export const AddBike4 = () => {
   const kmsDriven = useSelector((state) => state.bikeDetails.kmsDriven);
 
   const [images, setImages] = useState([]);
-  
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-  
+
     setOpen(false);
   };
 

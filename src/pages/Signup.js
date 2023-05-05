@@ -7,14 +7,12 @@ import Grid from "@mui/material/Grid";
 import { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Link from "@mui/material/Link";
 import signUpBackground from "../resources/signUpBackground.svg";
 import Typography from "@mui/material/Typography";
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler"; // import { useNavigate } from 'react-router-dom';
-import { AadharVeri } from "./AadharVeri";
 import { useSignup } from "../hooks/useSignup";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
 export const Signup = () => {

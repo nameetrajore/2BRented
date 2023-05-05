@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../app/store";
 
 export const useGetBikes = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,11 +12,11 @@ export const useGetBikes = () => {
     let query = `bikes?pickupLocation=${filter.pickupLocation}&dropLocation=${filter.dropLocation}&pickupDate=${filter.pickupDate}&dropDate=${filter.dropDate}`;
     if (filter.priceRange && filter.priceRange[1] !== 0)
       query += `&priceLow=${filter.priceRange[0]}&priceHigh=${filter.priceRange[1]}`;
-    if (filter.bikeType && filter.bikeType != "")
+    if (filter.bikeType && filter.bikeType !== "")
       query += `&type=${filter.bikeType}`;
-    if (filter.bikeCompany && filter.bikeCompany != "")
+    if (filter.bikeCompany && filter.bikeCompany !== "")
       query += `&brand=${filter.bikeCompany}`;
-    if (filter.rating && filter.rating != 0)
+    if (filter.rating && filter.rating !== 0)
       query += `&rating=${filter.rating}`;
     if (filter.kmsDriven && filter.kmsDriven !== 0)
       query += `&kmsDriven=${filter.kmsDriven}`;

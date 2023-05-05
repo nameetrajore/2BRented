@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 export const useGetBike = () => {
   const [isLoading, setIsLoading] = useState(true);

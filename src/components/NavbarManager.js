@@ -24,7 +24,7 @@ function stringAvatar(name) {
 export const NavbarManager = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClose = (event) => {
+  const handleClose = () => {
     setAnchorEl(null);
   };
   const navigate = useNavigate();

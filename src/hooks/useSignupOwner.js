@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { authActions, ownerAuthActions } from "../app/store";
+import { ownerAuthActions } from "../app/store";
 
 export const useSignupOwner = () => {
   const [error, setError] = useState(false);
@@ -34,11 +34,11 @@ export const useSignupOwner = () => {
     if (!response.ok) {
       setIsLoading(false);
       setError(true);
-      window.alert(error); // display the error in a popup window
+      window.alert("Error"); // display the error in a popup window
     }
     if (response.ok) {
       dispatch(ownerAuthActions.setOwner(ownerName));
-      dispatch(ownerAuthActions.setOwnerId(json.customer._id));
+      dispatch(ownerAuthActions.setOwnerId(json.owner._id));
       setIsLoading(false);
     }
   };

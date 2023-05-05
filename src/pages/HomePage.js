@@ -7,16 +7,7 @@ import LocationCityIcon from "@mui/icons-material/LocationCity";
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
 import SportsMotorsportsIcon from "@mui/icons-material/SportsMotorsports";
 import { Navbar } from "../components/Navbar";
-import {
-  Avatar,
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-  Icon,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
 import Footer from "../components/Footer";
 
 export const SearchPage = () => {

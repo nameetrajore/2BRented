@@ -11,13 +11,10 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler"; // import { useNavigate } from 'react-router-dom';
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import loginBackground from "../resources/loginBackground.png";
-import { useLogin } from "../hooks/useLogin";
 import { useLoginOwner } from "../hooks/useLoginOwner";
-import { Navbar } from "../components/Navbar";
 
 export const OwnerLogin = () => {
   const [password, setPassword] = useState("");
