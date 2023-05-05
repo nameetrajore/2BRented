@@ -76,7 +76,7 @@ export const NavbarManager = () => {
               sx={{ color: "white", mr: 2 }}
               onClick={() => navigate("/manager-dashboard")}
             >
-              Home
+              Queries
             </Button>
             <Button
               variant="text"

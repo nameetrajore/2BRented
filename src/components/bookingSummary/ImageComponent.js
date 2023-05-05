@@ -44,7 +44,7 @@ const ImageComponent = (props) => {
             alignItems="center"
           >
             {bike.imageUrl.map((image) => (
-              <Grid item md={2} px={2}>
+              <Grid item md={3} px={2}>
                 <Box key={Math.random()}>
                   <img
                     src={image}

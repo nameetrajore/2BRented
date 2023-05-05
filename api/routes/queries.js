@@ -2,7 +2,7 @@ const Query = require("../models/queries");
 
 const getQuery = async (req, res) => {
   try {
-    const admin = await Query.find(req.query);
+    const admin = await Query.find();
     res.json(admin);
   } catch (err) {
     res.status(500).json({ message: err.message });
