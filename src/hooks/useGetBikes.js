@@ -8,7 +8,7 @@ export const useGetBikes = () => {
   const id = useSelector((state) => state.auth._id);
 
   const getBikes = async (filter, setBikes) => {
-    // console.log(filter);
+    // //console.log(filter);
     setIsLoading(true);
     let query = `bikes?pickupLocation=${filter.pickupLocation}&dropLocation=${filter.dropLocation}&pickupDate=${filter.pickupDate}&dropDate=${filter.dropDate}`;
     if (filter.priceRange && filter.priceRange[1] !== 0)
@@ -28,7 +28,7 @@ export const useGetBikes = () => {
 
     const responseBikes = await fetch(`/api/` + query);
     const jsonResBikes = await responseBikes.json();
-    console.log(jsonResBikes);
+    //console.log(jsonResBikes);
     if (responseBikes.ok) {
       if (id !== -1) {
         const responseFavourites = await fetch(`/api/customers?_id=${id}`);
@@ -43,7 +43,7 @@ export const useGetBikes = () => {
           setBikes(bikes);
         }
       } else {
-        console.log(jsonResBikes);
+        //console.log(jsonResBikes);
         setBikes(jsonResBikes);
       }
       setIsLoading(false);

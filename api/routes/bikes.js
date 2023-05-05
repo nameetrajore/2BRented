@@ -34,7 +34,7 @@ const uploadToS3 = async (path, originalFilename, mimetype) => {
 
 // const getBikeImages = async (req, res) => {
 //   const filePath = path.join(process.cwd(), "uploads", req.params.filename);
-//   console.log("File path:", __dirname);
+//   //console.log("File path:", __dirname);
 
 //   fs.access(filePath, fs.constants.F_OK, (err) => {
 //     if (err) {
@@ -94,17 +94,17 @@ const postBike = async (req, res) => {
     try {
       const newBike = await bike.save();
       res.status(201).json(newBike);
-      console.log(bike);
+      //console.log(bike);
     } catch (err) {
       res.status(400).json({ message: err.message });
-      console.log(err.message);
+      //console.log(err.message);
     }
   });
 };
 
 const getBike = async (req, res) => {
   const incomingQuery = req.query;
-  console.log("inside getBike");
+  //console.log("inside getBike");
   const outgoingQuery = { ...incomingQuery };
 
   delete outgoingQuery.priceHigh;
@@ -182,7 +182,7 @@ const getBike = async (req, res) => {
 
 const patchBike = async (req, res) => {
   try {
-    console.log("here");
+    //console.log("here");
     const bike = await Bike.updateOne(
       { _id: req.params.id },
       { $set: req.body }

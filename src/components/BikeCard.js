@@ -27,7 +27,7 @@ const bull = (
 
 const BikeCard = (props) => {
   const bike = props.bike;
-  console.log("this is image", bike.imageUrl);
+  //console.log("this is image", bike.imageUrl);
   const { storeIsFavourite } = useFavourite(bike.isFavourite);
   const [isFavourite, setIsFavourite] = useState(bike.isFavourite);
   const dropDate = useSelector((state) => state.booking.dropDate);

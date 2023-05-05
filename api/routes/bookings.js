@@ -8,7 +8,7 @@ const postBooking = async (req, res) => {
     res.status(201).json(newBooking);
   } catch (err) {
     res.status(400).json({ message: err.message });
-    console.log(err.message);
+    //console.log(err.message);
   }
 };
 
@@ -16,7 +16,7 @@ const getBooking = async (req, res) => {
   try {
     const bookings = await Booking.find(req.query);
     res.json(bookings);
-    console.log(bookings);
+    //console.log(bookings);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

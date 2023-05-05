@@ -46,7 +46,7 @@ const SearchBike = (props) => {
                 label="Search"
                 onChange={(event) => {
                   setSearchBike(event.target.value);
-                  console.log(event.target.value);
+                  //console.log(event.target.value);
                 }}
                 variant="outlined"
               />

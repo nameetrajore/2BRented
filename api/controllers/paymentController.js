@@ -24,7 +24,7 @@ const checkout = async (req, res) => {
 };
 
 const paymentVerification = async (req, res) => {
-  console.log(res);
+  // //console.log(res);
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
     req.body;
   const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -35,16 +35,16 @@ const paymentVerification = async (req, res) => {
     .update(body.toString())
     .digest("hex");
 
-  console.log("sig received ", razorpay_order_id);
-  console.log("sig received ", razorpay_payment_id);
-  //  console.log("sig generated " ,expectedSignature);
+  //console.log("sig received ", razorpay_order_id);
+  //console.log("sig received ", razorpay_payment_id);
+  //  //console.log("sig generated " ,expectedSignature);
 
   const isAuthentic = expectedSignature === razorpay_signature;
 
   if (isAuthentic) {
     // Save in Database
     // Redirect
-    console.log("Payment is Authentic");
+    //console.log("Payment is Authentic");
     res
       .status(201)
       .redirect(

@@ -26,7 +26,6 @@ const AppRoutes = () => {
   const owner = useSelector((state) => state.ownerAuth.owner);
   const manager = useSelector((state) => state.managerAuth.manager);
 
-  console.log("ownerauth", owner);
   return (
     <Routes basename="/">
       <Route path="/" element={<SearchPage />} />
@@ -76,6 +75,10 @@ const AppRoutes = () => {
         path="manager-dashboard-bikes"
         element={manager ? <ManageBikes /> : <Navigate to="/manager-login" />}
       />
+      {/* <Route */}
+      {/*   path="manager-dashboard-queries" */}
+      {/*   element={manager ? <ManageQueries /> : <Navigate to="/manager-login" />} */}
+      {/* /> */}
       <Route
         path="/manager-login"
         element={

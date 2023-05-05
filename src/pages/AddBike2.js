@@ -34,10 +34,12 @@ export const AddBike2 = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     if (e.target.checkValidity()) {
-      console.log("this is bike details: ", brand, model, year)
+      //console.log("this is bike details: ", brand, model, year)
       navigate("/add-bike-3");
     }
+
   };
 
   const handleDailyRateChange = (event) => {

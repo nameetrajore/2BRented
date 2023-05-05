@@ -57,7 +57,7 @@ const BookingComponent = (props) => {
   const booking = props.booking;
   const setBookings = props.setBookings;
   const { deleteBooking } = useDeleteBooking();
-  console.log(booking);
+  //console.log(booking);
   return (
     <>
       <Grid

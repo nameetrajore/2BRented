@@ -34,14 +34,6 @@ export const SignupOwner = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // const data = new FormData(event.currentTarget);
-    console.log(
-      email,
-      password,
-      { city, pincode, state, address },
-      userName,
-      phone,
-      rePassword
-    );
     await signup(
       userName,
       { city, pincode, state, address },

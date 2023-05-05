@@ -11,7 +11,7 @@ export const usePatchBike = () => {
         bookingDates: newBookingDates,
       });
     }
-    console.log("already booked", alreadyBooked);
+    //console.log("already booked", alreadyBooked);
     return alreadyBooked;
   };
 
@@ -34,7 +34,7 @@ export const usePatchBike = () => {
       responseGetBikes.data[0].bookingDates.includes(item)
     );
 
-    console.log(dateArray, responseGetBikes.data[0].bookingDates, "hello");
+    //console.log(dateArray, responseGetBikes.data[0].bookingDates, "hello");
 
     const alreadyBooked = hasIntersection;
 

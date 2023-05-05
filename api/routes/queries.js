@@ -10,7 +10,7 @@ const getQuery = async (req, res) => {
 };
 const postQuery = async (req, res) => {
   const admin = new Query({ ...req.body });
-  console.log(req.body);
+  //console.log(req.body);
   try {
     const newQuery = await admin.save();
     res.status(201).json(newQuery);

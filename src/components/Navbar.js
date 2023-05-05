@@ -34,8 +34,8 @@ export const Navbar = () => {
   };
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-  // console.log(user, "inside nav");
-  // console.log(user[0].customerName, "this is the logged in user")
+  // //console.log(user, "inside nav");
+  // //console.log(user[0].customerName, "this is the logged in user")
   const { logout } = useLogout();
   const handleAvatarClick = (event) => {
     setAnchorEl(event.currentTarget);

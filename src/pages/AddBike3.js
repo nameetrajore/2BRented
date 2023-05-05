@@ -26,8 +26,8 @@ export const AddBike3 = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("inside")
-    console.log("this is bike address: ", addressBike, pincodeBike, stateBike, cityBike)
+    //console.log("inside")
+    //console.log("this is bike address: ", addressBike, pincodeBike, stateBike, cityBike)
     dispatch(bikeDetailsActions.setLocation({
         address: addressBike,
         city: cityBike,
