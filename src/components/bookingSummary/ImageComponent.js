@@ -38,6 +38,7 @@ const ImageComponent = (props) => {
         <Grid item md={12} px={5} pb={7}>
           <Grid
             container
+            spacing={3}
             direction="row"
             justifyContent="center"
             alignItems="center"
@@ -48,7 +49,7 @@ const ImageComponent = (props) => {
                   <img
                     src={image}
                     alt="Bike Image"
-                    height="200px"
+                    height="300px"
                     width="100%"
                     style={{ objectFit: "cover", borderRadius: "10px" }}
                   />

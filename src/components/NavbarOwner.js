@@ -72,7 +72,14 @@ export const NavbarOwner = () => {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box>
-            <Button variant="text" size="large" sx={{ color: "white", mr: 2 }}>
+            <Button
+              variant="text"
+              size="large"
+              sx={{ color: "white", mr: 2 }}
+              onClick={() => {
+                navigate("/owner-dashboard");
+              }}
+            >
               Home
             </Button>
             <Button
