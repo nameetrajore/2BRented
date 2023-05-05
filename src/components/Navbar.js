@@ -118,13 +118,6 @@ export const Navbar = () => {
                 >
                   <MenuItem
                     onClick={() => {
-                      navigate("/profile");
-                    }}
-                  >
-                    Profile
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
                       navigate("/my-bookings");
                     }}
                   >
