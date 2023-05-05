@@ -26,14 +26,12 @@ export const useGetBikes = () => {
     if (filter.fuelType && filter.fuelType !== "all")
       query += `&fuelType=${filter.fuelType}`;
 
-    const responseBikes = await fetch(`http://localhost:4000/api/` + query);
+    const responseBikes = await fetch(`/api/` + query);
     const jsonResBikes = await responseBikes.json();
-    console.log(jsonResBikes)
+    console.log(jsonResBikes);
     if (responseBikes.ok) {
       if (id !== -1) {
-        const responseFavourites = await fetch(
-          `http://localhost:4000/api/customers?_id=${id}`
-        );
+        const responseFavourites = await fetch(`/api/customers?_id=${id}`);
         const jsonResFavourites = await responseFavourites.json();
 
         if (responseFavourites.ok) {
@@ -45,7 +43,7 @@ export const useGetBikes = () => {
           setBikes(bikes);
         }
       } else {
-        console.log(jsonResBikes)
+        console.log(jsonResBikes);
         setBikes(jsonResBikes);
       }
       setIsLoading(false);
