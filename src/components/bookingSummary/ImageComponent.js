@@ -36,7 +36,24 @@ const ImageComponent = (props) => {
           </Typography>
         </Grid>
         <Grid item md={12} px={5} pb={7}>
-          <SimpleImageSlider images={bike.imageUrl} />
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item md={2}>
+              <Box key={Math.random()}>
+                <img
+                  src={image}
+                  alt="Bike Image"
+                  height="200px"
+                  width="100%"
+                  style={{ objectFit: "cover", borderRadius: "10px" }}
+                />
+              </Box>
+            </Grid>
+          </Grid>
           {/* <Slider {...settings}> */}
           {/*   {bike.imageUrl.map((image) => ( */}
           {/*     <Box key={Math.random()}> */}

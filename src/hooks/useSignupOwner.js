@@ -34,7 +34,7 @@ export const useSignupOwner = () => {
     if (!response.ok) {
       setIsLoading(false);
       setError(true);
-      window.alert("Error"); // display the error in a popup window
+      window.alert("Error in signing up"); // display the error in a popup window
     }
     if (response.ok) {
       dispatch(ownerAuthActions.setOwner(ownerName));

@@ -283,6 +283,7 @@ export const AddBike2 = () => {
                       value={dailyRate}
                       id="dailyRate"
                       inputProps={{
+                        step: 100,
                         min: 100,
                         max: 3000,
                       }}
