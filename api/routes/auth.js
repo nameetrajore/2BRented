@@ -27,7 +27,7 @@ const customerSignup = async (req, res) => {
     );
     res.status(200).json({ customer: result, accessToken: accessToken });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     res.status(500).json({ message: "Something went wrong" });
   }
 };
@@ -63,7 +63,7 @@ const customerLogin = async (req, res) => {
       .status(200)
       .json({ customer: existingCustomer, accessToken: accessToken });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     res.status(500).json({ message: "Something went wrong" });
   }
 };
@@ -91,7 +91,7 @@ const managerSignup = async (req, res) => {
     );
     res.status(200).json({ accessToken: accessToken });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     res.status(500).json({ message: "Something went wrong" });
   }
 };
@@ -125,7 +125,7 @@ const managerLogin = async (req, res) => {
       .status(200)
       .json({ manager: existingManager, accessToken: accessToken });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     res.status(500).json({ message: "Something went wrong" });
   }
 };
@@ -153,7 +153,7 @@ const ownerSignup = async (req, res) => {
     );
     res.status(200).json({ owner: result, accessToken: accessToken });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     res.status(500).json({ message: "Something went wrong" });
   }
 };
@@ -187,7 +187,7 @@ const ownerLogin = async (req, res) => {
 
     res.status(200).json({ owner: existingOwner, accessToken: accessToken });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     res.status(500).json({ message: "Something went wrong" });
   }
 };

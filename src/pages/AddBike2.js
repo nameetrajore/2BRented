@@ -30,7 +30,7 @@ export const AddBike2 = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("this is bike details: ", brand, model, year)
+    //console.log("this is bike details: ", brand, model, year)
     navigate("/add-bike-3");
   };
 

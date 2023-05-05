@@ -28,7 +28,6 @@ const AppRoutes = () => {
   const owner = useSelector((state) => state.ownerAuth.owner);
   const manager = useSelector((state) => state.managerAuth.manager);
 
-  console.log("ownerauth", owner);
   return (
     <Routes basename="/">
       <Route path="/" element={<SearchPage />} />

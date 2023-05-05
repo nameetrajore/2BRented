@@ -21,7 +21,7 @@ const postCustomer = async (req, res) => {
 };
 
 const patchCustomer = async (req, res) => {
-  console.log(req.query);
+  //console.log(req.query);
   try {
     if (req.query.addFavourite) {
       const customer = await Customer.updateOne(

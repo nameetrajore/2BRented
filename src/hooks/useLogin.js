@@ -11,7 +11,7 @@ export const useLogin = () => {
     setIsLoading(true);
     setError(false);
     try {
-      console.log(process.env);
+      //console.log(process.env);
       const response = await axios.post(`/api/customer-login`, {
         customerEmail,
         customerPassword,

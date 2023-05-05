@@ -34,7 +34,7 @@ export const ManagerLogin = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(email, password);
+    //console.log(email, password);
     await login(email, password);
   };
 
