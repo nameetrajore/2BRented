@@ -83,9 +83,9 @@ export const AddBike4 = () => {
     }
 
     try {
-      console.log("this is the form data", formData.values);
+      //console.log("this is the form data", formData.values);
       const response = await axios.post(
-        "http://localhost:4000/api/bikes",
+        "/api/bikes",
         formData,
         {
           headers: {
