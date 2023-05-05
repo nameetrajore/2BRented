@@ -58,7 +58,7 @@ export const SearchPage = () => {
           <Grid item md={3}>
             <Box
               boxShadow="#DFF3F1 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px"
-              borderRadius={5}
+              borderRadius={3}
               sx={{
                 backgroundColor: "#DFF3F1",
               }}
@@ -85,7 +85,7 @@ export const SearchPage = () => {
           <Grid item md={3}>
             <Box
               boxShadow="#DFF3F1 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px"
-              borderRadius={5}
+              borderRadius={3}
               sx={{
                 backgroundColor: "#DFF3F1",
               }}
@@ -112,7 +112,7 @@ export const SearchPage = () => {
           <Grid item md={3}>
             <Box
               boxShadow="#DFF3F1 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px"
-              borderRadius={5}
+              borderRadius={3}
               sx={{
                 backgroundColor: "#DFF3F1",
               }}
@@ -139,7 +139,7 @@ export const SearchPage = () => {
           <Grid item md={3}>
             <Box
               boxShadow="#DFF3F1 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px"
-              borderRadius={5}
+              borderRadius={3}
               sx={{
                 backgroundColor: "#DFF3F1",
               }}

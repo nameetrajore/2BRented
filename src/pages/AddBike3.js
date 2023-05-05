@@ -23,6 +23,7 @@ export const AddBike3 = () => {
   const [stateBike, setState] = useState("");
   const [cityBike, setCity] = useState("");
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     //console.log("inside")
@@ -75,8 +76,8 @@ export const AddBike3 = () => {
           flexDirection: "column",
           alignItems: "center",
           width: 700,
-          boxShadow: 5,
-          borderRadius: 5,
+          boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+          borderRadius: 2,
         }}
         >
           <Typography

@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { bikeDetailsActions } from "../app/store";
-
+import { useState } from 'react';
 export const AddBike2 = () => {
 
   const dispatch = useDispatch();
@@ -27,12 +27,36 @@ export const AddBike2 = () => {
   const registrationNumber = useSelector((state) => state.bikeDetails.registrationNumber)
   const bikeAge = useSelector((state) => state.bikeDetails.bikeAge)
   const mileage = useSelector((state) => state.bikeDetails.mileage)
-
+  const dailyRate = useSelector((state) => state.bikeDetails.dailyRate)
+  const kmsDriven = useSelector((state) => state.bikeDetails.kmsDriven)
+  const [warningDailyRate, setWarningDailyRate] = useState(false);
+  const [warningDailyRateText, setWarningDailyRateText] = useState("")
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    //console.log("this is bike details: ", brand, model, year)
-    navigate("/add-bike-3");
+    
+    if (e.target.checkValidity()) {
+      //console.log("this is bike details: ", brand, model, year)
+      navigate("/add-bike-3");
+    }
+
   };
+
+  const handleDailyRateChange = (event) => {
+    const value = event.target.value;
+    if (value < 100) {
+      setWarningDailyRate(true);
+      setWarningDailyRateText("Value must be greater than or equal to 100");
+    } else if (value > 3000) {
+      setWarningDailyRate(true);
+      setWarningDailyRateText("Value must be less than or equal to 3000");
+    } else {
+      setWarningDailyRate(false);
+      setWarningDailyRateText("");
+      dispatch(bikeDetailsActions.setDailyRate(value));
+    }
+  }
+  
 
   return (
     <>
@@ -52,7 +76,7 @@ export const AddBike2 = () => {
         <Box
         component="form"
         noValidate
-        
+        // onSubmit={handleSubmit}
         sx={{
           height: "100%",
           px: 4,
@@ -61,8 +85,8 @@ export const AddBike2 = () => {
           flexDirection: "column",
           alignItems: "center",
           width: 700,
-          boxShadow: 5,
-          borderRadius: 5,
+          boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+          borderRadius: 2,
         }}
         >
           <Typography
@@ -89,7 +113,7 @@ export const AddBike2 = () => {
             <Box
               component="form"
               noValidate
-              
+              // onSubmit={handleSubmit}    
               sx={{ mt: 4 }}
             >
               <Grid container spacing={3} alignItems="center" align="center" justifyContent="center">
@@ -212,12 +236,51 @@ export const AddBike2 = () => {
                   <TextField
                     required
                     fullWidth
-                    
+                    style={{textAlign: "center"}}
+                    type="number"
                     onChange={(event) => {dispatch(bikeDetailsActions.setMileage(event.target.value))}}
                     value={mileage}
                     id="bikeMileage"
                     label="Mileage"
                     name="bikeMileage"
+                    
+                    color="secondary"
+                  />
+                </Grid>
+                <Grid item md={6}>
+                  <>
+                    <TextField
+                      required
+                      fullWidth
+                      style={{textAlign: "center"}}
+                      type="number"
+                      onChange={handleDailyRateChange}
+                      value={dailyRate}
+                      id="dailyRate"
+                      inputProps={{
+                        min: 100,
+                        max: 3000
+                      }}
+                      label="Daily Rate"
+                      name="dailyRate"
+                      helperText={warningDailyRate? warningDailyRateText: ""}
+                      color="secondary"
+                    />
+                    {/* {warningDailyRate && <p style={{color: 'red'}}>{warningDailyRateText}</p>} */}
+                    
+                  </>
+                  
+                </Grid>
+                <Grid item md={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    type="number"
+                    onChange={(event) => {dispatch(bikeDetailsActions.setKmsDriven(event.target.value))}}
+                    value={kmsDriven}
+                    id="kmsDriven"
+                    label="Kms Driven"
+                    name="kmsDriven"
                     
                     color="secondary"
                   />
