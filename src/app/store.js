@@ -119,6 +119,12 @@ const bikeSlice = createSlice({
     setOwnerID(state, action) {
       state.owner = action.payload;
     },
+    setDailyRate(state, action) {
+      state.dailyRate = action.payload;
+    },
+    setKmsDriven(state, action) {
+      state.kmsDriven = action.payload;
+    },
     setLocation,
   },
 });
