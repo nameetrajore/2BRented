@@ -7,19 +7,16 @@ export const usePatchBike = () => {
       booking
     );
     if (!alreadyBooked) {
-      const responseBike = await axios.patch(
-        `http://localhost:4000/api/bikes/${bike._id}`,
-        { bookingDates: newBookingDates }
-      );
+      const responseBike = await axios.patch(`/api/bikes/${bike._id}`, {
+        bookingDates: newBookingDates,
+      });
     }
     console.log("already booked", alreadyBooked);
     return alreadyBooked;
   };
 
   const getBookedDates = async (bike, booking) => {
-    const responseGetBikes = await axios.get(
-      `http://localhost:4000/api/bikes?_id=${bike._id}`
-    );
+    const responseGetBikes = await axios.get(`/api/bikes?_id=${bike._id}`);
 
     const dateArray = [];
 

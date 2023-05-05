@@ -48,13 +48,13 @@ const paymentVerification = async (req, res) => {
     res
       .status(201)
       .redirect(
-        `http://localhost:3000/payment?success=true&orderId=${req.query.orderId}`
+        `/payment?success=true&orderId=${req.query.orderId}`
       );
   } else {
     res
       .status(201)
       .redirect(
-        `http://localhost:3000/payment?success=true&orderId=${req.query.orderId}`
+        `/payment?success=true&orderId=${req.query.orderId}`
       );
   }
 };

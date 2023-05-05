@@ -5,9 +5,7 @@ import { createSearchParams } from "react-router-dom";
 export const usePayment = () => {
   const id = useSelector((state) => state.auth._id);
   const checkout = async (amount, bike, booking) => {
-    const response = await fetch(
-      `http://localhost:4000/api/customers?_id=${id}`
-    );
+    const response = await fetch(`/api/customers?_id=${id}`);
 
     const jsonRes = await response.json();
 
@@ -15,11 +13,11 @@ export const usePayment = () => {
 
     const {
       data: { key },
-    } = await axios.get("http://localhost:4000/api/get-key");
+    } = await axios.get("/api/get-key");
 
     const {
       data: { order },
-    } = await axios.post("http://localhost:4000/api/checkout", {
+    } = await axios.post("/api/checkout", {
       amount,
     });
 
@@ -31,7 +29,7 @@ export const usePayment = () => {
       description: `${bike.brand} ${bike.model} ${bike.year.substring(0, 4)}`,
       image: "https://example.com/your_logo",
       order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      callback_url: `http://localhost:4000/api/payment-verification?orderId=${order.id}`,
+      callback_url: `/api/payment-verification?orderId=${order.id}`,
       prefill: {
         name: user.customerName,
         email: user.customerEmail,
@@ -73,10 +71,7 @@ export const usePayment = () => {
   };
 
   const postBooking = async (params) => {
-    const responseBooking = await axios.post(
-      `http://localhost:4000/api/bookings`,
-      params
-    );
+    const responseBooking = await axios.post(`/api/bookings`, params);
   };
 
   return { checkout };

@@ -11,13 +11,10 @@ export const useLoginOwner = () => {
   const login = async (ownerEmail, ownerPassword) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        `http://localhost:4000/api/owner-login`,
-        {
-          ownerEmail,
-          ownerPassword,
-        }
-      );
+      const response = await axios.post(`/api/owner-login`, {
+        ownerEmail,
+        ownerPassword,
+      });
       const owner = response.data.owner;
       dispatch(ownerAuthActions.setOwner(owner.ownerName));
       dispatch(ownerAuthActions.setOwnerId(owner._id));

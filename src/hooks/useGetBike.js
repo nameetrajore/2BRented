@@ -6,9 +6,7 @@ export const useGetBike = () => {
 
   const getBike = async (id, setBike) => {
     setIsLoading(true);
-    const responseBikes = await fetch(
-      `http://localhost:4000/api/bikes?_id=${id}`
-    );
+    const responseBikes = await fetch(`/api/bikes?_id=${id}`);
 
     const jsonRes = await responseBikes.json();
 

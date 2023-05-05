@@ -10,13 +10,10 @@ export const useManagerLogin = () => {
   const login = async (managerEmail, managerPassword) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        `http://localhost:4000/api/manager-login`,
-        {
-          managerEmail,
-          managerPassword,
-        }
-      );
+      const response = await axios.post(`/api/manager-login`, {
+        managerEmail,
+        managerPassword,
+      });
       const manager = response.data.manager;
       dispatch(managerAuthActions.setManager(manager.managerName));
       dispatch(managerAuthActions.setManagerId(manager._id));

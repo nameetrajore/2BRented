@@ -17,7 +17,7 @@ export const useSignupOwner = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch("http://localhost:4000/api/owner-signup", {
+    const response = await fetch("/api/owner-signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
