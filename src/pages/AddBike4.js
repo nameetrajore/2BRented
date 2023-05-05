@@ -50,7 +50,7 @@ export const AddBike4 = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //console.log("this is location : ", location);
+    console.log("this is location : ", location);
     const formData = new FormData();
     formData.append("owner", userID);
     formData.append("brand", brand);
@@ -69,11 +69,11 @@ export const AddBike4 = () => {
 
     for (let i = 0; i < images.length; i++) {
       formData.append("images", images[i]);
-      //console.log(images[i]);
+      console.log(images[i]);
     }
 
     try {
-      //console.log("this is the form data", formData.values);
+      console.log("this is the form data", formData.values);
       const response = await axios.post(
         "/api/bikes",
         formData,
@@ -83,7 +83,7 @@ export const AddBike4 = () => {
           },
         }
       );
-      //console.log(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error(error);
     }

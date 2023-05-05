@@ -80,6 +80,10 @@ const AppRoutes = () => {
         element={manager ? <ManageBikes /> : <Navigate to="/manager-login" />}
       />
       <Route
+        path="manager-dashboard-queries"
+        element={manager ? <ManageQueries /> : <Navigate to="/manager-login" />}
+      />
+      <Route
         path="/manager-login"
         element={
           !manager ? <ManagerLogin /> : <Navigate to="/manager-dashboard" />
