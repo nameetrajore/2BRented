@@ -283,7 +283,7 @@ export const AddBike2 = () => {
                       value={dailyRate}
                       id="dailyRate"
                       inputProps={{
-                        step: 100,
+                        step: 50,
                         min: 100,
                         max: 3000,
                       }}
@@ -307,6 +307,9 @@ export const AddBike2 = () => {
                     }}
                     value={kmsDriven}
                     id="kmsDriven"
+                    inputProps={{
+                      step: 100,
+                    }}
                     label="Kms Driven"
                     name="kmsDriven"
                     color="secondary"
