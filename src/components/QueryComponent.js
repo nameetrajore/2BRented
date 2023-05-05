@@ -24,7 +24,7 @@ const QueryComponent = (props) => {
             backgroundPosition: "right bottom",
           }}
         >
-          <Grid item md={12} pl={1}>
+          <Grid item md={12} pl={1} pb={3}>
             <Box>
               <Typography variant="h4" fontWeight={500}>
                 {query.name}
