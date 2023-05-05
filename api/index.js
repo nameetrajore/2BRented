@@ -14,7 +14,7 @@ db.once("open", () => console.log("Connected to Database"));
 
 app.use(cors());
 app.use(express.json());
-// app.use("/api", require(path.join(__dirname, "routes", "index.js")));
+app.use("/api", require(path.join(__dirname, "routes", "index.js")));
 
 // if (process.env.NODE_ENV === "production") {
 //   app.get("/", (req, res) => {
