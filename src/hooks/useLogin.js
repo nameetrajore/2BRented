@@ -12,7 +12,7 @@ export const useLogin = () => {
     setError(false);
     try {
       const response = await axios.post(
-        `${process.env.REACT_API_PORT}/api/customer-login`,
+        `${process.env.REACT_API_PORT}/customer-login`,
         { customerEmail, customerPassword }
       );
       const customer = response.data.customer;
