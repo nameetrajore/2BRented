@@ -9,13 +9,11 @@ import Signup from "../pages/Signup";
 import OwnerLogin from "../pages/OwnerLogin";
 import OwnerDashboard from "../pages/OwnerDashboard";
 import SignupOwner from "../pages/SignupOwner";
-import AddBike1 from "../pages/AddBike1";
 import AddBike2 from "../pages/AddBike2";
 import AddBike3 from "../pages/AddBike3";
 import AddBike4 from "../pages/AddBike4";
 import Invoice from "../pages/Invoice";
 import Bookings from "../pages/Bookings";
-import Profile from "../pages/Profile";
 import Support from "../pages/Support";
 import ManagerLogin from "../pages/ManagerLogin";
 import ManagerDashboard from "../pages/ManagerDashboard";
@@ -43,7 +41,6 @@ const AppRoutes = () => {
         path="/login-owner"
         element={!owner ? <OwnerLogin /> : <Navigate to="/owner-dashboard" />}
       />
-      <Route path="/add-bike-1" element={<AddBike1 />} />
       <Route path="/add-bike-2" element={<AddBike2 />} />
       <Route path="/add-bike-3" element={<AddBike3 />} />
       <Route path="/add-bike-4" element={<AddBike4 />} />
@@ -58,7 +55,6 @@ const AppRoutes = () => {
       <Route path="/booking-summary/:id" element={<BookingSummary />} />
       <Route path="/payment" element={<Invoice />} />
       <Route path="/my-bookings" element={<Bookings />} />
-      <Route path="/profile" element={<Profile />} />
       <Route path="/support" element={<Support />} />
       <Route
         path="/manager-dashboard"
