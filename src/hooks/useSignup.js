@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { authActions } from "../app/store";
-
 export const useSignup = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(null);

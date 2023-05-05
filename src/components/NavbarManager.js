@@ -82,7 +82,7 @@ export const NavbarManager = () => {
               variant="text"
               size="large"
               sx={{ color: "white", mr: 2 }}
-              onClick={() => navigate("/manager-dashboard/customers")}
+              onClick={() => navigate("/manager-dashboard-customers")}
             >
               Customers
             </Button>
@@ -90,7 +90,7 @@ export const NavbarManager = () => {
               variant="text"
               size="large"
               sx={{ color: "white", mr: 2 }}
-              onClick={() => navigate("/manager-dashboard/owners")}
+              onClick={() => navigate("/manager-dashboard-owners")}
             >
               Owners
             </Button>
@@ -98,7 +98,7 @@ export const NavbarManager = () => {
               variant="text"
               size="large"
               sx={{ color: "white", mr: 2 }}
-              onClick={() => navigate("/manager-dashboard/bikes")}
+              onClick={() => navigate("/manager-dashboard-bikes")}
             >
               Bikes
             </Button>

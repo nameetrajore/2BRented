@@ -67,17 +67,17 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="manager-dashboard/customers"
+        path="manager-dashboard-customers"
         element={
           manager ? <ManageCustomers /> : <Navigate to="/manager-login" />
         }
       />
       <Route
-        path="manager-dashboard/owners"
+        path="manager-dashboard-owners"
         element={manager ? <ManageOwners /> : <Navigate to="/manager-login" />}
       />
       <Route
-        path="manager-dashboard/bikes"
+        path="manager-dashboard-bikes"
         element={manager ? <ManageBikes /> : <Navigate to="/manager-login" />}
       />
       <Route
