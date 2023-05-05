@@ -16,9 +16,9 @@ const ManagerDashboard = () => {
       <Box p={8}>
         <Grid container spacing={3} display="flex" direction="column-reverse">
           {queries.length !== 0 ? (
-            queries.map((query) => {
-              return <QueryComponent query={query} key={Math.random()} />;
-            })
+            queries.map((query) =>
+              <QueryComponent query={query} key={Math.random()} />
+            )
           ) : (
             <>
               <Typography variant="h4">No queries yet</Typography>
