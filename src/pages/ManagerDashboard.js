@@ -9,20 +9,21 @@ const ManagerDashboard = () => {
   const { getQueries } = useQueries();
   useEffect(() => {
     getQueries(setQueries);
+    console.log(queries);
   }, []);
   return (
     <>
       <NavbarManager />
       <Box>
-        <Grid container spacing={3} display="flex" direction="column-reverse">
-          {queries ? (
-            queries.map((query) => {
-              return <QueryComponent query={query} key={Math.random()} />;
-            })
-          ) : (
-            <></>
-          )}
-        </Grid>
+        {/* <Grid container spacing={3} display="flex" direction="column-reverse"> */}
+        {/*   {queries ? ( */}
+        {/*     queries.map((query) => { */}
+        {/*       return <QueryComponent query={query} key={Math.random()} />; */}
+        {/*     }) */}
+        {/*   ) : ( */}
+        {/*     <></> */}
+        {/*   )} */}
+        {/* </Grid> */}
       </Box>
     </>
   );
