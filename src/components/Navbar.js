@@ -64,7 +64,7 @@ export const Navbar = () => {
             variant="h5"
             component="div"
             color="white"
-            sx={{ mt: 0, fontWeight: "700", fontStyle: "italic" }}
+            sx={{ mt: 0, fontWeight: "700", fontStyle: "italic", cursor: "pointer" }}
             onClick={() => navigate("/")}
           >
             2BRENTED

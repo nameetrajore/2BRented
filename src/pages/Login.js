@@ -195,17 +195,13 @@ export const Login = () => {
               >
                 Login
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2" color="secondary">
-                    Forgot password?
-                  </Link>
-                </Grid>
+              <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link
                     variant="body2"
                     color="secondary"
                     onClick={() => navigate("/sign-up")}
+                    sx={{ cursor: "pointer" }}
                   >
                     {"Don't have an account? Sign Up"}
                   </Link>

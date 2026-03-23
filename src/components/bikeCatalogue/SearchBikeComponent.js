@@ -5,97 +5,65 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+
 const SearchBike = (props) => {
-  const { searchBike, setSearchBike } = props;
+  const { searchBike, setSearchBike, setSort } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleSort = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
   const open = Boolean(anchorEl);
 
-  const handleClose = (event) => {
-    setAnchorEl(null);
-    if (event.target.value === "Sort by increasing price") props.setSort("ip");
-    if (event.target.value === "Sort by decreasing price") props.setSort("dp");
-    if (event.target.value === "Sort by increasing rate") props.setSort("ir");
-    if (event.target.value === "Sort by decreasing rate") props.setSort("dr");
-  };
+  const handleSort = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
+
+  const sortOptions = [
+    { label: "Price: Low to High", value: "ip" },
+    { label: "Price: High to Low", value: "dp" },
+    { label: "Rating: Low to High", value: "ir" },
+    { label: "Rating: High to Low", value: "dr" },
+  ];
 
   return (
-    <>
-      <Grid
-        container
-        pt={3}
-        alignItems="center"
-        justifyContent="center"
-        spacing={3}
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "flex-start",
-        }}
-      >
-        <Grid item md={8} sx={{ flexGrow: 1 }} />
-        <Grid item md={4}>
-          <Grid container spacing={2}>
-            <Grid item md={1} />
-            <Grid item md={5}>
-              <TextField
-                fullWidth
-                value={searchBike}
-                label="Search"
-                onChange={(event) => {
-                  setSearchBike(event.target.value);
-                  //console.log(event.target.value);
-                }}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={2}>
-              <Button
-                id="basic-button"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                variant="outlined"
-                onClick={handleSort}
-                sx={{
-                  height: "100%",
-                }}
-              >
-                <SortIcon />
-              </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                sx={{
-                  mx: -1,
-                }}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem onClick={handleClose}>
-                  {" "}
-                  Sort by increasing price
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  Sort by decreasing price
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  Sort by increasing rating
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  Sort by decreasing rating
-                </MenuItem>
-              </Menu>
-            </Grid>
-          </Grid>
-        </Grid>
+    <Grid
+      container
+      pt={4}
+      px={0}
+      alignItems="center"
+      justifyContent="flex-end"
+      spacing={2}
+    >
+      <Grid item xs={8} sm={5} md={3}>
+        <TextField
+          fullWidth
+          value={searchBike}
+          label="Search by brand or model"
+          size="small"
+          onChange={(event) => setSearchBike(event.target.value)}
+          variant="outlined"
+        />
       </Grid>
-    </>
+      <Grid item xs={4} sm={2} md={1}>
+        <Button
+          variant="outlined"
+          onClick={handleSort}
+          sx={{ height: "40px", minWidth: "40px" }}
+          title="Sort"
+        >
+          <SortIcon />
+        </Button>
+        <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          {sortOptions.map(({ label, value }) => (
+            <MenuItem
+              key={value}
+              onClick={() => {
+                setSort(value);
+                handleClose();
+              }}
+            >
+              {label}
+            </MenuItem>
+          ))}
+        </Menu>
+      </Grid>
+    </Grid>
   );
 };
 

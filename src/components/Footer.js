@@ -1,101 +1,65 @@
 import React from "react";
 import { Box, Container, Grid, Typography, Link } from "@mui/material";
+import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
 
 const Footer = () => {
-  const footerStyle = {
-    backgroundColor: "#f5f5f5",
-    padding: "24px 0",
-    mt: 6,
-    bottom: 0,
-  };
-
-  const textStyles = {
-    fontSize: "18px",
-    textAlign: "center",
-    color: "#000",
-  };
-
   return (
-    <Box sx={footerStyle}>
+    <Box sx={{ backgroundColor: "#154B46", py: 6 }}>
       <Container maxWidth="lg">
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
           <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" sx={textStyles} gutterBottom>
-              Links
-            </Typography>
-            <Typography sx={textStyles}>
-              <Link href="/about" color="inherit" underline="hover">
-                About
-              </Link>
-            </Typography>
-            <Typography sx={textStyles}>
-              <Link href="/services" color="inherit" underline="hover">
-                Services
-              </Link>
-            </Typography>
-            <Typography sx={textStyles}>
-              <Link href="/contact" color="inherit" underline="hover">
-                Contact
-              </Link>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+              <TwoWheelerIcon sx={{ color: "#33b3a6" }} />
+              <Typography variant="h6" fontWeight={700} color="white" fontStyle="italic">
+                2BRented
+              </Typography>
+            </Box>
+            <Typography variant="body2" color="rgba(255,255,255,0.6)">
+              India's peer-to-peer bike rental platform. Rent bikes by the day,
+              across 50+ cities.
             </Typography>
           </Grid>
+
           <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" sx={textStyles} gutterBottom>
-              Social
+            <Typography variant="subtitle1" fontWeight={600} color="white" gutterBottom>
+              Quick Links
             </Typography>
-            <Typography sx={textStyles}>
-              <Link
-                href="https://www.facebook.com/"
-                target="_blank"
-                rel="noopener"
-                color="inherit"
-                underline="hover"
-              >
-                Facebook
-              </Link>
-            </Typography>
-            <Typography sx={textStyles}>
-              <Link
-                href="https://www.twitter.com/"
-                target="_blank"
-                rel="noopener"
-                color="inherit"
-                underline="hover"
-              >
-                Twitter
-              </Link>
-            </Typography>
-            <Typography sx={textStyles}>
-              <Link
-                href="https://www.linkedin.com/"
-                target="_blank"
-                rel="noopener"
-                color="inherit"
-                underline="hover"
-              >
-                LinkedIn
-              </Link>
-            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+              <Link href="/" color="rgba(255,255,255,0.6)" underline="hover" variant="body2">Home</Link>
+              <Link href="/bike-catalogue" color="rgba(255,255,255,0.6)" underline="hover" variant="body2">Browse Bikes</Link>
+              <Link href="/support" color="rgba(255,255,255,0.6)" underline="hover" variant="body2">Support</Link>
+              <Link href="/login-owner" color="rgba(255,255,255,0.6)" underline="hover" variant="body2">List Your Bike</Link>
+            </Box>
           </Grid>
+
           <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" sx={textStyles} gutterBottom>
-              Address
-            </Typography>
-            <Typography sx={textStyles}>123 Main Street</Typography>
-            <Typography sx={textStyles}>Suite 69</Typography>
-            <Typography sx={textStyles}>Funkytown, Bruh 12345</Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" sx={textStyles} gutterBottom>
+            <Typography variant="subtitle1" fontWeight={600} color="white" gutterBottom>
               Contact Us
             </Typography>
-            <Typography sx={textStyles}>Phone: (000) 000000 </Typography>
-            <Typography sx={textStyles}>Email: NoEmail@2BRented.com</Typography>
+            <Typography variant="body2" color="rgba(255,255,255,0.6)">support@2brented.in</Typography>
+            <Typography variant="body2" color="rgba(255,255,255,0.6)" mt={0.5}>+91 98765 43210</Typography>
+            <Typography variant="body2" color="rgba(255,255,255,0.6)" mt={0.5}>
+              Mon–Sat, 9 AM – 6 PM IST
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <Typography variant="subtitle1" fontWeight={600} color="white" gutterBottom>
+              Follow Us
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+              <Link href="https://www.instagram.com/" target="_blank" rel="noopener" color="rgba(255,255,255,0.6)" underline="hover" variant="body2">Instagram</Link>
+              <Link href="https://www.twitter.com/" target="_blank" rel="noopener" color="rgba(255,255,255,0.6)" underline="hover" variant="body2">Twitter / X</Link>
+              <Link href="https://www.linkedin.com/" target="_blank" rel="noopener" color="rgba(255,255,255,0.6)" underline="hover" variant="body2">LinkedIn</Link>
+            </Box>
           </Grid>
         </Grid>
-        <Typography variant="body1" sx={{ ...textStyles, marginTop: "24px" }}>
-          © 2023 2BRented. All rights reserved.
-        </Typography>
+
+        <Box sx={{ borderTop: "1px solid rgba(255,255,255,0.1)", mt: 5, pt: 3, textAlign: "center" }}>
+          <Typography variant="body2" color="rgba(255,255,255,0.4)">
+            © {new Date().getFullYear()} 2BRented. All rights reserved.
+          </Typography>
+        </Box>
       </Container>
     </Box>
   );

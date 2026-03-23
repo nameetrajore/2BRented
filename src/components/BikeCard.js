@@ -9,25 +9,17 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Box, IconButton, Rating, Tooltip } from "@mui/material";
-import ArrowForward from "@mui/icons-material/ArrowForward";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
+import { Box, Button, Chip, IconButton, Rating, Tooltip } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useFavourite } from "../hooks/useFavourite";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
-
 const BikeCard = (props) => {
   const bike = props.bike;
-  //console.log("this is image", bike.imageUrl);
   const { storeIsFavourite } = useFavourite(bike.isFavourite);
   const [isFavourite, setIsFavourite] = useState(bike.isFavourite);
+  const [imgError, setImgError] = useState(false);
   const dropDate = useSelector((state) => state.booking.dropDate);
   const pickupDate = useSelector((state) => state.booking.pickupDate);
   const pickupLocation = useSelector((state) => state.booking.pickupLocation);
@@ -41,23 +33,16 @@ const BikeCard = (props) => {
 
   const handleIsFavourite = () => {
     if (id !== -1) setIsFavourite((prevState) => !prevState);
-    else {
-      navigate(`/login?${createSearchParams(message)}`);
-    }
+    else navigate(`/login?${createSearchParams(message)}`);
   };
 
-  // to make sure that this useEffect executes everytime except the first render
   const isFirstRender = useRef(true);
   useEffect(() => {
     if (!isFirstRender.current) {
       const timer = setTimeout(() => {
         storeIsFavourite(bike._id, isFavourite, bike);
       }, 250);
-
-      // props.setApplyFilter(false);
-      return () => {
-        clearTimeout(timer);
-      };
+      return () => clearTimeout(timer);
     }
     isFirstRender.current = false;
   }, [isFavourite]);
@@ -67,66 +52,93 @@ const BikeCard = (props) => {
     86400000;
 
   return (
-    <Box
+    <Card
       sx={{
-        boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-        borderRadius: 2,
+        borderRadius: 3,
+        boxShadow: "rgba(99, 99, 99, 0.15) 0px 2px 12px 0px",
+        transition: "box-shadow 0.2s",
+        "&:hover": {
+          boxShadow: "rgba(51, 179, 166, 0.3) 0px 8px 24px 0px",
+        },
       }}
     >
-      <Card
-        sx={{
-          borderRadius: 3,
-        }}
-      >
+      {imgError || !bike.imageUrl?.[0] ? (
+        <Box
+          sx={{
+            height: 180,
+            bgcolor: "#f5f5f5",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <TwoWheelerIcon sx={{ fontSize: 64, color: "#d0d0d0" }} />
+        </Box>
+      ) : (
         <CardMedia
           component="img"
           alt={bike.brand + " " + bike.model}
-          height="200"
-          width="200"
+          height="180"
           image={bike.imageUrl[0]}
+          onError={() => setImgError(true)}
+          sx={{ objectFit: "cover" }}
         />
-        <CardContent sx={{ pb: 0 }}>
-          <Tooltip title={bike.brand + " " + bike.model} placement="top">
-            <Typography gutterBottom variant="h6" noWrap component="div">
-              {bike.brand + " " + bike.model}
-            </Typography>
-          </Tooltip>
-          <Typography variant="body2" color="text.secondary">
-            {bike.fuelType}
-            {bull}
-            {bike.transmission}
-            {bull}
-            {bike.year.substring(0, 4)}
+      )}
+      <CardContent sx={{ pb: 0 }}>
+        <Tooltip title={bike.brand + " " + bike.model} placement="top">
+          <Typography gutterBottom variant="h6" noWrap fontWeight={600}>
+            {bike.brand} {bike.model}
           </Typography>
-          <Rating value={bike.rating} readOnly size="small" precision={0.1} />
-          <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-            ₹{bike.dailyRate} / day
+        </Tooltip>
+
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mb: 0.5 }}>
+          <LocationOnIcon sx={{ fontSize: 14, color: "text.secondary" }} />
+          <Typography variant="body2" color="text.secondary" noWrap>
+            {bike.locationCity}, {bike.locationState}
           </Typography>
-          <Typography variant="h6" sx={{ color: "#6C63FF" }}>
+        </Box>
+
+        <Box sx={{ display: "flex", gap: 0.5, mb: 1, flexWrap: "wrap" }}>
+          <Chip label={bike.fuelType} size="small" variant="outlined" />
+          {bike.transmission && (
+            <Chip label={bike.transmission} size="small" variant="outlined" />
+          )}
+          <Chip label={bike.year?.substring(0, 4)} size="small" variant="outlined" />
+        </Box>
+
+        <Rating value={bike.rating} readOnly size="small" precision={0.1} />
+
+        <Typography variant="body2" color="text.secondary" mt={0.5}>
+          ₹{bike.dailyRate} / day
+        </Typography>
+        {numberOfDays > 0 && (
+          <Typography variant="h6" color="primary.main" fontWeight={700}>
             ₹{bike.dailyRate * numberOfDays} total
           </Typography>
-        </CardContent>
-        <CardActions>
-          <Box sx={{ flexGrow: 1 }} />
-          <IconButton onClick={handleIsFavourite}>
-            {isFavourite ? (
-              <FavoriteIcon sx={{ color: pink[500] }} />
-            ) : (
-              <FavoriteBorderIcon />
-            )}
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              navigate(
-                `/booking-summary/${bike._id}?${createSearchParams(params)}`
-              );
-            }}
-          >
-            <ArrowForward />
-          </IconButton>
-        </CardActions>
-      </Card>
-    </Box>
+        )}
+      </CardContent>
+
+      <CardActions sx={{ px: 2, pb: 2, pt: 1 }}>
+        <IconButton onClick={handleIsFavourite} size="small">
+          {isFavourite ? (
+            <FavoriteIcon sx={{ color: pink[500] }} />
+          ) : (
+            <FavoriteBorderIcon />
+          )}
+        </IconButton>
+        <Box sx={{ flexGrow: 1 }} />
+        <Button
+          variant="contained"
+          size="small"
+          onClick={() =>
+            navigate(`/booking-summary/${bike._id}?${createSearchParams(params)}`)
+          }
+          sx={{ borderRadius: 2, px: 2 }}
+        >
+          Book
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 

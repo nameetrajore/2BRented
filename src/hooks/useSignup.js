@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { authActions } from "../app/store";
+
 export const useSignup = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(null);
@@ -22,8 +23,11 @@ export const useSignup = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         customerName,
-        customerAddress,
-        customerPhoneNumber,
+        locationCity: customerAddress.city,
+        locationState: customerAddress.state,
+        locationPincode: parseInt(customerAddress.pincode) || 0,
+        locationAddress: customerAddress.address,
+        customerPhoneNumber: String(customerPhoneNumber),
         customerEmail,
         customerPassword,
         customerDrivingLicense,
@@ -32,12 +36,11 @@ export const useSignup = () => {
     });
 
     const json = await response.json();
-    //console.log(json);
 
     if (!response.ok) {
       setIsLoading(false);
       setError(true);
-      window.alert(error); // display the error in a popup window
+      window.alert(json.message || "Signup failed");
     }
     if (response.ok) {
       dispatch(authActions.setUser(customerName));

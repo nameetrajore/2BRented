@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
-import ClearIcon from "@mui/icons-material/Clear";
-import CachedIcon from "@mui/icons-material/Cached";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
 import InputLabel from "@mui/material/InputLabel";
 import Rating from "@mui/material/Rating";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Button, Grid, IconButton, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,229 +44,189 @@ const Filter = (props) => {
       props.getBikes(completeFilter, props.setBikes);
     }, 500);
 
-    // props.setApplyFilter(false);
     return () => {
       clearTimeout(timer);
     };
   }, [props.applyFilter, filter, booking]);
 
-  const marksPriceRange = [
-    {
-      value: 100,
-      label: "₹0.1k",
-    },
-    {
-      value: 3000,
-      label: "₹3k",
-    },
-  ];
+  const marksPriceRange = [{ value: 100 }, { value: 3000 }];
+  const marksKmsDriven = [{ value: 10000 }, { value: 1000000 }];
+  const marksBikeAge = [{ value: 1 }, { value: 10 }];
 
-  const marksKmsDriven = [
-    {
-      value: 10000,
-      label: "10k",
-    },
-    {
-      value: 1000000,
-      label: "1000k+",
-    },
-  ];
-
-  const marksBikeAge = [
-    {
-      value: 1,
-      label: "1yr",
-    },
-    {
-      value: 10,
-      label: "10yr+",
-    },
-  ];
   return (
-    <>
-      <Box
-        sx={{
-          height: "100%",
-          px: 4,
-          py: 2,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-          borderRadius: 3,
-        }}
-      >
-        <Grid container>
-          <Grid item flexGrow={1}>
-            <Typography variant="h5" fontWeight="500">
-              Filters
-            </Typography>
-          </Grid>
-          <Grid item>
-            {props.applyFilter ? (
-              <></>
-            ) : (
-              <Button variant="text" size="large" onClick={applyFilterHandler}>
-                Reset
-              </Button>
-            )}
-          </Grid>
+    <Box
+      sx={{
+        px: 4,
+        py: 3,
+        display: "flex",
+        flexDirection: "column",
+        boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+        borderRadius: 3,
+      }}
+    >
+      <Grid container alignItems="center">
+        <Grid item sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" fontWeight={600}>
+            Filters
+          </Typography>
         </Grid>
-        <Box mt={2}>
-          <Typography component="legend" ml={-0.6}>
-            Price
-          </Typography>
-          <Slider
-            size="small"
-            value={priceRange}
-            onChange={(event) => {
-              dispatch(filterActions.setPriceRange(event.target.value));
-              props.setApplyFilter(false);
-            }}
-            valueLabelDisplay="auto"
-            marks={marksPriceRange}
-            min={100}
-            max={3000}
-            step={100}
-          />
-        </Box>
-        <Box mt={2}>
-          <Typography component="legend" ml={-0.6}>
-            Type of Bike
-          </Typography>
-          <Box mt={1} />
-          <FormControl fullWidth>
-            <InputLabel>Type</InputLabel>
-            <Select
-              value={type}
-              label="Type"
-              onChange={(event) => {
-                dispatch(filterActions.setBikeType(event.target.value));
-                props.setApplyFilter(false);
-              }}
-            >
-              <MenuItem value={"Road"}>Road</MenuItem>
-              <MenuItem value={"Mountain"}>Mountain</MenuItem>
-              <MenuItem value={"City"}>City</MenuItem>
-              <MenuItem value={"Super-Bike"}>Super Bike</MenuItem>
-              <MenuItem value={"Sport"}>Sport</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <Box mt={2}>
-          <Typography component="legend" ml={-0.6}>
-            Bike Company
-          </Typography>
-          <Box mt={1} />
-          <FormControl fullWidth>
-            <InputLabel>Company</InputLabel>
-            <Select
-              value={company}
-              label="Company"
-              onChange={(event) => {
-                dispatch(filterActions.setBikeCompany(event.target.value));
-                props.setApplyFilter(false);
-              }}
-            >
-              {/* TODO: Load dynamically from database */}
-              <MenuItem value={"Honda"}>Honda</MenuItem>
-              <MenuItem value={"KTM"}>KTM</MenuItem>
-              <MenuItem value={"TVS"}>TVS</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <Box mt={2}>
-          <Typography component="legend">Min. Rating</Typography>
-          <Rating
-            name="simple-controlled"
-            value={rating}
-            onChange={(event) => {
-              dispatch(filterActions.setRating(Number(event.target.value)));
-              props.setApplyFilter(false);
-            }}
-          />
-        </Box>
-        <Box mt={2}>
-          <Typography component="legend">Max. Kms Driven</Typography>
-          <Slider
-            size="small"
-            min={10000}
-            max={1000000}
-            step={10000}
-            marks={marksKmsDriven}
-            value={kmsDriven}
-            onChange={(event) => {
-              dispatch(filterActions.setKmsDriven(event.target.value));
-              props.setApplyFilter(false);
-            }}
-            defaultValue={400000}
-            aria-label="Small"
-            valueLabelDisplay="auto"
-          />
-        </Box>
-        <Box mt={2}>
-          <Typography component="legend">Max. Bike Age</Typography>
-          <Slider
-            size="small"
-            defaultValue={3}
-            min={1}
-            max={10}
-            value={bikeAge}
-            onChange={(event) => {
-              dispatch(filterActions.setBikeAge(event.target.value));
-              props.setApplyFilter(false);
-            }}
-            aria-label="Small"
-            marks={marksBikeAge}
-            valueLabelDisplay="auto"
-          />
-        </Box>
-        <Box mt={2}>
-          <Typography component="legend">Fuel Type</Typography>
-          <FormControl>
-            <RadioGroup
-              row
-              value={fuelType}
-              onChange={(event) => {
-                dispatch(filterActions.setFuelType(event.target.value));
-                props.setApplyFilter(false);
-              }}
-            >
-              <FormControlLabel
-                value="all"
-                control={<Radio />}
-                /* onChange={() => dispatch(filterActions.setFuelType("all"))} */
-                label="All"
-              />
-              <FormControlLabel
-                value="Petrol"
-                /* onChange={() => dispatch(filterActions.setFuelType("petrol"))} */
-                control={<Radio />}
-                label="Petrol"
-              />
-              <FormControlLabel
-                value="Electric"
-                /* onChange={() => dispatch(filterActions.setFuelType("electric"))} */
-                control={<Radio />}
-                label="Electric"
-              />
-            </RadioGroup>
-          </FormControl>
-        </Box>
-        <Box mt={2}>
-          <FormGroup>
-            <FormControlLabel
-              value={favouritesOnly}
-              onChange={() => {
-                setFavouritesOnly((prevState) => !prevState);
-              }}
-              control={<Checkbox />}
-              label="Favourites only"
-            />
-          </FormGroup>
+        <Grid item>
+          {!props.applyFilter && (
+            <Button variant="text" size="small" onClick={applyFilterHandler}>
+              Reset
+            </Button>
+          )}
+        </Grid>
+      </Grid>
+
+      <Box mt={1}>
+        <Typography variant="body2" fontWeight={500} mb={1.5}>Price / day</Typography>
+        <Slider
+          size="small"
+          value={priceRange}
+          onChange={(event) => {
+            dispatch(filterActions.setPriceRange(event.target.value));
+            props.setApplyFilter(false);
+          }}
+          valueLabelDisplay="auto"
+          valueLabelFormat={(v) => `₹${v}`}
+          marks={marksPriceRange}
+          min={100}
+          max={3000}
+          step={100}
+        />
+        <Box sx={{ display: "flex", justifyContent: "space-between", mt: 0.5 }}>
+          <Typography variant="caption" color="text.secondary">₹100</Typography>
+          <Typography variant="caption" color="text.secondary">₹3k</Typography>
         </Box>
       </Box>
-    </>
+
+      <Box mt={3}>
+        <Typography variant="body2" fontWeight={500} mb={1.5}>Bike Type</Typography>
+        <FormControl fullWidth size="small">
+          <InputLabel>Type</InputLabel>
+          <Select
+            value={type}
+            label="Type"
+            onChange={(event) => {
+              dispatch(filterActions.setBikeType(event.target.value));
+              props.setApplyFilter(false);
+            }}
+          >
+            <MenuItem value="">Any</MenuItem>
+            <MenuItem value="Road">Road</MenuItem>
+            <MenuItem value="Mountain">Mountain</MenuItem>
+            <MenuItem value="City">City</MenuItem>
+            <MenuItem value="Super-Bike">Super Bike</MenuItem>
+            <MenuItem value="Sport">Sport</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
+      <Box mt={3}>
+        <Typography variant="body2" fontWeight={500} mb={1.5}>Brand</Typography>
+        <FormControl fullWidth size="small">
+          <InputLabel>Brand</InputLabel>
+          <Select
+            value={company}
+            label="Brand"
+            onChange={(event) => {
+              dispatch(filterActions.setBikeCompany(event.target.value));
+              props.setApplyFilter(false);
+            }}
+          >
+            <MenuItem value="">Any</MenuItem>
+            <MenuItem value="Bajaj">Bajaj</MenuItem>
+            <MenuItem value="Hero">Hero</MenuItem>
+            <MenuItem value="Honda">Honda</MenuItem>
+            <MenuItem value="KTM">KTM</MenuItem>
+            <MenuItem value="Royal Enfield">Royal Enfield</MenuItem>
+            <MenuItem value="TVS">TVS</MenuItem>
+            <MenuItem value="Yamaha">Yamaha</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
+      <Box mt={3}>
+        <Typography variant="body2" fontWeight={500} mb={1.5}>Min. Rating</Typography>
+        <Rating
+          value={rating}
+          onChange={(event) => {
+            dispatch(filterActions.setRating(Number(event.target.value)));
+            props.setApplyFilter(false);
+          }}
+        />
+      </Box>
+
+      <Box mt={3}>
+        <Typography variant="body2" fontWeight={500} mb={1.5}>Max. Kms Driven</Typography>
+        <Slider
+          size="small"
+          min={10000}
+          max={1000000}
+          step={10000}
+          marks={marksKmsDriven}
+          value={kmsDriven}
+          onChange={(event) => {
+            dispatch(filterActions.setKmsDriven(event.target.value));
+            props.setApplyFilter(false);
+          }}
+          valueLabelDisplay="auto"
+        />
+        <Box sx={{ display: "flex", justifyContent: "space-between", mt: 0.5 }}>
+          <Typography variant="caption" color="text.secondary">10k</Typography>
+          <Typography variant="caption" color="text.secondary">1M+</Typography>
+        </Box>
+      </Box>
+
+      <Box mt={3}>
+        <Typography variant="body2" fontWeight={500} mb={1.5}>Max. Bike Age</Typography>
+        <Slider
+          size="small"
+          min={1}
+          max={10}
+          value={bikeAge}
+          onChange={(event) => {
+            dispatch(filterActions.setBikeAge(event.target.value));
+            props.setApplyFilter(false);
+          }}
+          marks={marksBikeAge}
+          valueLabelDisplay="auto"
+        />
+        <Box sx={{ display: "flex", justifyContent: "space-between", mt: 0.5 }}>
+          <Typography variant="caption" color="text.secondary">1yr</Typography>
+          <Typography variant="caption" color="text.secondary">10yr+</Typography>
+        </Box>
+      </Box>
+
+      <Box mt={3}>
+        <Typography variant="body2" fontWeight={500} mb={1}>Fuel Type</Typography>
+        <FormControl>
+          <RadioGroup
+            value={fuelType}
+            onChange={(event) => {
+              dispatch(filterActions.setFuelType(event.target.value));
+              props.setApplyFilter(false);
+            }}
+          >
+            <FormControlLabel value="all" control={<Radio size="small" />} label="All" />
+            <FormControlLabel value="Petrol" control={<Radio size="small" />} label="Petrol" />
+            <FormControlLabel value="Electric" control={<Radio size="small" />} label="Electric" />
+          </RadioGroup>
+        </FormControl>
+      </Box>
+
+      <Box mt={2}>
+        <FormGroup>
+          <FormControlLabel
+            value={favouritesOnly}
+            onChange={() => setFavouritesOnly((prevState) => !prevState)}
+            control={<Checkbox size="small" />}
+            label="Favourites only"
+          />
+        </FormGroup>
+      </Box>
+    </Box>
   );
 };
 

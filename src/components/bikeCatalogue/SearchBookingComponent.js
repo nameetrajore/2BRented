@@ -58,7 +58,7 @@ const SearchBooking = (props) => {
           flexDirection: "row",
         }}
       >
-        <Grid container spacing={8} alignItems="center" justifyContent="center">
+        <Grid container spacing={3} alignItems="center" justifyContent="center">
           <Grid item>
             <TextField
               fullWidth

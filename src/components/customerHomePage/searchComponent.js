@@ -2,14 +2,17 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import customerHomePage1 from "../../resources/undraw_web_search_re_efla.svg";
+import Container from "@mui/material/Container";
+import MenuItem from "@mui/material/MenuItem";
+import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
-import { createSearchParams, Navigate, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { bookingActions } from "../../app/store";
 import { useState } from "react";
+
+const cities = ["Mumbai", "Bangalore", "Hyderabad", "Delhi", "Chennai", "Jaipur"];
+
 const SearchComponent = () => {
   const dispatch = useDispatch();
   const dropDate = useSelector((state) => state.booking.dropDate);
@@ -20,9 +23,7 @@ const SearchComponent = () => {
   const [errorPickupLocation, setErrorPickupLocation] = useState(false);
   const [errorDropLocation, setErrorDropLocation] = useState(false);
   const today = new Date();
-  const [minPickupDate, setMinPickupDate] = useState(
-    today.toISOString().substring(0, 10)
-  );
+  const [minPickupDate] = useState(today.toISOString().substring(0, 10));
   const [minDropDate, setMinDropDate] = useState(
     new Date(minPickupDate).toISOString().substring(0, 10)
   );
@@ -31,184 +32,127 @@ const SearchComponent = () => {
     const nextDay = new Date();
     nextDay.setDate(new Date(event.target.value).getDate() + 1);
     if (event.target.value >= dropDate)
-      dispatch(
-        bookingActions.setDropDate(nextDay.toISOString().substring(0, 10))
-      );
+      dispatch(bookingActions.setDropDate(nextDay.toISOString().substring(0, 10)));
     dispatch(bookingActions.setPickupDate(event.target.value));
     setMinDropDate(nextDay.toISOString().substring(0, 10));
   };
 
   const navigate = useNavigate();
+
   return (
-    <Box bgcolor="transparent" p={10} mt={-40}>
-      <Grid
-        container
-        /* color="linear-gradient(131deg, rgba(44,212,195,1) 19%, rgba(51,179,166,1) 41%, rgba(30,125,116,1) 82%)" */
-        sx={{
-          backgroundRepeat: "no-repeat",
-          boxShadow:
-            "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px" /* backgroundColor: (t) => */,
-          /*   t.palette.mode === "light" */
-          /*     ? t.palette.primary[100] */
-          /*     : t.palette.grey[900], */
-          backgroundSize: "25%",
-          backgroundImage: `url(${customerHomePage1})`,
-          backgroundColor: "white",
-          borderRadius: 2,
-          /* height: "50vh", */
-          backgroundPosition: "right bottom",
-        }}
-      >
-        <Grid item xs={12} sm={12} md={12}>
-          <Box
-            pt={5}
-            pb={2}
-            pl={8}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Typography variant="h3" fontWeight={500}>
-              Search for your Bike
-            </Typography>
-          </Box>
-        </Grid>
-        <Grid container spacing={3} pt={2} px={7}>
-          <Grid item xs={12} sm={6} md={3}>
-            <TextField
-              fullWidth
-              margin="none"
-              required
-              id="email"
-              label="Pickup Location"
-              name="email"
-              value={pickupLocation}
-              autoComplete="email"
-              error={errorPickupLocation}
-              helperText={
-                errorPickupLocation ? "Cannot leave this field empty" : ""
-              }
-              onChange={(event) => {
-                dispatch(bookingActions.setPickupLocation(event.target.value));
-              }}
-            />
-          </Grid>
-          <Grid item xs={false} sm={false} md={3}>
-            <TextField
-              fullWidth
-              margin="none"
-              required
-              id="email"
-              value={dropLocation}
-              error={errorDropLocation}
-              helperText={
-                errorDropLocation ? "Cannot leave this field empty" : ""
-              }
-              onChange={(event) => {
-                dispatch(bookingActions.setDropLocation(event.target.value));
-              }}
-              label="Drop Location"
-              name="email"
-              /* type="date" */
-              autoComplete="Location"
-            />
-          </Grid>
-          <Grid item xs={false} sm={false} md={6} />
-          <Grid item xs={false} sm={false} md={2}>
-            <TextField
-              fullWidth
-              margin="none"
-              required
-              id="email"
-              value={pickupDate}
-              inputProps={{
-                min: minPickupDate,
-              }}
-              onChange={pickupDateHandler}
-              type="date"
-              label="Pickup Date"
-              name="email"
-              autoComplete="email"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <TextField
-              fullWidth
-              margin="none"
-              required
-              id="email"
-              label="Drop Date"
-              value={dropDate}
-              type="date"
-              onChange={(event) => {
-                dispatch(bookingActions.setDropDate(event.target.value));
-              }}
-              name="email"
-              autoComplete="email"
-              inputProps={{
-                min: minDropDate,
-              }}
-            />
-          </Grid>
-          <Grid item md={8} />
-          <Grid item xs={12} sm={8} md={1.5}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
+    /* Pull card up into hero with negative margin; zIndex sits above gradient */
+    <Box sx={{ mt: "-110px", position: "relative", zIndex: 2, pb: 1 }}>
+      <Container maxWidth="lg">
+        {/* White search card — 72% wide on large screens, full width on mobile */}
+        <Box
+          sx={{
+            backgroundColor: "white",
+            borderRadius: 3,
+            boxShadow:
+              "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
+            px: { xs: 3, md: 5 },
+            py: 4,
+          }}
+        >
+          <Typography variant="h5" fontWeight={600} color="#154B46" mb={3}>
+            Search for your Bike
+          </Typography>
+
+          {/* Single row on md+: (3) + (3) + (2) + (2) + (2) = 12 columns */}
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} sm={6} md={3}>
+              <TextField
+                fullWidth
+                required
+                select
+                id="pickup-location"
+                label="Pickup Location"
+                name="pickupLocation"
+                value={pickupLocation}
+                error={errorPickupLocation}
+                helperText={errorPickupLocation ? "Required" : ""}
+                onChange={(e) =>
+                  dispatch(bookingActions.setPickupLocation(e.target.value))
+                }
+              >
+                {cities.map((city) => (
+                  <MenuItem key={city} value={city}>{city}</MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <TextField
+                fullWidth
+                required
+                select
+                id="drop-location"
+                label="Drop Location"
+                name="dropLocation"
+                value={dropLocation}
+                error={errorDropLocation}
+                helperText={errorDropLocation ? "Required" : ""}
+                onChange={(e) =>
+                  dispatch(bookingActions.setDropLocation(e.target.value))
+                }
+              >
+                {cities.map((city) => (
+                  <MenuItem key={city} value={city}>{city}</MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={12} sm={6} md={2}>
+              <TextField
+                fullWidth
+                required
+                id="pickup-date"
+                label="Pickup Date"
+                name="pickupDate"
+                type="date"
+                value={pickupDate}
+                inputProps={{ min: minPickupDate }}
+                onChange={pickupDateHandler}
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={2}>
+              <TextField
+                fullWidth
+                required
+                id="drop-date"
+                label="Drop Date"
+                name="dropDate"
+                type="date"
+                value={dropDate}
+                inputProps={{ min: minDropDate }}
+                onChange={(e) =>
+                  dispatch(bookingActions.setDropDate(e.target.value))
+                }
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={2}>
               <Button
                 variant="contained"
+                fullWidth
                 onClick={() => {
                   if (dropLocation === "") setErrorDropLocation(true);
+                  else setErrorDropLocation(false);
                   if (pickupLocation === "") setErrorPickupLocation(true);
+                  else setErrorPickupLocation(false);
                   if (pickupLocation !== "" && dropLocation !== "") {
-                    setErrorDropLocation(false);
-                    setErrorPickupLocation(false);
                     navigate(`bike-catalogue?${createSearchParams(params)}`);
                   }
                 }}
                 size="large"
-                sx={{ p: 1.5 }}
+                sx={{ py: 1.8, whiteSpace: "nowrap" }}
                 endIcon={<ArrowForwardIcon />}
               >
                 Find Bike
               </Button>
-            </Box>
+            </Grid>
           </Grid>
-          {/* <Grid item xs={0} sm={0} md={8} /> */}
-        </Grid>
-        <Grid item xs={12} sm={8} md={5}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              p: 4,
-            }}
-          >
-            {/* <Typography component="h1" variant="h3"> */}
-            {/*   Category */}
-            {/* </Typography> */}
-          </Box>
-        </Grid>
-
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            p: "20px",
-          }}
-        >
-          {/* <CategoryCard categoryName={"bike"} /> */}
-          {/* <CategoryCard categoryName={"bike"} /> */}
-          {/* <CategoryCard categoryName={"bike"} /> */}
-          {/* <CategoryCard categoryName={"bike"} /> */}
         </Box>
-      </Grid>
+      </Container>
     </Box>
   );
 };

@@ -113,6 +113,10 @@ const getBike = async (req, res) => {
     where.locationCity = { contains: q.pickupLocation, mode: "insensitive" };
   }
 
+  if (q.type) where.type = q.type;
+  if (q.brand) where.brand = { contains: q.brand, mode: "insensitive" };
+  if (q.fuelType) where.fuelType = q.fuelType;
+
   if (q.pickupDate && q.dropDate) {
     const dateArray = [];
     const cur = new Date(q.pickupDate);
