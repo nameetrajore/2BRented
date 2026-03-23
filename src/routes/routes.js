@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useSearchParams } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { BikeCatalouge } from "../pages/BikeCatalogue";
 import BookingSummary from "../pages/BookingSummary";
 import { useSelector } from "react-redux";

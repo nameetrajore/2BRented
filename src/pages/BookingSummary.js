@@ -53,6 +53,7 @@ const BookingSummary = () => {
     dispatch(bookingActions.setPickupLocation(searchParams.get("pickupLocation")));
     dispatch(bookingActions.setDropDate(searchParams.get("dropDate")));
     dispatch(bookingActions.setPickupDate(searchParams.get("pickupDate")));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dropDate = useSelector((state) => state.booking.dropDate);
@@ -62,6 +63,7 @@ const BookingSummary = () => {
 
   useEffect(() => {
     getBike(id, setBike);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const numberOfDays =

@@ -2,13 +2,14 @@ import * as React from "react";
 import { NavbarManager } from "../components/NavbarManager";
 import QueryComponent from "../components/QueryComponent";
 import { useEffect, useState } from "react";
-import { Grid, Typography, Button, Box } from "@mui/material";
+import { Grid, Typography, Box } from "@mui/material";
 import { useQueries } from "../hooks/useQueries";
 const ManagerDashboard = () => {
   const [queries, setQueries] = useState([]);
   const { getQueries } = useQueries();
   useEffect(() => {
     getQueries(setQueries);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

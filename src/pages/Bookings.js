@@ -18,6 +18,7 @@ const Bookings = () => {
   const { getBookings } = useBooking();
   useEffect(() => {
     getBookings(customerId, setBookings);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

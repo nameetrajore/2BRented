@@ -1,15 +1,14 @@
 import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { NavbarOwner } from "../components/NavbarOwner";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import { Box, Button, Typography } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import Paper from "@mui/material/Paper";
 import { FormControl, Input, CardMedia, Card } from "@mui/material";
 import axios from "axios";
-import { styled } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
@@ -53,10 +52,6 @@ export const AddBike4 = () => {
     }
     setSelectedFiles(urls);
   };
-
-  const StyledInput = styled("input")({
-    display: "none",
-  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();

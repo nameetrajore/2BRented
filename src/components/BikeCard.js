@@ -45,6 +45,7 @@ const BikeCard = (props) => {
       return () => clearTimeout(timer);
     }
     isFirstRender.current = false;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFavourite]);
 
   const numberOfDays =

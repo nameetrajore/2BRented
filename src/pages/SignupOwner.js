@@ -50,7 +50,6 @@ export const SignupOwner = () => {
           t.palette.mode === "light"
             ? t.palette.primary[100]
             : t.palette.grey[900],
-        backgroundSize: "cover",
         backgroundImage: `url(${signUpBackground})`,
         backgroundSize: "auto",
         backgroundPosition: "left bottom",

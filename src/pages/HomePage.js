@@ -7,7 +7,7 @@ import LocationCityIcon from "@mui/icons-material/LocationCity";
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
 import SportsMotorsportsIcon from "@mui/icons-material/SportsMotorsports";
 import { Navbar } from "../components/Navbar";
-import { Avatar, Box, Button, Chip, Container, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Button, Chip, Container, Typography } from "@mui/material";
 import Footer from "../components/Footer";
 import illustration from "../resources/undraw_web_search_re_efla.svg";
 import { useNavigate, createSearchParams } from "react-router-dom";

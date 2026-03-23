@@ -23,6 +23,7 @@ const ManageOwners = () => {
 
   useEffect(() => {
     getOwners(setOwners);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

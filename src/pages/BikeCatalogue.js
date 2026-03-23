@@ -7,7 +7,7 @@ import { Navbar } from "../components/Navbar";
 import SearchBooking from "../components/bikeCatalogue/SearchBookingComponent";
 import SearchBike from "../components/bikeCatalogue/SearchBikeComponent";
 import { useGetBikes } from "../hooks/useGetBikes";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Box, Container, Typography } from "@mui/material";
 import LoadingSkeleton from "../components/bikeCatalogue/LoadingSkeletonComponent";
 import { bookingActions } from "../app/store";
@@ -23,6 +23,7 @@ export const BikeCatalouge = () => {
     dispatch(bookingActions.setPickupLocation(searchParams.get("pickupLocation")));
     dispatch(bookingActions.setDropDate(searchParams.get("dropDate")));
     dispatch(bookingActions.setPickupDate(searchParams.get("pickupDate")));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [applyFilter, setApplyFilter] = useState(true);

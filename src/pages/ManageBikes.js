@@ -22,6 +22,7 @@ const ManageBikes = () => {
 
   useEffect(() => {
     getBikes(setBikes);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

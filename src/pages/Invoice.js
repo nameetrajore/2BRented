@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 
 const Invoice = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const orderId = searchParams
     .get("orderId")
     .substring(6, searchParams.get("orderId").length);

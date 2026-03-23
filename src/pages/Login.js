@@ -21,7 +21,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const { login, error, isLoading } = useLogin();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const message = searchParams.get("message");
 
   const handleSubmit = async (event) => {
@@ -40,7 +40,6 @@ export const Login = () => {
             t.palette.mode === "light"
               ? t.palette.primary[100]
               : t.palette.grey[900],
-          backgroundSize: "cover",
           backgroundImage: `url(${loginBackground})`,
           backgroundSize: "auto",
           backgroundPosition: "left bottom",
