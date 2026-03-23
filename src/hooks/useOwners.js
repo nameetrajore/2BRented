@@ -9,7 +9,7 @@ export const useOwners = () => {
   };
 
   const deleteOwner = async (id) => {
-    const response = await axios.delete(`/api/owners/${id}`);
+    await axios.delete(`/api/owners/${id}`);
   };
   return { getOwners, deleteOwner, isLoading };
 };

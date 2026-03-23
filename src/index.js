@@ -8,7 +8,6 @@ import { ThemeProvider } from "@emotion/react";
 // Import css files
 import { themeOptions } from "./theme/theme";
 import { BrowserRouter } from "react-router-dom";
-import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 
 const container = document.getElementById("root");
 const root = createRoot(container);

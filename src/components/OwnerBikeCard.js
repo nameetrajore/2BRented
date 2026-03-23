@@ -40,7 +40,7 @@ export const OwnerBikeCard = (props) => {
                 <Box ml={3} mt={3} mb={3}>
                   <img
                     src={bike.imageUrl[0]}
-                    alt="Bike Image"
+                    alt={`${bike.brand} ${bike.model}`}
                     height="250px"
                     width="100%"
                     style={{ objectFit: "cover", borderRadius: "10px" }}

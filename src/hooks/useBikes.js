@@ -10,7 +10,7 @@ export const useBikes = () => {
   };
 
   const deleteBike = async (id) => {
-    const response = await axios.delete(`/api/bikes/${id}`);
+    await axios.delete(`/api/bikes/${id}`);
   };
 
   return { getBikes, deleteBike, isLoading };

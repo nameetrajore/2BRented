@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Modal, Typography, Box } from "@mui/material";
 
 const ErrorModal = ({ modal, setModal }) => {
-  const handleModal = () => {
-    setModal(true);
-  };
-
   const handleClose = () => {
     setModal(false);
   };

@@ -1,24 +1,6 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Rating,
-  Typography,
-} from "@mui/material";
-import SimpleImageSlider from "react-simple-image-slider";
-import Slider from "react-slick";
+import { Box, Grid, Typography } from "@mui/material";
 const ImageComponent = (props) => {
   const bike = props.bike;
-  var settings = {
-    dots: true,
-    centerMode: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-  };
   return (
     <Box bgcolor="transparent" px={10} pt={3}>
       <Grid
@@ -48,7 +30,7 @@ const ImageComponent = (props) => {
                 <Box key={Math.random()}>
                   <img
                     src={image}
-                    alt="Bike Image"
+                    alt={`${bike.brand} ${bike.model}`}
                     height="300px"
                     width="100%"
                     style={{ objectFit: "cover", borderRadius: "10px" }}

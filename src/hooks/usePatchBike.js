@@ -7,7 +7,7 @@ export const usePatchBike = () => {
       booking
     );
     if (!alreadyBooked) {
-      const responseBike = await axios.patch(`/api/bikes/${bike._id}`, {
+      await axios.patch(`/api/bikes/${bike._id}`, {
         bookingDates: newBookingDates,
       });
     }

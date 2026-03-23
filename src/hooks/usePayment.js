@@ -70,7 +70,7 @@ export const usePayment = () => {
   };
 
   const postBooking = async (params) => {
-    const responseBooking = await axios.post(`/api/bookings`, params);
+    await axios.post(`/api/bookings`, params);
   };
 
   return { checkout };

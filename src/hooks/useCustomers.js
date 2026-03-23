@@ -10,7 +10,7 @@ export const useCustomers = () => {
   };
 
   const deleteCustomer = async (id) => {
-    const response = await axios.delete(`/api/customers/${id}`);
+    await axios.delete(`/api/customers/${id}`);
   };
 
   return { getCustomers, deleteCustomer, isLoading };

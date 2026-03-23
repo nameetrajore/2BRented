@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, Link, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 const humanReadableDate = (inputDate) => {
   const dateStr = inputDate;

@@ -7,8 +7,6 @@ import CachedIcon from "@mui/icons-material/Cached";
 import { bookingActions } from "../../app/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
-
 const commonStyles = {
   bgcolor: "background.paper",
   m: 1,
@@ -22,13 +20,10 @@ const SearchBooking = (props) => {
   const pickupDate = useSelector((state) => state.booking.pickupDate);
   const dropLocation = useSelector((state) => state.booking.dropLocation);
   const pickupLocation = useSelector((state) => state.booking.pickupLocation);
-  const [searchParams, setSearchParams] = useSearchParams();
   const filter = useSelector((state) => state.filter);
   const booking = useSelector((state) => state.booking);
   const today = new Date();
-  const [minPickupDate, setMinPickupDate] = useState(
-    today.toISOString().substring(0, 10)
-  );
+  const minPickupDate = today.toISOString().substring(0, 10);
   const [minDropDate, setMinDropDate] = useState(
     new Date(minPickupDate).toISOString().substring(0, 10)
   );

@@ -5,7 +5,7 @@ export const useFavourite = () => {
   const storeIsFavourite = async (bikeId, _isFavourite, bike) => {
     if (_isFavourite) {
       bike.isFavourite = true;
-      const response = await fetch(
+      await fetch(
         `/api/customers/${id}?addFavourite=${bikeId}`,
         {
           method: "PATCH",
@@ -16,7 +16,7 @@ export const useFavourite = () => {
       );
     } else {
       bike.isFavourite = false;
-      const response = await fetch(
+      await fetch(
         `/api/customers/${id}?removeFavourite=${bikeId}`,
         {
           method: "PATCH",

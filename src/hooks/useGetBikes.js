@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export const useGetBikes = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
   const id = useSelector((state) => state.auth._id);
 
   const getBikes = async (filter, setBikes) => {

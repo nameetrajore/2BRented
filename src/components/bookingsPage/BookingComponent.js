@@ -1,5 +1,4 @@
 import { Grid, Typography, Button, Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useDeleteBooking } from "../../hooks/useDeleteBooking";
 
 const humanReadableDate = (inputDate) => {

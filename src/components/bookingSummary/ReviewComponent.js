@@ -1,12 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Rating,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Grid, Rating, Typography } from "@mui/material";
 const ReviewComponent = (props) => {
   const bike = props.bike;
   return (

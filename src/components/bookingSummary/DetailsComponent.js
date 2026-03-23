@@ -1,12 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Rating,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import BookingDetails from "./BookingDetailsComponent";
 import { useSelector } from "react-redux";
 const DetailsComponent = (props) => {

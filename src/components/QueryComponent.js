@@ -1,4 +1,4 @@
-import { Grid, Typography, Button, Box } from "@mui/material";
+import { Grid, Typography, Box } from "@mui/material";
 
 const QueryComponent = (props) => {
   const query = props.query;

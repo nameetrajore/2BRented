@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
@@ -14,7 +14,6 @@ import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
 import { filterActions } from "../../app/store";
-import useDidMountEffect from "../../hooks/useDidMountEffect";
 
 const Filter = (props) => {
   const priceRange = useSelector((state) => state.filter.priceRange);
@@ -47,6 +46,7 @@ const Filter = (props) => {
     return () => {
       clearTimeout(timer);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.applyFilter, filter, booking]);
 
   const marksPriceRange = [{ value: 100 }, { value: 3000 }];
