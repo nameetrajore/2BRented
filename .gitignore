@@ -19,3 +19,5 @@ tmp/
 /server/.env
 /server/node_modules/
 /node_modules/
+/api/node_modules/
+/api/.env

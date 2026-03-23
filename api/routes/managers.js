@@ -1,19 +1,22 @@
-const Manager = require("../models/managers");
+const prisma = require("../lib/prisma");
 
 const getManager = async (req, res) => {
   try {
-    const manager = await Manager.find(req.query);
-    res.json(manager);
+    const where = {};
+    if (req.query.managerEmail) where.managerEmail = req.query.managerEmail;
+    if (req.query.id) where.id = req.query.id;
+
+    const managers = await prisma.manager.findMany({ where });
+    res.json(managers.map((m) => ({ ...m, _id: m.id })));
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
-const postManager = async (req, res) => {
-  const manager = new Manager({ ...req.body });
 
+const postManager = async (req, res) => {
   try {
-    const newManager = await manager.save();
-    res.status(201).json(newManager);
+    const manager = await prisma.manager.create({ data: req.body });
+    res.status(201).json({ ...manager, _id: manager.id });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -25,16 +28,11 @@ const putManager = (req, res) => {
 
 const deleteManager = async (req, res) => {
   try {
-    const manager = await Manager.deleteOne({ _id: req.params.id });
-    res.json(manager);
+    await prisma.manager.delete({ where: { id: req.params.id } });
+    res.json({ message: "Manager deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-module.exports = {
-  getManager,
-  postManager,
-  putManager,
-  deleteManager,
-};
+module.exports = { getManager, postManager, putManager, deleteManager };

@@ -54,7 +54,7 @@ const paymentVerification = async (req, res) => {
     res
       .status(201)
       .redirect(
-        `/payment?success=true&orderId=${req.query.orderId}`
+        `/payment?success=false&orderId=${req.query.orderId}`
       );
   }
 };

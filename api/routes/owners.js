@@ -1,20 +1,27 @@
-const Owner = require("../models/owners");
+const prisma = require("../lib/prisma");
 
 const getOwner = async (req, res) => {
   try {
-    const owner = await Owner.find(req.query);
-    res.json(owner);
+    const where = {};
+    if (req.query.ownerEmail) where.ownerEmail = req.query.ownerEmail;
+    if (req.query.id) where.id = req.query.id;
+
+    const owners = await prisma.owner.findMany({ where });
+    res.json(owners.map((o) => ({ ...o, _id: o.id })));
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
 const postOwner = async (req, res) => {
-  const owner = new Owner({ ...req.body });
-
   try {
-    const newOwner = await owner.save();
-    res.status(201).json(newOwner);
+    const owner = await prisma.owner.create({
+      data: {
+        ...req.body,
+        locationPincode: parseInt(req.body.locationPincode),
+      },
+    });
+    res.status(201).json({ ...owner, _id: owner.id });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -26,16 +33,11 @@ const putOwner = (req, res) => {
 
 const deleteOwner = async (req, res) => {
   try {
-    const owner = await Owner.deleteOne({ _id: req.params.id });
-    res.json(owner);
+    await prisma.owner.delete({ where: { id: req.params.id } });
+    res.json({ message: "Owner deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-module.exports = {
-  getOwner,
-  postOwner,
-  putOwner,
-  deleteOwner,
-};
+module.exports = { getOwner, postOwner, putOwner, deleteOwner };

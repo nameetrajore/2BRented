@@ -1,15 +1,14 @@
-const Bike = require("../models/bikes");
+const prisma = require("../lib/prisma");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
-const path = require("path");
-const express = require("express");
-const app = express();
-const http = require("http");
 const multer = require("multer");
-const bucket = "2brented-app";
-const uploadToS3 = async (path, originalFilename, mimetype) => {
+
+const bucket = "2brented-bikes";
+const region = "ap-south-1";
+
+const uploadToS3 = async (filePath, originalFilename, mimetype) => {
   const client = new S3Client({
-    region: "eu-north-1",
+    region,
     credentials: {
       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
       accessKeyId: process.env.S3_ACCESS_KEY,
@@ -19,47 +18,24 @@ const uploadToS3 = async (path, originalFilename, mimetype) => {
   const parts = originalFilename.split(".");
   const ext = parts[parts.length - 1];
   const newFilename = Date.now() + "." + ext;
-  const data = await client.send(
+
+  await client.send(
     new PutObjectCommand({
       Bucket: bucket,
-      Body: fs.readFileSync(path),
+      Body: fs.readFileSync(filePath),
       Key: newFilename,
       ContentType: mimetype,
-      ACL: "public-read",
     })
   );
 
-  return `https://${bucket}.s3.amazonaws.com/${newFilename}`;
+  return `https://${bucket}.s3.${region}.amazonaws.com/${newFilename}`;
 };
-
-// const getBikeImages = async (req, res) => {
-//   const filePath = path.join(process.cwd(), "uploads", req.params.filename);
-//   //console.log("File path:", __dirname);
-
-//   fs.access(filePath, fs.constants.F_OK, (err) => {
-//     if (err) {
-//       console.error("Error:", err);
-//       res.status(404).end();
-//       return;
-//     }
-
-//     const fileStream = fs.createReadStream(filePath);
-//     fileStream.on("error", (error) => {
-//       console.error("Error:", error);
-//       res.status(404).end();
-//     });
-
-//     fileStream.pipe(res);
-//   });
-// };
 
 const postBike = async (req, res) => {
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       const dir = "/tmp";
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
-      }
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir);
       cb(null, dir);
     },
     filename: function (req, file, cb) {
@@ -67,114 +43,90 @@ const postBike = async (req, res) => {
     },
   });
 
-  const upload = multer({ storage: storage }).array("images", 5); // change 'single' to 'array' and set a limit of 5 files
+  const upload = multer({ storage }).array("images", 5);
 
-  // Call the upload middleware here to process the file uploads
   upload(req, res, async function (err) {
-    // wrap the callback function inside async
     if (err) {
-      // Handle any errors
-      console.error(err);
-      res.status(400).json({ message: "Failed to upload images" });
-      return;
+      return res.status(400).json({ message: "Failed to upload images" });
     }
 
-    // Get the file paths of the uploaded images
     const uploadedFiles = [];
-    for (let i = 0; i < req.files.length; i++) {
-      const { path, originalname, mimetype } = req.files[i];
-      const url = await uploadToS3(path, originalname, mimetype);
+    for (const file of req.files) {
+      const url = await uploadToS3(file.path, file.originalname, file.mimetype);
       uploadedFiles.push(url);
     }
-    const bike = new Bike({
-      ...req.body,
-      imageUrl: uploadedFiles,
-      location: JSON.parse(req.body.location),
-    });
+
+    const location = JSON.parse(req.body.location);
+    const { location: _loc, ...rest } = req.body;
+
     try {
-      const newBike = await bike.save();
-      res.status(201).json(newBike);
-      //console.log(bike);
+      const bike = await prisma.bike.create({
+        data: {
+          brand: rest.brand,
+          model: rest.model,
+          year: new Date(rest.year),
+          locationState: location.state,
+          locationCity: location.city,
+          locationPincode: parseInt(location.pincode),
+          locationAddress: location.address,
+          locationGmapLink: location.gmapLink || null,
+          type: rest.type,
+          transmission: rest.transmission || null,
+          fuelType: rest.fuelType,
+          registrationNumber: rest.registrationNumber,
+          dailyRate: parseFloat(rest.dailyRate),
+          kmsDriven: parseInt(rest.kmsDriven),
+          bikeAge: parseInt(rest.bikeAge),
+          rating: parseFloat(rest.rating),
+          mileage: parseFloat(rest.mileage),
+          imageUrl: uploadedFiles,
+          ownerId: rest.ownerId || null,
+          bookingDates: [],
+        },
+      });
+      res.status(201).json({ ...bike, _id: bike.id });
     } catch (err) {
       res.status(400).json({ message: err.message });
-      //console.log(err.message);
     }
   });
 };
 
 const getBike = async (req, res) => {
-  const incomingQuery = req.query;
-  //console.log("inside getBike");
-  const outgoingQuery = { ...incomingQuery };
+  const q = req.query;
+  const where = {};
 
-  delete outgoingQuery.priceHigh;
-  delete outgoingQuery.priceLow;
-  delete outgoingQuery.rating;
-  delete outgoingQuery.bikeAge;
-  delete outgoingQuery.kmsDriven;
-  delete outgoingQuery.pickupLocation;
+  if (q.owner) where.ownerId = q.owner;
+  if (q.ownerId) where.ownerId = q.ownerId;
 
-  if (incomingQuery.owner) {
-    outgoingQuery.owner = incomingQuery.owner;
-  }
-
-  if (incomingQuery.priceHigh && incomingQuery.priceLow) {
-    outgoingQuery.dailyRate = {
-      $gte: incomingQuery.priceLow,
-      $lte: incomingQuery.priceHigh,
+  if (q.priceHigh && q.priceLow) {
+    where.dailyRate = {
+      gte: parseFloat(q.priceLow),
+      lte: parseFloat(q.priceHigh),
     };
   }
 
-  if (incomingQuery.rating) {
-    outgoingQuery.rating = {
-      $gte: incomingQuery.rating,
-    };
+  if (q.rating) where.rating = { gte: parseFloat(q.rating) };
+  if (q.bikeAge) where.bikeAge = { lte: parseInt(q.bikeAge) };
+  if (q.kmsDriven) where.kmsDriven = { lte: parseInt(q.kmsDriven) };
+
+  if (q.pickupLocation && q.pickupLocation !== "") {
+    where.locationCity = { contains: q.pickupLocation, mode: "insensitive" };
   }
 
-  if (incomingQuery.bikeAge) {
-    outgoingQuery.bikeAge = {
-      $lte: incomingQuery.bikeAge,
-    };
+  if (q.pickupDate && q.dropDate) {
+    const dateArray = [];
+    const cur = new Date(q.pickupDate);
+    const end = new Date(q.dropDate);
+    while (cur <= end) {
+      dateArray.push(new Date(cur));
+      cur.setDate(cur.getDate() + 1);
+    }
+    where.NOT = { bookingDates: { hasSome: dateArray } };
   }
-
-  if (incomingQuery.kmsDriven) {
-    outgoingQuery.kmsDriven = {
-      $lte: incomingQuery.kmsDriven,
-    };
-  }
-
-  if (incomingQuery.pickupLocation && incomingQuery.pickupLocation != "") {
-    outgoingQuery["location.city"] = {
-      $regex: new RegExp(incomingQuery.pickupLocation),
-      $options: "i",
-    };
-  }
-
-  const dateArray = [];
-
-  // Loop through each day between start and end date
-  const currentDate = new Date(incomingQuery.pickupDate);
-  while (currentDate <= new Date(incomingQuery.dropDate)) {
-    // Add the current date to the array
-    dateArray.push(new Date(currentDate));
-
-    // Increment the current date
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  if (incomingQuery.pickupDate && incomingQuery.dropDate)
-    outgoingQuery.bookingDates = {
-      $not: {
-        $elemMatch: {
-          $in: dateArray,
-        },
-      },
-    };
 
   try {
-    const bikes = await Bike.find(outgoingQuery);
-
-    res.json(bikes);
+    const bikes = await prisma.bike.findMany({ where });
+    res.json(bikes.map((b) => ({ ...b, _id: b.id })));
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -182,12 +134,22 @@ const getBike = async (req, res) => {
 
 const patchBike = async (req, res) => {
   try {
-    //console.log("here");
-    const bike = await Bike.updateOne(
-      { _id: req.params.id },
-      { $set: req.body }
-    );
-    res.json(bike);
+    const data = { ...req.body };
+    if (data.bookingDates)
+      data.bookingDates = data.bookingDates.map((d) => new Date(d));
+    if (data.dailyRate) data.dailyRate = parseFloat(data.dailyRate);
+    if (data.kmsDriven) data.kmsDriven = parseInt(data.kmsDriven);
+    if (data.bikeAge) data.bikeAge = parseInt(data.bikeAge);
+    if (data.rating) data.rating = parseFloat(data.rating);
+    if (data.mileage) data.mileage = parseFloat(data.mileage);
+    if (data.locationPincode) data.locationPincode = parseInt(data.locationPincode);
+    if (data.year) data.year = new Date(data.year);
+
+    const bike = await prisma.bike.update({
+      where: { id: req.params.id },
+      data,
+    });
+    res.json({ ...bike, _id: bike.id });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -195,16 +157,11 @@ const patchBike = async (req, res) => {
 
 const deleteBike = async (req, res) => {
   try {
-    const bike = await Bike.deleteOne({ _id: req.params.id });
-    res.json(bike);
+    await prisma.bike.delete({ where: { id: req.params.id } });
+    res.json({ message: "Bike deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-module.exports = {
-  getBike,
-  postBike,
-  patchBike,
-  deleteBike,
-};
+module.exports = { getBike, postBike, patchBike, deleteBike };

@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Bike {
+  id                 String     @id @default(cuid())
+  brand              String
+  model              String
+  year               DateTime
+  locationState      String
+  locationCity       String
+  locationPincode    Int
+  locationAddress    String
+  locationGmapLink   String?
+  type               String
+  transmission       String?
+  fuelType           String
+  registrationNumber String
+  bookingDates       DateTime[]
+  dailyRate          Float
+  kmsDriven          Int
+  bikeAge            Int
+  rating             Float
+  reviews            Json       @default("[]")
+  mileage            Float
+  imageUrl           String[]
+  ownerId            String?
+  owner              Owner?     @relation(fields: [ownerId], references: [id])
+  bookings           Booking[]
+  customerFavs       Customer[] @relation("CustomerFavourites")
+}
+
+model Customer {
+  id                     String    @id @default(cuid())
+  customerName           String
+  locationState          String
+  locationCity           String
+  locationPincode        Int
+  locationAddress        String
+  customerPhoneNumber    String
+  customerEmail          String    @unique
+  customerPassword       String
+  customerDrivingLicense String?
+  rating                 Float
+  bookings               Booking[]
+  favourites             Bike[]    @relation("CustomerFavourites")
+}
+
+model Owner {
+  id               String  @id @default(cuid())
+  ownerName        String
+  locationState    String
+  locationCity     String
+  locationPincode  Int
+  locationAddress  String
+  ownerPhoneNumber String
+  ownerEmail       String
+  ownerPassword    String
+  bikes            Bike[]
+}
+
+model Manager {
+  id                 String @id @default(cuid())
+  managerName        String
+  managerDesignation String
+  managerPhoneNumber String
+  managerEmail       String
+  managerPassword    String
+}
+
+model Booking {
+  id             String    @id @default(cuid())
+  bikeId         String?
+  bike           Bike?     @relation(fields: [bikeId], references: [id])
+  bikeName       String
+  startDate      DateTime
+  endDate        DateTime
+  pickupLocation String
+  dropLocation   String
+  totalAmount    Float
+  customerId     String?
+  customer       Customer? @relation(fields: [customerId], references: [id])
+  paymentId      String
+  status         String    @default("pending")
+}
+
+model Query {
+  id           String @id @default(cuid())
+  name         String
+  email        String
+  mobileNumber String
+  comment      String
+}

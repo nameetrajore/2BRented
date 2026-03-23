@@ -1,22 +1,30 @@
-const Booking = require("../models/bookings");
+const prisma = require("../lib/prisma");
 
 const postBooking = async (req, res) => {
-  const booking = new Booking({ ...req.body });
-
   try {
-    const newBooking = await booking.save();
-    res.status(201).json(newBooking);
+    const booking = await prisma.booking.create({
+      data: {
+        ...req.body,
+        startDate: new Date(req.body.startDate),
+        endDate: new Date(req.body.endDate),
+        totalAmount: parseFloat(req.body.totalAmount),
+      },
+    });
+    res.status(201).json({ ...booking, _id: booking.id });
   } catch (err) {
     res.status(400).json({ message: err.message });
-    //console.log(err.message);
   }
 };
 
 const getBooking = async (req, res) => {
   try {
-    const bookings = await Booking.find(req.query);
-    res.json(bookings);
-    //console.log(bookings);
+    const where = {};
+    if (req.query.customerId) where.customerId = req.query.customerId;
+    if (req.query.bikeId) where.bikeId = req.query.bikeId;
+    if (req.query.status) where.status = req.query.status;
+
+    const bookings = await prisma.booking.findMany({ where });
+    res.json(bookings.map((b) => ({ ...b, _id: b.id })));
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -26,16 +34,11 @@ const patchBooking = () => {};
 
 const deleteBooking = async (req, res) => {
   try {
-    const booking = await Booking.deleteOne({ _id: req.params.id });
-    res.json(booking);
+    await prisma.booking.delete({ where: { id: req.params.id } });
+    res.json({ message: "Booking deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-module.exports = {
-  getBooking,
-  postBooking,
-  patchBooking,
-  deleteBooking,
-};
+module.exports = { getBooking, postBooking, patchBooking, deleteBooking };
